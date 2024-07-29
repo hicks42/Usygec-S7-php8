@@ -1,0 +1,27 @@
+{% extends 'logged_in_base.html.twig' %}
+
+{% block title %}Modification du mot de passe
+{% endblock %}
+
+{% block body %}
+	<div class="row de-flex justify-center mt-5">
+		<div class="er-row basis-full col-sm-8 col-lg-5 rounded-lg mt-5 p-5">
+			{% for flash_error in app.flashes('reset_password_error') %}
+				<div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+			{% endfor %}
+			<h1>Demander un nouveau mot de passe</h1>
+
+			{{ form_start(requestForm) }}
+			{{ form_row(requestForm.email) }}
+			<div class="mt-2">
+				<small>
+					Un lien sera envoyé a cette addresse mail pour obtenir un nouveau mot de passe.
+				</small>
+			</div>
+			<div class="row de-flex justify-center">
+				<button class="btn btn-primary btn-sm w-25 mt-3">Envoyer</button>
+			</div>
+			{{ form_end(requestForm) }}
+		</div>
+	</div>
+{% endblock %}

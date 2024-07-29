@@ -1,0 +1,26 @@
+{% extends 'bam_base.html.twig' %}
+
+{% block title %}Créer un compte
+{% endblock %}
+
+{% block content %}
+	<div class="row g-0 flex justify-center lg:basis-1/2 md:basis-8/12 basis-full m-1">
+		<div>
+			<h3>Créer un compte</h3>
+		</div>
+		<a href="{{ path('accounts_index') }}" class="btn btn-secondary btn w-3">
+			<i class="fa-solid fa-angles-left"></i>
+			Retour</a>
+		{{ form_start(form, {"method": "POST"}) }}
+		<div class="row">
+			{{ form_row(form.email) }}
+		</div>
+		<div class="col-md-12 mt-3">
+			{{ form_widget(form._token) }}
+			{{ form_end(form, {'render_rest': false}) }}
+		</div>
+		<button type="submit" class="btn btn-primary btn-lg btn-block">
+			Enregistrer les modifications
+		</button>
+	</div>
+{% endblock %}

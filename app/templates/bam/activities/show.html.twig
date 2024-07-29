@@ -1,0 +1,39 @@
+{% extends 'bam_base.html.twig' %}
+
+{% block title %}Activities
+{% endblock %}
+
+{% block content %}
+	<h1>Activities</h1>
+
+	<table class="table">
+		<tbody>
+			<tr>
+				<th>Nom</th>
+				<td>{{ activity.name }}</td>
+			</tr>
+			<tr>
+				<th>Description</th>
+				<td>{{ activity.description }}</td>
+			</tr>
+			<tr>
+				<th>Date limite</th>
+				<td>{{ activity.dueDate ? activity.dueDate|date('d-m-Y H:i:s') : '' }}</td>
+			</tr>
+			<tr>
+				<th>Rappel</th>
+				<td>{{ activity.reminder ? activity.dueDate|date('d-m-Y H:i:s') : '' }}</td>
+			</tr>
+		</tbody>
+	</table>
+
+		<div class="row g-0 btn-group flex justify-center btn-group-sm my-3 basis-full" role="group">
+		<div class="flex justify-center lg:basis-1/2 basis-full">
+		<a class="btn btn-outline-primary" href="{{ path('app_activities') }}">
+			<i class="fa-solid fa-address-book"></i>
+			Clients</a>
+		<a class="btn btn-secondary" href="{{ path('app_activities_edit', {'id': activity.id}) }}">
+			<i class="fa-solid fa-user-pen"></i>
+			Modification</a>
+	</div></div>
+{% endblock %}

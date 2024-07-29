@@ -1,0 +1,27 @@
+services:
+  # apache
+  www-service:
+    build:
+      context: ./docker
+    # environment:
+    #   - DEBIAN_FRONTEND=noninteractive
+    container_name: SYMFONY-6-www-container
+    ports:
+      - "8080:80"
+      - "443:443"
+    volumes:
+      - ./docker/vhosts:/etc/apache2/sites-enabled
+      - ./docker/ssl:/etc/apache2/ssl
+      - ./app:/var/www/project/app
+      - ./app/var/log/apache_log:/var/log/apache2
+      - ./docker/php/php.ini:/usr/local/etc/php/php.ini
+
+    restart: on-failure:5
+    networks:
+      - USYGEC-ntw
+
+networks:
+  USYGEC-ntw:
+    external: true
+    driver: bridge
+    name: USYGEC-ntw

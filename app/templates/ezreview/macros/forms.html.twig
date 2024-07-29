@@ -1,0 +1,73 @@
+{# form for existing structures #}
+{% macro niceForm(form) %}
+	<div id="accordion" class="bg-slate-400 flex flex-col my-[1px] rounded-md">
+		<div class="item" id="etbls-{{ form.vars.name }}">
+			<div class="header bg-slate-600 flex flex-row justify-between items-center cursor-pointer font-bold p-6 rounded-md" id="heading-{{ form.vars.name }}">
+				<div class=" text-white">{{ form.name.vars.value }}</div>
+				<svg class="size-6 activeIcon text-gray-200" fill="rgb(71 85 105 / var(--tw-bg-opacity))">
+					<use xlink:href="{{ asset('icons/icons.svg') }}#icon-down"></use>
+				</svg>
+				<svg class="size-6 inactiveIcon text-gray-200" fill="rgb(71 85 105 / var(--tw-bg-opacity))">
+					<use xlink:href="{{ asset('icons/icons.svg') }}#icon-up"></use>
+				</svg>
+			</div>
+			<div class="content transition-all duration-1000">
+				{{ form_row(form.name)}}
+				{{ form_row(form.imageFile)}}
+				{{ form_row(form.Pid)}}
+				{{ form_row(form.badRevUrl)}}
+				<div class="grid lg:grid-cols-2 grid-cols-1 gap-2">
+					<div class="">
+						{{ form_row(form.adresse1)}}
+					</div>
+					<div class="">
+						{{ form_row(form.adresse2)}}
+					</div>
+					<div class="">
+						{{ form_row(form.cp)}}
+					</div>
+					<div class="">
+						{{ form_row(form.city)}}
+					</div>
+					<div class="">
+						{{ form_row(form.country)}}
+					</div>
+					<div class="">
+						{{ form_row(form.phone)}}
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+{% endmacro niceForm %}
+
+{# form to make structures #}
+{% macro newForm(form) %}
+	<div class="etbl-card flex flex-col">
+		{{ form_row(form.name)}}
+		{{ form_row(form.imageFile)}}
+		{{ form_row(form.Pid)}}
+		{{ form_row(form.badRevUrl)}}
+		<div class="grid lg:grid-cols-2 grid-cols-1 gap-2">
+			<div class="">
+				{{ form_row(form.adresse1)}}
+			</div>
+			<div class="">
+				{{ form_row(form.adresse2)}}
+			</div>
+			<div class="">
+				{{ form_row(form.cp)}}
+			</div>
+			<div class="">
+				{{ form_row(form.city)}}
+			</div>
+			<div class="">
+				{{ form_row(form.country)}}
+			</div>
+			<div class="">
+				{{ form_row(form.phone)}}
+			</div>
+		</div>
+	</div>
+{% endmacro newForm %}

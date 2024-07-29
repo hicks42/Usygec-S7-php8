@@ -1,0 +1,71 @@
+{% extends 'logged_in_base.html.twig' %}
+
+{% block title %}Compte de
+	{{ user.company}}
+{% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+{% endblock stylesheets %}
+
+{% block javascripts %}
+	{{ parent() }}
+	{{ encore_entry_script_tags('modal') }}
+{% endblock javascripts %}
+
+{% block content %}
+	<h2>Compte de
+		{{ user.company}}</h2>
+	<div class="my-3">
+		<div class="er-row rounded overflow-hidden my-3 p-2">
+			<div class="my-4">
+				<h5>Société :</h5>
+				<strong>{{ user.company}}</strong>
+			</div>
+		</div>
+		<div class="er-row rounded overflow-hidden my-3 p-2">
+			<div class="my-4">
+				<h5>e-mail :</h5>
+				<small>(login et envois/réception de l'enquete)</small><br>
+				<strong>{{user.email}}</strong>
+			</div>
+		</div>
+		<div class="er-row rounded overflow-hidden my-3 p-2">
+			<div class="my-4">
+				<h5>Etablissements:</h5>
+				<ul class="structures">
+					{% for structure in user.structures %}
+						<li>
+							<hr>
+							<div class="flex flex-wrap justify-around align-items-center m-1 ml-4">
+								<div class="col-xl-6 col-sm-12 my-3">
+									<strong>-
+										{{ structure.name }}</strong>
+								</div>
+								<div class="flex flex-nowrap justify-around col-xl-6 col-sm-12 my-3">
+									<a href="{{ path('enquete', {'id': structure.id}) }}" class="btn btn-secondary btn-sm w-3 mx-1">Envoyer mail</a>
+
+									<a href="#" type="button" data-structureid="{{structure.id}}" class="modal-btn btn btn-secondary btn-sm w-3 mx-1">charger un fichier</a>
+								</div>
+							</div>
+						</li>
+					{% endfor %}
+				</ul>
+			</div>
+		</div>
+		<div class="flex justify-around text-center">
+			<a href="{{ path('ezreview_settings') }}" class="btn btn-primary btn  w-3">Modifier votre compte</a>
+		</div>
+
+		<div class="modal-container flex justify-around">
+			<div class="modal-popup">
+				<button class="close-popup">x</button>
+				{{ form_start(form, {"method": "POST"}) }}
+				<h6 id="form-title">Selectionnez un fichier csv</h6>
+				{{ form_row(form.csvFile) }}
+				<button type="submit" class="submit-modal">Traiter</button>
+				{{ form_widget(form._token) }}
+				{{ form_end(form, {'render_rest': false}) }}
+			</div>
+		</div>
+	{% endblock %}

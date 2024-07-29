@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale }}">
+
+	<head>
+		{% block head %}
+			<meta charset="utf-8"/>
+			<meta http-equiv="x-ua-compatible" content="ie=edge"/>
+			<meta name="description" content=""/>
+			<meta name="viewport" content="width=device-width, initial-scale=1"/>
+			<title>
+				{% block title %}{% endblock title %}
+			</title>
+			{# <link rel="shortcut icon" type="image/x-icon" href="favicon.ico"/> #}
+			<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+			<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+			<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+			<link rel="manifest" href="/site.webmanifest">
+			<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+			<meta name="msapplication-TileColor" content="#da532c">
+			<meta name="theme-color" content="#ffffff">
+
+			{% block stylesheets %}
+				<link rel="stylesheet" href="{{ asset('styles/app.tailwind.css') }}">
+				<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+			{% endblock stylesheets %}
+
+			{% block javascripts %}
+				{% block importmap %}
+					{{ importmap('app') }}
+				{% endblock %}
+			{% endblock %}
+
+		{% endblock head %}
+	</head>
+
+	<body>
+  <object type="image/svg+xml" data="{{ asset('icons/icons.svg') }}" class="hidden"></object>
+		{% block body %}
+			<div class="relative h-dvh">
+				{{ include('main/partials/_message_flash.html.twig') }}
+				{{ include('main/partials/_header_logged_in.html.twig') }}
+				{{ include('main/partials/_preloader.html.twig') }}
+
+				<div class="flex justify-center w-full">
+					<div class="prime">
+							{% block content %}{% endblock %}
+					</div>
+				</div>
+				{% include '_traits/sizer.html.twig' %}
+			</div>
+
+			<!-- ========================= scroll-top ========================= -->
+			<a href="#" class="d-none d-xxl-flex scroll-top btn-hover">
+				<i class="lni lni-chevron-up"></i>
+			</a>
+		{% endblock %}
+	</body>
+</html>

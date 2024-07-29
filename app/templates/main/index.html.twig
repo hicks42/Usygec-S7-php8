@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Usygec - Solutions pour le web.
+{% endblock %}
+
+{% block content %}
+	{{ parent() }}
+	{{ include('main/partials/_hero.html.twig') }}
+	{{ include('main/partials/_service.html.twig') }}
+	{{ include('main/partials/_aboutus.html.twig') }}
+	{# {{ include('main/partials/_video.html.twig') }} #}
+	{# {{ include('main/partials/_pricing.html.twig') }} #}
+	{# {{ include('main/partials/_version.html.twig') }} #}
+	{# {{ include('main/partials/_news.html.twig') }} #}
+	{# {{ include('main/partials/_newsletter.html.twig') }} #}
+	{# {{ include('main/partials/_brand.html.twig') }} #}
+		<a href="#" class="scroll-top btn-hover"> <em class="fas fa-angle-up"></em>
+	</a>
+{% endblock %}

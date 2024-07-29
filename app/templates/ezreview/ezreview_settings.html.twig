@@ -1,0 +1,74 @@
+{% extends 'logged_in_base.html.twig' %}
+
+{% block title %}Modification du compte EZR
+{% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<script type="module">
+		import '{{ asset('js/collection_managment.js') }}';
+    import '{{ asset('js/accordion.js') }}';
+	</script>
+{% endblock javascripts %}
+
+{% block content %}
+
+	{% import "ezreview/macros/forms.html.twig" as formMacros %}
+	<div class="flex flex-col justify-center mt-10 p-2">
+		<div class="w-full">
+			<h1>Paramètres de {{ user.company}}</h1>
+			<div class="">
+				{{ form_start(form, {"method": "PATCH"}) }}
+				<div class="flex flex-row rounded overflow-hidden my-3 p-2">
+					<div class="w-2/3">
+						<div class="me-2">Nom de la société :</div>
+						<div>{{ form_row(form.company) }}</div>
+					</div>
+				</div>
+				<div class="flex flex-row justify-between border-b my-3 p-2">
+					<div class="basis-8/12">
+						<h1>Etablissements :</h1>
+					</div>
+					<div class="basis-4/12">
+						<button type="button" class="add_item_link btn btn-secondary btn-sm float-end" data-collection-holder-class="structures">
+							<i class="fa-solid fa-folder-plus"></i>
+							Ajouter</button>
+					</div>
+				</div>
+
+				{# ici commencent les structures existantes #}
+				{% for row in form.structures %}
+						{{ formMacros.niceForm(row) }}
+				{% endfor %}
+
+				{# ici commencent le form d'ajout de structure #}
+				<ul class="structures"
+            data-index="{{ form.structures|length > 0 ? form.structures|last.vars.name + 1 : 0 }}"
+            data-prototype="{{ formMacros.newForm(form.structures.vars.prototype)|e('html_attr') }}"></ul>
+
+				{% do form.company.setRendered %}
+				{% if form.structures|length == 0  %}
+					{% do form.structures.setRendered %}
+				{% endif %}
+
+				<div class="w-full flex justify-around">
+					<a href="{{ path('ezreview_hp') }}" class="flex flex-col btn btn-outline btn-md my-2">
+						<i class="fa-solid fa-angles-left"></i>
+            <div class="text-gray-600">Retour</div>
+						</a>
+					<button type="submit" class="btn btn-warning btn-sm my-2">
+						<i class="fa-solid fa-file-arrow-down"></i>
+						Enregistrer
+					</button>
+				</div>
+
+				{{ form_end(form) }}
+			</div>
+		</div>
+	</div>
+{% endblock %}

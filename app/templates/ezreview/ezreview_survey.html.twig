@@ -1,0 +1,44 @@
+{% extends 'raw.html.twig' %}
+
+{% block title %}Survey.
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+{% endblock javascripts %}
+
+{% block content %}
+	<div class="qr-container vw">
+		<div class="banner-qr-container">
+			<img src="{{ (structure.imageName ? vich_uploader_asset(structure) : asset('build/images/placeholder.jpg')) | imagine_filter('company_image_banner') }}" alt="{{ structure.name }}" alt="{{structure}}">
+		</div>
+		<div class="row flex justify-center ">
+			<div class="content basis-full col-sm-8 lg:basis-1/2 pr-3 my-3">
+				<div class="qr-title mt-1 px-2">
+					<h1>{{structure}}</h1>
+				</div>
+				<div class="qr-text">
+					<p>
+						<h5>Bonjour.</h5>
+						Vous avez récemment été accueillis dans notre établissement :
+						<strong>"{{structure}}"</strong>.
+					</p>
+					<p>
+						Soucieux de l'amélioration continue de nos prestations et afin de répondre au mieux à vos attentes, nous avons mis en place cette enquête de satisfaction.
+					</p>
+					<p>
+						Toutes les données recueillies restent confidentielles et seront traitées de manière anonyme.
+					</p>
+					<h3>
+						Qu'avez vous pensé de la qualité de nos services ? :
+					</h3>
+				</div>
+				<div class="flex justify-around">
+					<a href="{{ path('badreview', {structureId: structure.id}) }}" class="btn btn-sm btn-warning mx-1 w-sm-50">
+						Plutôt mécontent</a>
+					<a href="{{ GooglUrl }}" target="_blank" class="btn btn-sm btn-success mx-1 w-sm-50">
+						Plutôt satisfait</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>{% endblock %}

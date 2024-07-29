@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Le comparateur
+{% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	{# ########### WIP ########### #}
+	<link rel="stylesheet" href="http://localhost:8080/wip.scss">
+{% endblock stylesheets %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+	{# ########### WIP ########### #}
+	<script src="http://localhost:8080/wip.js"></script>
+{% endblock javascripts %}
+
+{% block content %}
+	<div class="main-wrapper">
+		<h1>Le Comparateur</h1>
+		<div class="compare-result">
+			{% if compare is null %}
+				<div class="row">
+					<div class="basis-full">Aucun produit dans le comparateur</div>
+				</div>
+			{% else %}
+				<div class="bg-secondary bg-gradient text-white" id="tableHeader">
+					<div class="col-{{col1}} p-2 pt-3">IDENTITE</div>
+					{% for item in compare %}
+						{% for column in item.produit.imageName|split('<hr />') %}
+							<div class="col-{{lastcols}} p-2">
+								<img src="{{ (column ? vich_uploader_asset(item.produit) : asset('build/images/placeholder.jpg')) | imagine_filter('square_thumbnail_htiny') }}" class="border border-white border-2 ml-2 bg-white">
+							</div>
+						{% endfor %}
+					{% endfor %}
+				</div>
+				{% for key in fieldnames %}
+					{% if key == "sharePrice" %}
+						<div class="row bg-info bg-gradient text-white">
+							<div class="col-{{col1}} p-2" colspan="{{(compare|length)+1}}">CHIFFRES CLES</div>
+						</div>
+					{% elseif key == "investStrat" %}
+						<div class="row bg-info bg-gradient text-white">
+							<div class="col-{{col1}} p-2" colspan="{{(compare|length)+1}}">STRATEGIE</div>
+						</div>
+					{% elseif key == "subscriptionCom" %}
+						<div class="row bg-info bg-gradient text-white">
+							<div class="col-{{col1}} p-2" colspan="{{(compare|length)+1}}">FRAIS</div>
+						</div>
+					{% endif %}
+					{% include 'traits/_line.html.twig' with {'value': key} %}
+				{% endfor %}
+			{% endif %}
+			<p class="flex justify-around">
+				<a href={{ path ('produits') }} class="btn btn-secondary w-50 my-2">Retour aux produits</a>
+			</p>
+		</div>
+	</div>
+	{{ encore_entry_script_tags('donut') }}
+{% endblock content %}

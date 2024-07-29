@@ -1,0 +1,21 @@
+@layer components {
+  .main-card {
+    @apply flex flex-row justify-center bg-white rounded-md shadow-md my-2 py-8;
+  }
+
+  .card {
+    @apply bg-slate-100 shadow-lg border border-slate-200 rounded-lg overflow-hidden;
+  }
+
+  .card-header {
+    @apply bg-gray-100 px-4 py-2;
+  }
+
+  .card-body {
+    @apply px-4 py-2;
+  }
+
+  .inactive {
+    @apply opacity-50;
+  }
+}

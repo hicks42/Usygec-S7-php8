@@ -1,0 +1,72 @@
+{% extends 'bam_base.html.twig' %}
+
+{% block title %}Liste des Activités
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	{{ encore_entry_script_tags('ajaxsort') }}
+{% endblock javascripts %}
+
+{% block content %}
+	<div class="container">
+		<div class="flex justify-between">
+			<div class="ms-2">
+				{% if  app.request.query.get('keyword') %}
+					<h1>Activités contenant le mot : "{{ app.request.query.get('keyword') }}"</h1>
+				{% else %}
+					<h1>Liste des Activités</h1>
+				{% endif %}
+			</div>
+			<div>
+				<a class="btn btn-success" href="{{ path('app_companies_new') }}">
+					<i class="fa-solid fa-file-circle-plus"></i>
+				</a>
+			</div>
+		</div>
+
+		<div class="row search-row">
+			<div class="col-6">
+				<form action="{{ path('app_activities') }}" method="GET">
+					<div class="input-group mb-3">
+						<input type="text" class="form-control" name="keyword" placeholder="Recherche par mots cléfs">
+						<button type="submit" class="btn btn-outline-dark">
+							<i class="fa-solid fa-magnifying-glass"></i>
+						</button>
+					</div>
+				</form>
+			</div>
+			<div class="col-6"></div>
+		</div>
+
+		<div class="head-row flex justify-between">
+			<div class="col-3">
+				<a href="javascript:void(0);" class="sorting-link" data-sort-by="name" data-sort-order="{{ sort_order == 'desc' ? 'asc' : 'desc' }}">Activité</a>
+			</div>
+			<div class="col-2">
+				<a href="javascript:void(0);" class="sorting-link" data-sort-by="company" data-sort-order="{{ sort_order == 'desc' ? 'asc' : 'desc' }}">Société</a>
+			</div>
+			<div class="col-1 flex flex-nowrap">
+				<a href="javascript:void(0);" class="sorting-link" data-sort-by="reminder" data-sort-order="{{ sort_order == 'desc' ? 'asc' : 'desc' }}">Rappel</a>
+			</div>
+			<div class="text-center col-1 flex flex-nowrap">
+				<a href="javascript:void(0);" class="sorting-link" data-sort-by="dueDate" data-sort-order="{{ sort_order == 'desc' ? 'asc' : 'desc' }}">Date limite</a>
+			</div>
+		</div>
+
+		<div id="activities-list" data-ajax-url="{{ path('app_activities_ajax_sort') }}">
+			{% include 'bam/activities/_ajax_activity_list.html.twig' %}
+		</div>
+
+		<div class="pagination-row flex justify-center">
+			{{ knp_pagination_render(pagination) }}
+		</div>
+		<div class="btn-group btn-group-sm" role="group">
+			<a class="btn btn-outline-primary" href="{{ path('app_companies') }}">
+				<i class="fa-solid fa-address-book"></i>
+				Sociétés</a>
+			<a class="btn btn-outline-primary" href="{{ path('app_activities')}}">
+				<i class="fa-solid fa-table-list me-1"></i>Activités</a>
+		</div>
+	</div>
+{% endblock %}

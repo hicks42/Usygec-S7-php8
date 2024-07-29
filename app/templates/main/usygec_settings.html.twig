@@ -1,0 +1,85 @@
+{% extends 'logged_in_base.html.twig' %}
+
+{% block title %}Compte de
+	{{user.email}}
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+    <script type="module">
+      import '{{ asset('js/modal.js') }}';
+    </script>
+{% endblock javascripts %}
+
+{% block content %}
+	<div class="flex justify-center mt-10">
+		<div class="lg:w-8/12 mt-4">
+			<h1>Compte de
+				{{user.email}}</h1>
+			<div class="grid gap-0 grid-cols-4 mt-10 border-t pt-8">
+				<div class="col-span-3 my-0">
+					<h4>Mot de passe :</h4>
+				</div>
+				<div class="">
+					<a href="{{ path('app_reset_password', {'id': user.id}) }}" class="btn btn-secondary btn-sm float-end  text-nowrap">
+						<i class="fa-solid fa-pen-to-square"></i>
+						Changer</a>
+				</div>
+				<div class="col-span-4">
+					L'e-mail <strong>{{user.email}}</strong> est utilisé comme indentifiant mais aussi pour certaines fonctionnalités.
+					<br>
+					<small>(Contactez l'administrateur pour modification)</small>
+				</div>
+			</div>
+			<div class="grid grid-cols-4 mt-10 border-t pt-8">
+				<div class="col-span-3 my-0">
+					<h4>
+						Parametrage du compte EZreview :
+					</h4>
+				</div>
+				<div class="">
+					<a href="{{ path('ezreview_settings', {'id': user.id}) }}" class="btn btn-secondary btn-sm float-end  text-nowrap">
+						<i class="fa-solid fa-pen-to-square"></i>
+						Paramètres</a>
+				</div>
+				<div class="col-span-4">
+					Ajout / suppression d'établissements monitorés par EZreview.
+				</div>
+			</div>
+			<div class="grid grid-cols-4 mt-10 border-t pt-8">
+				<div class="col-span-3 my-0">
+					<h4>Ajout de société pour le BAM de :
+					</h4>
+				</div>
+				<div class="">
+					<a href="#" type="button" data-modal-type="company-csv" class="modal-btn btn btn-secondary btn-sm float-end  text-nowrap">
+						<i class="fa-solid fa-file-csv fs-5 me-1"></i>
+						Importer</a>
+				</div>
+				<div class="col-span-4">
+					Importation au format csv de votre fichiers de sociétés
+					<br>
+					<small>(Respectez l'ordre et l'intitulé des entêtes de colonnes:<br>
+						Civ, Prénom du contact, Nom du contact, Société, Categorie, Téléphone, Mobile, Mail, Adresse 1, Adresse 2, CP, Ville)</small>
+					<p class="mb-4">Les doublons (nom de société et code postal) seront ignorés</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal-container flex justify-around">
+		<div class="modal-popup">
+			<button class="close-popup">x</button>
+			<div class="flex justify-center my-8">
+				<div class="">
+					{{ form_start(formcsv, {"method": "POST"}) }}
+					<h6 id="form-title" class="my-4">Choisir un fichier CSV contenant les sociétés.</h6>
+					{{ form_row(formcsv.csvFile) }}
+					<button type="submit" class="submit-modal">Traiter</button>
+					{# {{ form_widget(formcsv._token) }} #}
+					{{ form_end(formcsv) }}
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

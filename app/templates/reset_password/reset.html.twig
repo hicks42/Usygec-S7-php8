@@ -1,0 +1,17 @@
+{% extends 'logged_in_base.html.twig' %}
+
+{% block title %}Reset your password
+{% endblock %}
+
+{% block body %}
+	<div class="row de-flex justify-center mt-5">
+		<div class="er-row basis-full col-sm-8 col-lg-5 rounded-lg mt-5 p-5">
+			<h1>Reset your password</h1>
+
+			{{ form_start(resetForm) }}
+			{{ form_row(resetForm.plainPassword) }}
+			<button class="btn btn-primary">Reset password</button>
+			{{ form_end(resetForm) }}
+		</div>
+	</div>
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends 'bam_base.html.twig' %}
+
+{% block title %}Modification de Activité
+{% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="{{ asset('flatpickr/flatpickr.min.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment-with-locales.min.js" integrity="sha512-LGXaggshOkD/at6PFNcp2V2unf9LzFq6LE+sChH7ceMTDP0g2kn6Vxwgg7wkPP7AAtX+lmPqPdxB47A0Nz0cMQ==" crossorigin="anonymous"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.31/moment-timezone-with-data.js"></script>
+
+  <script src="{{ asset('flatpickr/flatpickr.min.js') }}"></script>
+  <script src="{{ asset('flatpickr/l10n/fr.js') }}"></script>
+  <script src="{{ asset('js/flatpickr-config.js') }}"></script>
+  <script src="{{ asset('js/activity.js') }}"></script>
+{% endblock javascripts %}
+
+{% block content %}
+	{% import "bam/activities/macros/forms.html.twig" as formMacros %}
+		<div class="card p-1 m-1">
+			<div class=" flex justify-between basis-full">
+				<h1>Modifier :
+					{{ activity.name }}
+				</h1>
+				<div>
+					{{ include('bam/activities/_delete_form.html.twig') }}
+				</div>
+			</div>
+			{{ form_start(form, {"method": "POST"}) }}
+			{{ formMacros.existForm(form) }}
+      <div class="flex justify-center my-10 w-full">
+        <div class="btn-group" role="group">
+          {% if company is not defined %}
+            {% set company = activity.company %}
+          {% endif %}
+          <a class="btn btn-sm btn-outline rounded-none rounded-l-md" href="{{ path('app_activities') }}">
+            <i class="fa-solid fa-backward"></i>
+            Retour</a>
+          <button type="submit" class="btn btn-sm btn-warning rounded-none rounded-r-md">
+            <i class="fa-solid fa-file-arrow-down me-1"></i> {{button_label|default('Modifier')}}
+          </button>
+        </div>
+      </div>
+			{{form_rest(form)}}
+      {{form_end(form)}}
+    </div>
+{% endblock %}

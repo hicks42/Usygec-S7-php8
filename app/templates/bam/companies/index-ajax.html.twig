@@ -1,0 +1,127 @@
+{% extends 'bam_base.html.twig' %}
+
+{% block title %}Liste des sociétés
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	{{ encore_entry_script_tags('companies_ajaxsort') }}
+{% endblock javascripts %}
+
+{% block content %}
+	<div class="flex justify-between w-full">
+		<div class="ms-2">
+			{% if  app.request.query.get('name') %}
+				<h1>Sociétés dont le nom contient : "{{ app.request.query.get('name') }}"</h1>
+			{% elseif  app.request.query.get('category') %}
+				<h1>Sociétés du type : "{{ app.request.query.get('category') }}"</h1>
+			{% else %}
+				<h1>Liste des sociétés</h1>
+			{% endif %}
+		</div>
+		<div>
+			<a class="btn btn-success" href="{{ path('app_companies_new') }}" title="Création d'une société">
+				<i class="fa-solid fa-user-plus"></i>
+			</a>
+		</div>
+	</div>
+
+	<div class="row search-row">
+		<div class="col-6">
+			<form action="{{ path('app_companies') }}" medivod="GET">
+				<div class="input-group mb-3">
+					<input type="text" class="form-control" name="name" placeholder="Recherche par nom">
+					<select id="category" name="category" class="form-select">
+						<option value="">ou categories</option>
+						{% for category in categories %}
+							<option value="{{ category }}">{{ category }}</option>
+						{% endfor %}
+					</select>
+					<button type="submit" class="btn btn-outline-dark">
+						<i class="fa-solid fa-magnifying-glass"></i>
+					</button>
+				</div>
+			</form>
+		</div>
+		<div class="col-6"></div>
+	</div>
+
+	<div class="row head-row flex justify-between">
+		<div class="col-1">Categorie</div>
+		<div class="col-2">
+			<a href="{{ path('app_companies', { 'sort_by': 'name', 'sort_order': (sort_by == 'name' and sort_order == 'desc') ? 'asc' : 'desc' }) }}">
+				Société
+				{% if sort_by == 'name' %}
+					{% if sort_order == 'desc' %}
+						<i class="fas fa-sort-up"></i>
+					{% else %}
+						<i class="fas fa-sort-down"></i>
+					{% endif %}
+				{% else %}
+					<i class="fas fa-sort"></i>
+				{% endif %}
+			</a>
+		</div>
+		<div class="col-2">Téléphone</div>
+		<div class="col-2">Contact</div>
+		<div class="col-2">Portable</div>
+		<div class="col-2">Email</div>
+		{# <div class="text-center col-1">
+			<a href="#" class="sort-control" data-sort-by="activitiesCount" data-sort-order="asc">
+				<a href="{{ path('app_companies', { 'sort_by': 'activitiesCount', 'sort_order': (sort_by == 'activitiesCount' and sort_order == 'desc') ? 'asc' : 'desc' }) }}" class="sort-control">
+				Activités
+				<span class="sort-icon">
+					<i class="fas fa-sort"></i>
+				</span>
+			</a>
+		</div> #}
+	</div>
+
+	<div id="sorted-companies"></div>
+
+	{# {% for item in pagination %}
+
+		{% set company = item.company %}
+		{% set activitiesCount = item.activitiesCount %}
+		<div class="row flex justify-between">
+			<div class="col-1">
+				{{ item.company.category }}
+			</div>
+			<div class="col-2">
+				<a href="{{ path('app_companies_show', {'id': item.company.id}) }}">
+					<i class="fa-solid fa-right-to-bracket me-2"></i>
+					{{ item.company.name }}</a>
+			</div>
+			<div class="col-2">{{ item.company.phone }}</div>
+			<div class="col-2">{{ item.company.contactFirstName }}
+				{{ item.company.contactLastName }}</div>
+			<div class="col-2">{{ item.company.mobile }}</div>
+			<div class="col-2">
+				<a href="mailto:{{ item.company.email }}">{{ item.company.email }}</a>
+			</div>
+			<div class="text-center col-1">
+				{% if item.activitiesCount > 0 %}
+					<span class="badge bg-success p-2">{{ item.activitiesCount }}</span>
+				{% endif %}
+			</div>
+		</div>
+	{% else %}
+		<div class="row flex justify-between">
+			<div class="basis-full">Pas encore de compte</div>
+		</div>
+	{% endfor %} #}
+
+	<div class="flex justify-center">{{ knp_pagination_render(pagination) }}</div>
+
+	<div class="flex justify-between my-5 w-full">
+		<div class="align-top">
+			<div class="btn-group btn-group-sm" role="group">
+				<a class="btn btn-secondary" href="{{ path('csv_export') }}">
+					<i class="fa-solid fa-file-arrow-down me-1"></i>
+					Télécharger en CSV</a>
+				<a class="btn btn-outline-primary" href="{{ path('app_activities')}}">
+					<i class="fa-solid fa-table-list me-1"></i>Activités</a>
+			</div>
+		</div>
+	</div>
+{% endblock %}

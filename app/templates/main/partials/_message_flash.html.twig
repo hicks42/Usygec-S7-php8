@@ -1,0 +1,18 @@
+{% for type, messages in app.flashes(['success', 'error', 'info']) %}
+	{% for message in messages %}
+		<div class="flash-container active" role="document">
+			<div class="alert alert-{{ type }} flex flex-col text-center p-5 rounded-pill" data="data" role="alert">
+				<div class="text-center">
+					{% if type == 'success' %}
+						<img class="logo w-50" src="{{ asset('images/icones/ok-icon.png') }}" alt="Success"/>
+					{% elseif type == 'info' %}
+						<img class="logo w-50" src="{{ asset('images/icones/info-icon.png') }}" alt="Info"/>
+					{% elseif type == 'error' %}
+						<img class="logo w-50" src="{{ asset('images/icones/error-icon.png') }}" alt="Error"/>
+					{% endif %}
+				</div>
+				<h5 class="text-center">{{ message }}</h5>
+			</div>
+		</div>
+	{% endfor %}
+{% endfor %}

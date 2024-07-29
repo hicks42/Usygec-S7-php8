@@ -1,0 +1,68 @@
+{{ form_start(form) }}
+<div class="card p-4 form-group mt-5">
+	<div class="flex md:flex-row flex-col mt-2">
+		<div class="basis-1/2">
+{{ form_label(form.name) }}{{ form_widget(form.name) }}
+		</div>
+		<div class="basis-1/2">
+			{{ form_label(form.phone) }}{{ form_widget(form.phone) }}
+		</div>
+	</div>
+	<div class="flex flex-row mt-2">
+		<div class="basis-1/2">
+			{{ form_label(form.category) }}{{ form_widget(form.category) }}
+		</div>
+		<div class="basis-1/2">
+			{{ form_label(form.email) }}{{ form_widget(form.email) }}
+		</div>
+	</div>
+	<div class="flex flex-row mt-2">
+		<div class="basis-1/2">
+			{{ form_label(form.civ) }}{{ form_widget(form.civ) }}
+		</div>
+		<div class="basis-1/2">
+			{{ form_label(form.address1) }}{{ form_widget(form.address1) }}
+		</div>
+	</div>
+	<div class="flex flex-row mt-2">
+		<div class="basis-1/2">
+			{{ form_label(form.contactFirstName) }}{{ form_widget(form.contactFirstName) }}
+		</div>
+		<div class="basis-1/2">
+			{{ form_label(form.address2) }}{{ form_widget(form.address2) }}
+		</div>
+	</div>
+	<div class="flex flex-row mt-2">
+		<div class="basis-1/2">
+			{{ form_label(form.contactLastName) }}{{ form_widget(form.contactLastName) }}
+		</div>
+		<div class="basis-1/2">
+			{{ form_label(form.cp) }}{{ form_widget(form.cp) }}
+		</div>
+	</div>
+	<div class="flex flex-row mt-2">
+		<div class="basis-1/2">
+		{{ form_label(form.mobile) }}{{ form_widget(form.mobile) }}
+		</div>
+		<div class="basis-1/2">
+			{{ form_label(form.city) }}{{ form_widget(form.city) }}
+		</div>
+	</div>
+</div>
+	<div class="flex justify-center mt-10 w-full">
+		<div class="btn-group flex justify-around w-full" role="group">
+			<a class="btn btn-sm btn-outline " href="{{ path('app_companies') }}">
+				<i class="fa-solid fa-address-book me-1"></i>
+				Sociétés</a>
+			{% if company.id is not null %}
+				<a class="btn btn-sm btn-secondary" href="{{ path('app_companies_show', {'id': company.id}) }}">
+					<i class="fa-solid fa-backward me-1"></i>Retour</a>
+			{% endif %}
+			<button type="submit" class="btn btn-sm btn-warning">
+				<i class="fa-solid fa-file-arrow-down me-1"></i>
+				Enregistrer
+			</button>
+
+		</div>
+	</div>
+{{ form_end(form) }}

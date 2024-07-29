@@ -1,0 +1,28 @@
+@layer components {
+  [type="checkbox"]:checked {
+    @apply bg-none;
+  }
+  .toggle-switch {
+    @apply me-2 mt-[0.3rem] h-3.5 w-8 rounded-[0.4375rem] appearance-none bg-black/25 before:pointer-events-none hover:cursor-pointer
+     dark:bg-white/25
+     dark:after:bg-slate-300
+     dark:checked:bg-green-600
+     dark:checked:after:bg-green-600
+     checked:bg-green-500;
+
+    @apply before:absolute before:h-3.5 before:w-7 before:rounded-full before:bg-transparent before:content-[''];
+
+    @apply after:absolute after:z-[2] after:-mt-[0.2rem] after:h-5 after:w-5 after:rounded-full after:shadow-md after:transition-[background-color_0.2s,transform_0.2s] after:content-[''] checked:after:absolute checked:after:z-[2] checked:after:-mt-[3px] checked:after:ms-[1.0625rem] checked:after:h-5 checked:after:w-5 checked:after:rounded-full checked:after:border checked:after:shadow-sm checked:after:transition-[background-color_0.2s,transform_0.2s] checked:after:content-['']
+    after:border
+    after:border-gray-700
+    after:bg-yellow-500
+    checked:after:bg-green-500;
+
+    @apply focus:outline-none focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-lg focus:before:shadow-black/60 focus:before:transition-[box-shadow_0.2s,transform_0.2s] focus:after:absolute focus:after:z-[1] focus:after:block focus:after:h-5 focus:after:w-5 focus:after:rounded-full focus:after:content-[''] checked:focus:before:ms-[1.0625rem]
+    checked:focus:before:scale-100
+    checked:focus:before:shadow-lg
+    checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s]
+    checked:focus:border-slate-100
+    checked:focus:bg-green-600;
+  }
+}

@@ -1,0 +1,187 @@
+{% extends 'logged_in-lg_base.html.twig' %}
+
+{% block title %}Liste des sociétés
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+    <script type="module">
+      import '{{ asset('js/modal.js') }}';
+    </script>
+{% endblock javascripts %}
+
+{% block content %}
+
+	<div class="flex justify-between m-1">
+		<div class="mt-2">
+			{% if  app.request.query.get('name') %}
+				<h1>Sociétés dont le nom contient : "{{ app.request.query.get('name') }}"</h1>
+			{% elseif  app.request.query.get('category') %}
+				<h1>Sociétés du type : "{{ app.request.query.get('category') }}"</h1>
+			{% else %}
+				<h1>Liste des sociétés</h1>
+			{% endif %}
+		</div>
+		<div>
+			<a class="btn btn-success" href="{{ path('app_companies_new') }}" title="Création d'une société">
+				<i class="fa-solid fa-user-plus"></i>
+			</a>
+		</div>
+	</div>
+
+	<div class="search-row my-4">
+			<form action="{{ path('app_companies') }}" method="GET">
+		<div class="flex justify-between lg:basis-1/2 basis-full">
+				<div class="input-group md:w-1/2 w-full">
+					<input type="text" class="relative form-control w-full" name="name" placeholder="Rech. par nom">
+					<select id="category" name="category" class="absolute inset-y-0 right-10 border border-gray-300 w-36 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+						<option value="">ou categories</option>
+						{% for category in categories %}
+							<option value="{{ category }}">{{ category }}</option>
+						{% endfor %}
+					</select>
+					<button type="submit" class="absolute inset-y-0 right-2 flex items-center pl-3">
+						<i class="fa-solid fa-magnifying-glass"></i>
+					</button>
+				</div>
+			</form>
+		</div>
+		<div class="basis-6"></div>
+	</div>
+
+
+	<div class="head-row flex justify-between rounded-md">
+		<div class="lg:basis-3/12 basis-5/12 text-gray-200">
+			<a href="{{ path('app_companies', { 'sort_by': 'name', 'sort_order': (sort_by == 'name' and sort_order == 'desc') ? 'asc' : 'desc' }) }}">
+				Société
+				{% if sort_by == 'name' %}
+					{% if sort_order == 'desc' %}
+						<i class="fas fa-sort-up"></i>
+					{% else %}
+						<i class="fas fa-sort-down"></i>
+					{% endif %}
+				{% else %}
+					<i class="fas fa-sort"></i>
+				{% endif %}
+			</a>
+		</div>
+		<div class="hidden xl:block basis-2/12 text-gray-200">Téléphone</div>
+		<div class="lg:basis-2/12 basis-4/12 text-gray-200">Contact</div>
+		<div class="hidden lg:block md:hidden basis-2/12 text-gray-200">Portable</div>
+		<div class="xl:basis-2/12 basis-1/12 md:text-start text-gray-200 text-center">
+			<span class="xl:hidden">
+				<i class="fa-solid fa-at xl:hidden"></i>
+			</span>
+			<span class="hidden xl:block">Email</span>
+		</div>
+		<div class="basis-1/12 text-center text-xl text-yellow-400">
+			<a href="{{ path('app_companies', { 'sort_by': 'activitiesCount', 'sort_order': (sort_by == 'activitiesCount' and sort_order == 'desc') ? 'asc' : 'desc' }) }}" class="sort-control text-nowrap">
+					<i class="fa-solid fa-file-contract"></i>
+				<span class="sort-icon">
+					<i class="fas fa-sort"></i>
+				</span>
+			</a>
+		</div>
+	</div>
+
+
+	{% for item in pagination %}
+		{% set company = item.company %}
+		{% set activitiesCount = item.activitiesCount %}
+		<div class="flex flex-row justify-between items-center bg-slate-200 hover:bg-slate-300 border-gray-300 border-b py-3">
+			<div class="lg:basis-3/12 basis-5/12">
+				<small>{{ item.company.category }}</small>
+				<br>
+				<a href="{{ path('app_companies_show', {'id': item.company.id}) }}">
+					<i class="fa-solid fa-right-to-bracket me-2"></i>
+					{{ item.company.name }}</a>
+			</div>
+
+			{# telephone #}
+			<div class="hidden xl:block basis-2/12">{{ item.company.phone }}</div>
+
+			{# contact #}
+			<div class="lg:basis-2/12 basis-5/12 lg:block hidden">
+				{{ item.company.contactFirstName }}
+				{{ item.company.contactLastName }}
+			</div>
+
+			<div class="lg:basis-3/12 basis-4/12 lg:hidden">
+				{% if item.company.mobile %}
+					<a href="tel:{{ item.company.mobile }}">
+						<i class="fa-solid fa-phone me-1"></i>
+						{{ item.company.contactFirstName }}
+						{{ item.company.contactLastName }}
+					</a>
+				{% else %}
+					<div class="lg:basis-3/12 basis-5/12 lg:hidden">
+						{{ item.company.contactFirstName }}
+						{{ item.company.contactLastName }}
+					</div>
+				{% endif %}
+			</div>
+
+			{# mobile #}
+			<div class="hidden lg:block md:hidden basis-2/12">{{ item.company.mobile }}</div>
+
+			{# email #}
+			<div class="xl:basis-2/12 basis-1/12 text-start">
+				{% if item.company.email %}
+					<a href="mailto:{{ item.company.email }}" class="text-start">
+						<span class="xl:hidden">
+							<i class="fa-solid fa-envelope xl:hidden"></i>
+						</span>
+						<span class="hidden xl:block">{{ item.company.email }}</span>
+					</a>
+				{% endif %}
+			</div>
+
+			{# activité #}
+			<div class="basis-1/12 text-center">
+				{% if item.activitiesCount > 0 %}
+					<span class="badge bg-success p-2">{{ item.activitiesCount }}</span>
+				{% endif %}
+			</div>
+
+		</div>
+	{% else %}
+		<div class="flex flex-row justify-between mt-3">
+			<div class="basis-full mt-2">Pas encore de compte</div>
+		</div>
+	{% endfor %}
+	<div class="pagination-row flex flex-row justify-center mt-4">
+		{{ knp_pagination_render(pagination) }}
+	</div>
+
+	<div class="flex flex-row justify-center mt-10 my-3" role="group">
+		<div class="flex justify-center lg:basis-1/2 basis-full">
+			<div class="btn-group btn-group-sm" role="group">
+				<a class="btn btn-sm btn-outline rounded-none rounded-l-md" href="{{ path('app_companies') }}"><i class="fa-solid fa-address-book"></i>
+          Sociétés</a>
+				<a class="btn btn-sm btn-secondary border-2 rounded-none" href="{{ path('csv_export') }}"><i class="fa-solid fa-file-arrow-down me-1"></i>
+					Exporter en CSV</a>
+          <a href="#" type="button" data-modal-type="company-csv" class="modal-btn btn btn-sm btn-secondary border-2 rounded-none">
+						<i class="fa-solid fa-file-csv fs-5 me-1"></i>
+						Importer un csv</a>
+				<a class="btn btn-sm btn-outline rounded-none rounded-r-md" href="{{ path('app_activities')}}"><i class="fa-solid fa-table-list me-1"></i>
+          Activités</a>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal-container flex justify-around">
+		<div class="modal-popup">
+			<button class="close-popup">x</button>
+			<div class="flex justify-center my-8">
+				<div class="">
+					{{ form_start(formcsv, {"method": "POST"}) }}
+					<h6 id="form-title" class="my-4">Choisir un fichier CSV contenant les sociétés.</h6>
+					{{ form_row(formcsv.csvFile) }}
+					<button type="submit" class="submit-modal">Traiter</button>
+					{# {{ form_widget(formcsv._token) }} #}
+					{{ form_end(formcsv) }}
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

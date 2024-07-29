@@ -1,0 +1,23 @@
+{% extends 'raw.html.twig' %}
+
+{% block title %}Survey.
+{% endblock %}
+
+{% block content %}
+	<div class="flex flex-col justify-center w-full">
+  <div class="relative w-full h-[200px] bg-cover bg-center bg-no-repeat" style="background-image: url('{{ (structure.imageName ? vich_uploader_asset(structure) | imagine_filter('company_image_banner') : asset('/images/placeholder.png')) }}');" alt="{{ structure.name }}">
+  <div class="absolute bottom-3 left-28 p-6 bg-slate-900/70 rounded-lg "><h1 class="text-yellow-400">Votre avis nous interesse.</h1></div>
+  </div>
+			{# <img src="{{ (structure.imageName ? vich_uploader_asset(structure) | imagine_filter('company_image_banner') : asset('/images/placeholder.png')) }}" alt="{{ structure.name }}"> #}
+		<div class="flex justify-center px-2">
+			<div class="flex flex-col w-1/2">
+
+					<div class="mt-24 text-gray-300 text-3xl">Qu'avez vous pensé de votre visite à {{structure}}</div>
+					<div class="flex justify-center mt-16">
+						<img src="{{ myqrcode }}"/>
+					</div>
+          <div class="mt-4 text-gray-300">Flashez ce QR-Code pour acceder au questionnaire de satisfaction.</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

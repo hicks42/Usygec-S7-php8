@@ -1,0 +1,25 @@
+{% extends 'bam_base.html.twig' %}
+
+{% block title %}Création d'un utilisateur
+{% endblock %}
+
+{% block content %}
+	<div class="row g-0 flex justify-center">
+		<div class="lg:basis-1/2 md:basis-8/12 basis-full m-1">
+			<div class="my-2">
+				<h3>Créer un Utilisateur :</h3>
+			</div>
+			{{ form_start(registrationForm) }}
+
+			<div class="col-md-12 form-control">
+				{{ form_row(registrationForm.email) }}
+				{{ form_row(registrationForm.plainPassword, { label: 'Mot de passe' }) }}
+				{# {{ form_row(registrationForm.agreeTerms) }} #}
+				<div class=" flex justify-center">
+					<button type="submit" class="btn btn-primary btn-sm my-5 w-25">Créer</button>
+				</div>
+			</div>
+			{{ form_end(registrationForm) }}
+		</div>
+	</div>
+{% endblock %}

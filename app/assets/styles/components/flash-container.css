@@ -1,0 +1,9 @@
+@layer components {
+  .flash-container {
+    @apply fixed pointer-events-none opacity-0 top-0 left-0 bg-slate-950/75 w-full h-screen flex justify-center items-center transition-all ease-out  duration-150;
+  }
+
+  .flash-container.active {
+    @apply opacity-100 pointer-events-auto z-50;
+  }
+}

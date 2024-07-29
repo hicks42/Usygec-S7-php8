@@ -1,0 +1,97 @@
+{% extends 'bam_base.html.twig' %}
+
+{% block title %}Resultat de la recherhce.
+{% endblock %}
+
+{% block content %}
+	<div class="flex justify-between">
+		<div class="ms-2">
+			{% if  app.request.query.get('name') %}
+				<h1>Recherche sur les sociétés : "{{ app.request.query.get('name') }}"</h1>
+			{% else %}
+				<h1>Recherche sur les catégories : "{{ app.request.query.get('category') }}"</h1>
+			{% endif %}
+		</div>
+		<div>
+			<a class="btn btn-success" href="{{ path('app_companies_new') }}" title="Création d'une société">
+				<i class="fa-solid fa-user-plus"></i>
+			</a>
+		</div>
+	</div>
+
+	<table class="table mt-3">
+		<thead>
+			<tr>
+				<td colspan="4">
+					<form action="{{ path('app_companies_result') }}" method="GET">
+						<div class="input-group mb-3">
+							<input type="text" class="form-control" name="name" placeholder="Recherche par nom">
+							<select id="category" name="category" class="form-select">
+								<option value="">ou categories</option>
+								{% for category in categories %}
+									<option value="{{ category }}">{{ category }}</option>
+								{% endfor %}
+							</select>
+							<button type="submit" class="btn btn-outline-dark">
+								<i class="fa-solid fa-magnifying-glass"></i>
+							</button>
+						</div>
+					</form>
+				</td>
+				<td colspan="3"></td>
+			</tr>
+			<tr>
+				<th>Categorie</th>
+				<th>Société</th>
+				<th>Téléphone</th>
+				<th>Contact</th>
+				<th>Portable</th>
+				<th>Email</th>
+				<th class="text-center">Activités</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for company in pagination %}
+				<tr>
+					<td>
+						{{ company.category }}
+					</td>
+					<td>
+						<a href="{{ path('app_companies_show', {'id': company.id}) }}">
+							<i class="fa-solid fa-right-to-bracket me-2"></i>
+							{{ company.name }}</a>
+					</td>
+					<td>{{ company.phone }}</td>
+					<td>{{ company.contactFirstName }}
+						{{ company.contactLastName }}</td>
+					<td>{{ company.mobile }}</td>
+					<td>
+						<a href="mailto:{{ company.email }}">{{ company.email }}</a>
+					</td>
+					<td class="text-center">
+						<span class="badge bg-success p-2">{{ company.activities|length }}</span>
+
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="9">Pas resultat à votre recherche</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	<div class="flex justify-center">
+		{{ knp_pagination_render(pagination) }}
+	</div>
+	<div class="row g-0 btn-group flex justify-center btn-group-sm my-3 basis-full" role="group">
+		<div class="flex justify-center lg:basis-1/2 basis-full">
+			<div class="btn-group btn-group-sm" role="group">
+				<a class="btn btn-outline-primary" href="{{ path('app_companies')}}">
+					<i class="fa-solid fa-table-list me-1"></i>Sociétés</a>
+				<a class="btn btn-outline-primary" href="{{ path('app_activities') }}">
+					<i class="fa-solid fa-address-book"></i>
+					Activités</a>
+			</div>
+		</div>
+	</div>
+{% endblock %}

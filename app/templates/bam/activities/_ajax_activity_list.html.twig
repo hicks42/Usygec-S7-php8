@@ -1,0 +1,35 @@
+{% for item in pagination %}
+	{% set activity = item.activity %}
+	{% set company = item.activity.company %}
+	{% set daysToReminder = item.daysToReminder %}
+	<div class="list-row flex justify-between align-items-center">
+		<div class="col-3">
+			<a href="{{ path('app_activities_edit', {'id': activity.id}) }}">{{ activity.name }}</a>
+		</div>
+		<div class="col-2">
+			<a href="{{ path('app_companies_show', {'id': activity.company.id}) }}">
+				{{ activity.company.name }}</a>
+		</div>
+		<div class="col-1 flex flex-nowrap">
+			{% if daysToReminder is not empty %}
+				<div class="reminder-case flex justify-between border rounded-right">
+					<div class="flex align-items-center mx-1">
+						{{ activity.reminder ? activity.reminder|format_datetime(locale='fr', pattern='dd/MMM/yy') : '' }}
+					</div>
+					<div class="alarm bg-danger ms-1">
+						{{ daysToReminder }}
+						j
+					</div>
+				</div>
+			{% elseif activity.reminder is not null %}
+				{{ activity.reminder|format_datetime(locale='fr', pattern='dd/MMM/yy') }}
+			{% endif %}
+		</div>
+		<div class="text-center col-1 flex flex-nowrap">{{ activity.dueDate ? activity.dueDate|format_datetime(locale='fr', pattern='dd/MMM/yy') : '' }}</div>
+	</div>
+{% else %}
+	<div class="row">
+		<div class="basis-full">Pas d'activités
+		</div>
+	</div>
+{% endfor %}

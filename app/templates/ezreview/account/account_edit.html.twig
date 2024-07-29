@@ -1,0 +1,25 @@
+{% extends 'logged_in_base.html.twig' %}
+
+{% block title %}Modification email
+{% endblock %}
+
+{% block content %}
+		<div class="lg:basis-1/2 md:basis-8/12 basis-full m-1">
+				{{ form_start(form, {"method": "POST"}) }}
+			<div class="w-full my-2">
+				<h3>Modifier l'email du compte</h3>
+				{{ form_row(form.email) }}
+
+				<div class="flex flex-row justify-center w-full h-8">
+
+					<span class="btn btn-outline btn-sm mx-2">
+						<a href="{{ path('accounts_index') }}"><i class="fa-solid fa-angles-left"></i>Retour</a>
+					</span>
+
+					<button type="submit" class="btn btn-primary btn-sm text-nowrap mx-2 my-0">Enregistrer les modifications</button>
+
+				</div>
+			</div>
+					{{ form_end(form) }}
+		</div>
+{% endblock %}

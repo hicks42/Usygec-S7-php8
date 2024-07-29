@@ -1,0 +1,125 @@
+{% extends 'base-lg.html.twig' %}
+{% block head %}
+	{{ parent() }}
+{% endblock %}
+{% block title %}Usygec - contact.
+{% endblock %}
+
+{% block content %}
+	<div class="main-card">
+		<div class="w-4/6">
+			<h1 class="page-title">Contactez moi</h1>
+			<p>Profitez de mon réseau de professionnels en communication numérique sur la région stéphanoise
+				<br>
+				Référencement, campagne de communication multi support, podcast etc...
+			</p>
+		</div>
+	</div>
+
+	<!-- Start Contact Area -->
+	<section id="contact-us" class="flex md:flex-row flex-col shadow-sm">
+
+		<div class="main-card bg-indigo-700 md:rounded-e-none md:rounded-b rounded-b-none md:my-2 my-0 p-2">
+			<div class="flex flex-row justify-center">
+				<div class="flex flex-col w-full text-white">
+					<h5>Contact</h5>
+					<p class="text-white text-base">Patrice Gerin developpeur Full stack .</p>
+
+					<div class="flex flex-row lg:ms-4 ms-2 my-2">
+						<div class="flex-none text-white text-base">
+							<i class="fa-solid fa-mobile-screen-button me-4"></i>+33 06 64 25 67 04
+						</div>
+					</div>
+					<div class="flex flex-row lg:ms-4 ms-2 my-2">
+						<div class="text-white text-base">
+							<a href="mailto:info@yourwebsite.com" class="">
+								<i class="fa-solid fa-envelope me-4"></i>p.gerin@usygec.fr</a>
+						</div>
+					</div>
+					<div class="flex flex-row lg:ms-4 ms-2 my-2">
+						<div class="text-white text-base">
+							<i class="fa-solid fa-location-dot me-4"></i>
+						</div>
+						<div class="flex flex-col row-span-2">
+							<div class="text-white text-base">22 rue José Fappa</div>
+							<div class="text-white text-base">42000 St Etienne France.</div>
+						</div>
+					</div>
+					<div class="text-white my-2">
+						<h5>Suivez moi</h5>
+						<a href="https://www.linkedin.com/in/patrice-gerin/">
+							<i class="fa-brands fa-linkedin"></i>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="main-card w-full md:rounded-s-none md:rounded-t rounded-t-none md:my-2 my-0 p-2">
+			<div class="form-main form-group p-1">
+				{{ form_start(form) }}
+				<div class="grid grid-col-2 gap-1">
+
+					<div class="my-2">
+						<div class="">
+							{{ form_row(form.name) }}
+						</div>
+					</div>
+
+					<div class="my-2">
+						<div class="">
+							{{ form_row(form.email) }}
+						</div>
+					</div>
+
+					<div class="my-2">
+						<div class="">
+							{{ form_row(form.phone) }}
+						</div>
+					</div>
+					<div class=" my-2">
+						<div class="">
+							{{ form_row(form.subject) }}
+						</div>
+					</div>
+
+					<div class="col-span-2 my-2">
+						<div class=" message">
+							{{ form_row(form.message) }}
+						</div>
+					</div>
+
+				</div>
+				<div class="flex justify-center">
+					<div class="button">
+						{{ form_row(form.envoyer) }}
+						{{ form_rest(form) }}
+						{{ form_errors(form) }}
+					</div>
+				</div>
+				{{ form_end(form) }}
+			</div>
+		</div>
+
+	</section>
+<!-- Start Google-map Area
+<div class="map-section">
+<div class="container">
+<div class="row">
+<div class="basis-full">
+<div class="map-container">
+<div class="mapouter">
+<div class="gmap_canvas">
+<iframe width="100%" height="400" id="gmap_canvas" src="https://maps.google.com/maps?q=france%20lsaint-etienne&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+<a href="https://embedgooglemap.net/129/"></a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>-->
+<!-- End Google-map Area -->
+<!-- <a href="#" class="scroll-top btn-hover"> <em class="fas fa-angle-up"></em>
+</a> -->
+{% endblock %}

@@ -1,0 +1,97 @@
+{% extends 'logged_in_base.html.twig' %}
+
+{% block title %}Actions disponibles pour
+	{{ user.company}}
+{% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+{% endblock stylesheets %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<script type="module">
+		import '{{ asset('js/modal.js') }}';
+	</script>
+{% endblock javascripts %}
+{% block content %}
+	<div class="flex justify-center mt-10">
+		<div class="w-full mt-4 p-2">
+			<div class="flex justify-between my-3">
+
+				<div class="flex justify-start flex-col w-10/12">
+					<h1>EZ Review de :
+						<span class="font-semibold text-nowrap text-slate-500 text-3xl ms-2">
+							{{ user.company}}
+						</span>
+					</h1>
+				</div>
+
+				<div class="w-2/12 align-center">
+					<a href="{{ path('ezreview_settings') }}" class="btn btn-secondary btn-sm float-end text-nowrap">
+						<i class="fa-solid fa-pen-to-square"></i>
+						Configurer</a>
+				</div>
+			</div>
+
+			<div class="flex justify-start border-b">
+				<h2>E-mail :
+					<span class="text-spartan text-2xl text-slate-500  ms-1">{{user.email}}</span>
+				</h2>
+			</div>
+		</div>
+	</div>
+	{% if 'ROLE_ADMIN' not in user.roles %}
+		<div class="flex flex-row rounded overflow-hidden justify-center p-2">
+			<div class="card w-full my-4 p-3">
+				<h3>Etablissements:</h3>
+				<ul class="structures">
+					{% for structure in user.structures %}
+						<li>
+							<hr>
+							<div class="flex flex-col xl:flex-row justify-around items-center m-1">
+								<div class="flex flex-col items-center xl:w-5/12">
+									<i class="fa-solid fa-building lead my-2"></i>
+									{{ structure.name }}
+								</div>
+								<div class="flex text-nowrap justify-around w-full xl:w-7/12 my-3">
+									<a href="{{ path('enquete', {'id': structure.id}) }}" class="btn btn-secondary btn-sm mx-1">
+										<i class="fa-regular fa-envelope lead "></i><br>
+										Envoyer mail</a>
+
+									<a href="#" type="button" data-modal-type="email-csv" data-structureid="{{structure.id}}" class="modal-btn btn btn-secondary btn-sm mx-1">
+										<i class="fa-regular fa-file-lines lead"></i><br>
+										Envois groupé
+									</a>
+
+									<a href="{{ path('qr_gen', {id: structure.id}) }}" type="button" data-structureid="{{structure.id}}" class="qrcode-btn btn btn-secondary btn-sm mx-1">
+										<i class="fa-solid fa-qrcode lead"></i><br>
+										Créer un code</a>
+
+								</div>
+							</div>
+						</li>
+					{% endfor %}
+				</ul>
+			</div>
+		</div>
+	{% endif %}
+</div>
+
+<div class="modal-container flex justify-around">
+	<div class="modal-popup">
+		<button class="close-popup">x</button>
+		<div class="flex justify-center">
+			<div class="basis-10/12">
+				{{ form_start(form, {"method": "POST"}) }}
+				<h6 id="form-title" class="my-4">Choisir un fichier CSV contenant des mails.</h6>
+				<div id="form-fields">
+					{{ form_row(form.csvFile) }}
+				</div>
+					<button type="submit" class="submit-modal w-full">Traiter</button>
+				{{ form_widget(form._token) }}
+				{{ form_end(form, {'render_rest': false}) }}
+			</div>
+		</div>
+	</div>
+</div>{% endblock %}

@@ -1,0 +1,18 @@
+{# form for existing activities #}
+{% macro existForm(form) %}
+	<div class="basis-full p-1">
+		{{ form_widget(form.name)}}
+		{{ form_widget(form.description)}}
+		<div id="{{ form.vars.name }}" class="flex flex-col xl:flex-row justify-between mt-1">
+			<div class="flex flex-col md:flex-row md:basis-4/12 basis-full justify-between mb-1">
+				{{ form_label(form.reminder) }}{{ form_widget(form.reminder, { 'id': 'reminder-' ~ form.vars.id }) }}
+			</div>
+			<div class="flex flex-col md:flex-row md:basis-4/12 basis-full justify-between mb-1">
+				{{ form_label(form.dueDate) }}{{ form_widget(form.dueDate, { 'id': 'dueDate-' ~ form.vars.id }) }}
+			</div>
+			<div class="md:basis-3/12 basis-full flex justify-start m-1">
+				{{ form_row(form.isActive)}}
+			</div>
+		</div>
+	</div>
+{% endmacro existForm %}

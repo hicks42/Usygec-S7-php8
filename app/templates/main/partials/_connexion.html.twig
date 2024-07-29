@@ -1,0 +1,56 @@
+<div class="flex justify-end w-full">
+{% if is_granted('IS_IMPERSONATOR') %}
+
+	<div class="bg-emerald-500 hover:bg-emerald-400 ring-1 ring-offset-1 ring-emerald-600 border text-gray-100 rounded-md pt-3">
+    <a href="{{ impersonation_exit_path(path('lobby') ) }}" class="p-2 font-ubuntu inline-block align-base"><i class="fas fa-sign-out-alt"></i> Admin</a>
+	</div>
+{% endif %}
+
+	<div class="my-0">
+		{% if is_granted('ROLE_ADMIN') %}
+			<ul class="list-none mx-2">
+				<li class="text-gray-500 p-1">
+					<a href="{{ path('app_register') }}" class="font-ubuntu text-base mt-1 p-2">
+						<i class="fa-solid fa-user-plus me-1"></i>Utilisateur</a>
+				</li>
+				<li class="text-gray-500 p-1">
+					<a href="{{ path('accounts_index') }}" class="font-ubuntu text-base mt-1">
+						<i class="fa-solid fa-eye me-1"></i>
+						Utilisateurs</a>
+				</li>
+			</ul>
+		{% endif %}
+	</div>
+
+	<div class="my-0">
+		<ul class="list-none mx-2">
+			{% if app.user %}
+				<li class="text-gray-100 bg-gray-600 text-center rounded-md p-1">
+					<a href=" {{ path('usygec_settings')}}" class="font-spartan text-gray-100 bg-gray-600 text-center rounded-md p-1">
+            <i class="fas fa-user-circle me-2"></i>
+						{{ app.user.nickName }}</a>
+				</li>
+				<li class="text-gray-500">
+					<div class="d-flax justify-between" >
+						<a href=" {{ path('lobby')}}" class="font-ubuntu text-base mt-1">
+							<i class="fa-solid fa-door-open me-1"></i>
+							Lobby</a>
+						<a href="#" onclick="event.preventDefault(); document.getElementById('js-logout-form').submit();" class="font-ubuntu text-base mt-1">
+							<i class="fas fa-sign-out-alt ms-2"></i>
+							Déconnexion</a>
+					</div>
+				</li>
+				<form id="js-logout-form" action="{{ path('app_logout') }}" method="POST" style="display: none;">
+					<input type="hidden" name="_csrf_token" value="{{ csrf_token('logout') }}">
+				</form>
+			{% else %}
+				<li>
+					<a href="{{ path('app_login') }}" class="font-ubuntu text-base mt-1">
+						<i class="fas fa-sign-in-alt me-2"></i>
+						Connexion</a>
+				</li>
+			{% endif %}
+		</ul>
+	</div>
+
+</div>

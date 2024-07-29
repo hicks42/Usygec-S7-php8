@@ -1,0 +1,145 @@
+@layer base {
+  @font-face {
+    font-family: "Spartan";
+    src: url(/fonts/Spartan.ttf) format("truetype");
+    font-weight: normal;
+    font-style: 400;
+  }
+
+  @font-face {
+    font-family: "ZillaSlab";
+    src: url(/fonts/ZillaSlab-Regular.ttf) format("truetype");
+    font-weight: normal;
+    font-style: 400;
+    font-size: 5rem;
+  }
+
+  @font-face {
+    font-family: "ZillaSlab";
+    src: url(/fonts/ZillaSlab-Bold.ttf) format("truetype");
+    font-weight: bold;
+    font-style: 400;
+  }
+
+  @font-face {
+    font-family: "Ubuntu";
+    src: url(/fonts/UbuntuMono-Regular.ttf) format("truetype");
+    font-weight: normal;
+    font-style: 400;
+    font-size: 5rem;
+  }
+
+  @font-face {
+    font-family: "Ubuntu";
+    src: url(/fonts/UbuntuMono-Bold.ttf) format("truetype");
+    font-weight: bold;
+    font-style: 400;
+  }
+
+  @font-face {
+    font-family: "Poppins";
+    src: url(/fonts/Poppins-Regular.ttf) format("truetype");
+    font-weight: normal;
+    font-style: 400;
+    font-size: 3rem;
+  }
+
+  @font-face {
+    font-family: "Poppins";
+    src: url(/fonts/Poppins-Bold.ttf) format("truetype");
+    font-weight: bold;
+    font-style: 400;
+  }
+
+  .font-spartan {
+    font-family: "Spartan", sans-serif;
+  }
+
+  .font-zilla {
+    font-family: "ZillaSlab", serif;
+  }
+
+  .font-ubuntu {
+    font-family: "Ubuntu", sans-serif;
+  }
+
+  .font-poppins {
+    font-family: "Poppins", sans-serif;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-spartan text-3xl text-gray-900;
+  }
+
+  h1 {
+    @apply text-4xl font-medium;
+  }
+
+  h2 {
+    @apply text-2xl;
+  }
+
+  h4 {
+    @apply text-base;
+  }
+
+  h5 {
+    @apply text-2xl text-white font-spartan mt-4;
+  }
+
+  p,
+  div {
+    @apply font-poppins text-gray-500;
+  }
+
+  .debug {
+    @apply border border-white;
+  }
+
+  .prime {
+    @apply flex flex-col md:w-8/12 w-full window-h p-2;
+  }
+
+  label {
+    @apply inline-block;
+  }
+
+  input {
+    @apply inline-block rounded-lg border-gray-300;
+  }
+
+  .input-group {
+    @apply relative mt-2 rounded-md shadow-sm;
+  }
+
+  select {
+    @apply py-0;
+  }
+
+  .form-control {
+    @apply block rounded-md border border-gray-300 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 py-1;
+  }
+
+  .pagination {
+    @apply text-cyan-700 font-medium w-10/12 mt-10;
+  }
+
+  .head-row {
+    @apply bg-slate-800 p-2;
+  }
+
+  .bg-light {
+    @apply bg-white text-black;
+  }
+
+  .badge {
+    @apply text-xs rounded-full p-1;
+  }
+
+  .window-h {
+    @apply min-h-[calc(100vh-90px)];
+  }
+}

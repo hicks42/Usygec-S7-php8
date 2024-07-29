@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale }}">
+
+	<head>
+		{% block head %}
+			<!-- Google tag (gtag.js) -->
+			<script async src="https://www.googletagmanager.com/gtag/js?id=G-CPGP0YXXM9"></script>
+			<script>
+				window.dataLayer = window.dataLayer || [];
+function gtag() {
+dataLayer.push(arguments);
+}
+gtag('js', new Date());
+
+gtag('config', 'G-CPGP0YXXM9');
+			</script>
+
+			<meta charset="utf-8"/>
+			<meta http-equiv="x-ua-compatible" content="ie=edge"/>
+			<meta name="description" content=""/>
+			<meta name="viewport" content="width=device-width, initial-scale=1"/>
+			<title>
+				{% block title %}Bienvenue sur Usygec.fr
+				{% endblock %}
+			</title>
+			<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico"/>
+
+			{% block stylesheets %}
+				<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+				<link rel="stylesheet" href="{{ asset('styles/app.tailwind.css') }}">
+			{% endblock %}
+
+			{% block javascripts %}
+				{% block importmap %}
+					{{ importmap('app') }}
+				{% endblock %}
+			{% endblock %}
+
+		{% endblock %}
+	</head>
+	<body>
+  <object type="image/svg+xml" data="{{ asset('icons/icons.svg') }}" class="hidden"></object>
+		{% block body %}
+			<div class="bg-slate-900 min-h-screen">
+				{{ include('main/partials/_preloader.html.twig') }}
+				<div class="flex justify-center w-full">
+						{% block content %}{% endblock %}
+				</div>
+			</div>
+			{# {% include '_traits/sizer.html.twig' %} #}
+		{% endblock %}
+	</body>
+</html>

@@ -1,0 +1,12 @@
+<h1>Confirmez votre email!</h1>
+
+<p>
+    Merci de confirmer votre addresse e-mail en clickant sur le lien suivant : <br><br>
+    <a href="{{ signedUrl|raw }}">Confirm my Email</a>.
+    Ce lien expirera dans : {{ expiresAtMessageKey|trans(expiresAtMessageData, 'VerifyEmailBundle') }}.
+</p>
+
+<p>
+    Cordialement <br>
+    L'équipe Usygec
+</p>

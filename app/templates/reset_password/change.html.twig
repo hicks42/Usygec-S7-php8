@@ -1,0 +1,26 @@
+{% extends 'logged_in_base.html.twig' %}
+
+{% block title %}Changer le mot de passe
+{% endblock %}
+
+{% block body %}
+	<div class="row de-flex justify-center mt-5">
+		<div class="er-row col-sm-8 col-lg-5 basis-full rounded-lg mt-5 p-5">
+			<div class="mb-3">
+				<h1>Changer le mot de passe pour :
+					{{ userName }}</h1>
+			</div>
+			{{ form_start(changeForm) }}
+			{{ form_row(changeForm.plainPassword) }}
+			<div class="row flex justify-center">
+				<div class="btn-group mt-3 w-50" role="group">
+					<a class="btn btn-outline-primary" href="{{ path('lobby') }}">
+						<i class="fa-solid fa-backward"></i> Retour
+					</a>
+					<button class="btn btn-primary">Changer</button>
+				</div>
+			</div>
+			{{ form_end(changeForm) }}
+		</div>
+	</div>
+{% endblock %}
