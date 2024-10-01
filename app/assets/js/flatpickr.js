@@ -14,4 +14,14 @@ document.addEventListener("DOMContentLoaded", function () {
       firstDayOfWeek: 1,
     });
   });
+
+  document.querySelectorAll(".rdvflatpicker").forEach((input) => {
+    flatpickr(input, {
+      altInput: true,
+      altFormat: "j F, Y",
+      dateFormat: "d-m-Y",
+      locale: French,
+      firstDayOfWeek: 1,
+    });
+  });
 });

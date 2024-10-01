@@ -37,7 +37,6 @@ class MailerService
       $target,                            //to
       'Enquète de satisfaction ',         //subject
       'ezreview_template',                //template
-      $transport = "",                    //transport
       $context,                           //context
     );
   }

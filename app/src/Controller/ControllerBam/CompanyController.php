@@ -142,6 +142,7 @@ class CompanyController extends AbstractController
       'sort_order' => $sortOrder,
       'sort_by' => $sortBy,
       'name_sort_order' => $nameSortOrder,
+      'full_width' => true
     ]);
   }
 

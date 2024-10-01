@@ -31,7 +31,7 @@ class ApiActivityController extends AbstractController
     $this->user = $this->security->getUser();
   }
 
-  #[Route("/api/activities", name:"api_activities_api", methods:["GET"])]
+  #[Route("/api/activities", name: "api_activities_api", methods: ["GET"])]
   public function ajaxSortActivities(ActivityRepository $activityRepository, Request $request): Response
   {
     $headers = $request->headers->all();
@@ -106,7 +106,7 @@ class ApiActivityController extends AbstractController
     return new JsonResponse('No data');
   }
 
-  #[Route("/api/activity/", name:"api_add_activity", methods:["POST"])]
+  #[Route("/api/activity/", name: "api_add_activity", methods: ["POST"])]
   public function new(Request $request, EntityManagerInterface $em, SerializerInterface $serializer, ActivityRepository $activityRepository, $id): Response
   {
     $apiInput = $serializer->deserialize($request->getContent(), ApiInput::class, 'json');
@@ -124,11 +124,11 @@ class ApiActivityController extends AbstractController
 
     $activityRepository->add($activity, true);
 
-    return $this->redirectToRoute('app_company_activities', ["id" => $id], Response::HTTP_SEE_OTHER);
+    return $this->redirectToRoute('app_activities', ["id" => $id], Response::HTTP_SEE_OTHER);
   }
 
 
-  #[Route("/api/activity/{id<[0-9]+>}", name:"api_activities_show", methods:["GET"])]
+  #[Route("/api/activity/{id<[0-9]+>}", name: "api_activities_show", methods: ["GET"])]
   public function show(Activity $activity): Response
   {
     return $this->render('bam/activities/show.html.twig', [
@@ -136,7 +136,7 @@ class ApiActivityController extends AbstractController
     ]);
   }
 
-  #[Route("/api/{id}/edit", name:"api_activities_edit", methods:["PATCH"])]
+  #[Route("/api/{id}/edit", name: "api_activities_edit", methods: ["PATCH"])]
   public function edit(Request $request, EntityManagerInterface $em, Activity $activity, ActivityRepository $activityRepository): Response
   {
     $form = $this->createForm(ActivityType::class, $activity);
@@ -156,16 +156,16 @@ class ApiActivityController extends AbstractController
     ]);
   }
 
-  #[Route("/{id}", name:"api_activities_delete", methods:["DELETE"])]
+  #[Route("/{id}", name: "api_activities_delete", methods: ["DELETE"])]
   public function delete(Request $request, EntityManagerInterface $em, $id): Response
   {
-    $activity= $em->getRepository(Activity::class)->find($id);
+    $activity = $em->getRepository(Activity::class)->find($id);
     $companyId = $activity->getCompany()->getId();
     if ($this->isCsrfTokenValid('delete' . $activity->getId(), $request->request->get('_token'))) {
       $em->remove($activity);
       $em->flush();
     }
 
-    return $this->redirectToRoute('app_company_activities', ["id" => $companyId], Response::HTTP_SEE_OTHER);
+    return $this->redirectToRoute('app_activities', ["id" => $companyId], Response::HTTP_SEE_OTHER);
   }
 }

@@ -1,4 +1,4 @@
-{% extends 'logged_in-lg_base.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block title %}
 	{{ company.name }}
@@ -7,7 +7,7 @@
 {% block stylesheets %}
 	{{ parent() }}
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="{{ asset('flatpickr/flatpickr.min.css') }}">
+	<link rel="stylesheet" href="{{ asset('flatpickr/flatpickr.min.css') }}">
 {% endblock %}
 
 {% block javascripts %}
@@ -15,16 +15,16 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment-with-locales.min.js" integrity="sha512-LGXaggshOkD/at6PFNcp2V2unf9LzFq6LE+sChH7ceMTDP0g2kn6Vxwgg7wkPP7AAtX+lmPqPdxB47A0Nz0cMQ==" crossorigin="anonymous"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.31/moment-timezone-with-data.js"></script>
 
-  <script src="{{ asset('flatpickr/flatpickr.min.js') }}"></script>
-  <script src="{{ asset('flatpickr/l10n/fr.js') }}"></script>
-  <script src="{{ asset('js/flatpickr-config.js') }}"></script>
-  <script src="{{ asset('js/activity.js') }}"></script>
+	<script src="{{ asset('flatpickr/flatpickr.min.js') }}"></script>
+	<script src="{{ asset('flatpickr/l10n/fr.js') }}"></script>
+	<script src="{{ asset('js/flatpickr-config.js') }}"></script>
+	<script src="{{ asset('js/activity.js') }}"></script>
 {% endblock javascripts %}
 
 {% block content %}
 	<div class="flex lg:flex-row flex-col md:justify-between m-1">
 
-		<div id="left-side" class="flex flex-col lg:basis-4/12 basis-full mb-4">
+		<div id="left-side" class="flex flex-col lg:basis-4/12 basis-09/12 mb-4">
 			<div class="card p-2">
 				<div>
 					<h3>{{ company.name }}</h3>
@@ -93,21 +93,24 @@
 					{% endif %}
 				</p>
 			</div>
-        <div class="flex flex-row justify-center mt-10 my-3" role="group">
-          <div class="flex justify-center w-full">
-            <div class="btn-group btn-group-sm" role="group">
-              <a class="btn btn-sm btn-outline rounded-none rounded-l-md" href="{{ path('app_companies') }}"><i class="fa-solid fa-address-book"></i>
-          Sociétés</a>
-              <a class="btn btn-sm btn-secondary border-2 rounded-none" href="{{ path('app_companies_edit', {'id': company.id}) }}"><i class="fa-solid fa-user-pen"></i>
-                      Modification</a>
-              <a class="btn btn-sm btn-outline rounded-none rounded-r-md" href="{{ path('app_activities')}}"><i class="fa-solid fa-table-list me-1"></i>
-                Activités</a>
-            </div>
-          </div>
-        </div>
+			<div class="flex flex-row justify-center mt-10 my-3" role="group">
+				<div class="flex justify-center w-full">
+					<div class="btn-group btn-group-sm" role="group">
+						<a class="btn btn-sm btn-outline rounded-none rounded-l-md" href="{{ path('app_companies') }}">
+							<i class="fa-solid fa-address-book"></i>
+							Sociétés</a>
+						<a class="btn btn-sm btn-secondary border-2 rounded-none" href="{{ path('app_companies_edit', {'id': company.id}) }}">
+							<i class="fa-solid fa-user-pen"></i>
+							Modifier</a>
+						<a class="btn btn-sm btn-outline rounded-none rounded-r-md" href="{{ path('app_activities')}}">
+							<i class="fa-solid fa-table-list me-1"></i>
+							Activités</a>
+					</div>
+				</div>
+			</div>
 		</div>
 
-		<div id="right-side" class="flex flex-col lg:basis-8/12 basis-full ms-2 border-t border-stone-200 bg-gray-50 min-h-dvh shadow-inner p-2">
+		<div id="right-side" class="flex flex-col lg:basis-8/12 basis-full lg:ms-2 border-t border-stone-200 bg-gray-50 min-h-dvh shadow-inner p-2">
 			{% import "bam/companies/macros/forms.html.twig" as formMacros %}
 			{{ form_start(form, {"method": "POST"}) }}
 

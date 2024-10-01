@@ -1,13 +1,13 @@
-{% extends 'logged_in-lg_base.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block title %}Liste des sociétés
 {% endblock %}
 
 {% block javascripts %}
 	{{ parent() }}
-    <script type="module">
-      import '{{ asset('js/modal.js') }}';
-    </script>
+	<script type="module">
+		import '{{ asset('js/modal.js') }}';
+	</script>
 {% endblock javascripts %}
 
 {% block content %}
@@ -28,10 +28,18 @@
 			</a>
 		</div>
 	</div>
+		<div class="flex justify-center lg:basis-1/2 basis-full">
+			<a class="btn btn-sm btn-secondary border-2 me-1" href="{{ path('csv_export') }}">
+				<i class="fa-solid fa-file-arrow-down me-1"></i>
+				Exporter en CSV</a>
+			<a href="#" type="button" data-modal-type="company-csv" class="modal-btn btn btn-sm btn-secondary border-2 ms-1">
+				<i class="fa-solid fa-file-csv fs-5 me-1"></i>
+				Importer un CSV</a>
+		</div>
 
 	<div class="search-row my-4">
-			<form action="{{ path('app_companies') }}" method="GET">
-		<div class="flex justify-between lg:basis-1/2 basis-full">
+		<form action="{{ path('app_companies') }}" method="GET">
+			<div class="flex justify-between lg:basis-1/2 basis-full">
 				<div class="input-group md:w-1/2 w-full">
 					<input type="text" class="relative form-control w-full" name="name" placeholder="Rech. par nom">
 					<select id="category" name="category" class="absolute inset-y-0 right-10 border border-gray-300 w-36 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
@@ -52,7 +60,7 @@
 
 	<div class="head-row flex justify-between rounded-md">
 		<div class="lg:basis-3/12 basis-5/12 text-gray-200">
-			<a href="{{ path('app_companies', { 'sort_by': 'name', 'sort_order': (sort_by == 'name' and sort_order == 'desc') ? 'asc' : 'desc' }) }}">
+			<a href="{{ path('app_companies', { 'sort_by': 'name', 'sort_order': (sort_by == 'name' and sort_order == 'desc') ? 'asc' : 'desc' }) }}" class="sort-control text-nowrap">
 				Société
 				{% if sort_by == 'name' %}
 					{% if sort_order == 'desc' %}
@@ -76,7 +84,7 @@
 		</div>
 		<div class="basis-1/12 text-center text-xl text-yellow-400">
 			<a href="{{ path('app_companies', { 'sort_by': 'activitiesCount', 'sort_order': (sort_by == 'activitiesCount' and sort_order == 'desc') ? 'asc' : 'desc' }) }}" class="sort-control text-nowrap">
-					<i class="fa-solid fa-file-contract"></i>
+				<i class="fa-solid fa-file-contract"></i>
 				<span class="sort-icon">
 					<i class="fas fa-sort"></i>
 				</span>
@@ -84,12 +92,11 @@
 		</div>
 	</div>
 
-
 	{% for item in pagination %}
 		{% set company = item.company %}
 		{% set activitiesCount = item.activitiesCount %}
 		<div class="flex flex-row justify-between items-center bg-slate-200 hover:bg-slate-300 border-gray-300 border-b py-3">
-			<div class="lg:basis-3/12 basis-5/12">
+			<div class="lg:basis-3/12 ms-2 basis-5/12 text-ellipsis overflow-hidden text-nowrap">
 				<small>{{ item.company.category }}</small>
 				<br>
 				<a href="{{ path('app_companies_show', {'id': item.company.id}) }}">
@@ -106,7 +113,7 @@
 				{{ item.company.contactLastName }}
 			</div>
 
-			<div class="lg:basis-3/12 basis-4/12 lg:hidden">
+			<div class="lg:basis-3/12 basis-4/12 lg:hidden text-ellipsis overflow-hidden text-nowrap">
 				{% if item.company.mobile %}
 					<a href="tel:{{ item.company.mobile }}">
 						<i class="fa-solid fa-phone me-1"></i>
@@ -114,7 +121,7 @@
 						{{ item.company.contactLastName }}
 					</a>
 				{% else %}
-					<div class="lg:basis-3/12 basis-5/12 lg:hidden">
+					<div class="lg:basis-3/12 basis-5/12 lg:hidden text-ellipsis overflow-hidden text-nowrap">
 						{{ item.company.contactFirstName }}
 						{{ item.company.contactLastName }}
 					</div>
@@ -125,7 +132,7 @@
 			<div class="hidden lg:block md:hidden basis-2/12">{{ item.company.mobile }}</div>
 
 			{# email #}
-			<div class="xl:basis-2/12 basis-1/12 text-start">
+			<div class="xl:basis-2/12 basis-1/12 md:text-start text-end">
 				{% if item.company.email %}
 					<a href="mailto:{{ item.company.email }}" class="text-start">
 						<span class="xl:hidden">
@@ -139,7 +146,7 @@
 			{# activité #}
 			<div class="basis-1/12 text-center">
 				{% if item.activitiesCount > 0 %}
-					<span class="badge bg-success p-2">{{ item.activitiesCount }}</span>
+					<span class="text-base border border-green-600 bg-white rounded-full text-green-600 p-1 px-2 font-semibold">{{ item.activitiesCount }}</span>
 				{% endif %}
 			</div>
 
@@ -149,22 +156,19 @@
 			<div class="basis-full mt-2">Pas encore de compte</div>
 		</div>
 	{% endfor %}
-	<div class="pagination-row flex flex-row justify-center mt-4">
+	<div class="pagination-row flex flex-row justify-center basis-full mx-0 mt-4">
 		{{ knp_pagination_render(pagination) }}
 	</div>
 
 	<div class="flex flex-row justify-center mt-10 my-3" role="group">
 		<div class="flex justify-center lg:basis-1/2 basis-full">
 			<div class="btn-group btn-group-sm" role="group">
-				<a class="btn btn-sm btn-outline rounded-none rounded-l-md" href="{{ path('app_companies') }}"><i class="fa-solid fa-address-book"></i>
-          Sociétés</a>
-				<a class="btn btn-sm btn-secondary border-2 rounded-none" href="{{ path('csv_export') }}"><i class="fa-solid fa-file-arrow-down me-1"></i>
-					Exporter en CSV</a>
-          <a href="#" type="button" data-modal-type="company-csv" class="modal-btn btn btn-sm btn-secondary border-2 rounded-none">
-						<i class="fa-solid fa-file-csv fs-5 me-1"></i>
-						Importer un csv</a>
-				<a class="btn btn-sm btn-outline rounded-none rounded-r-md" href="{{ path('app_activities')}}"><i class="fa-solid fa-table-list me-1"></i>
-          Activités</a>
+				<a class="btn btn-sm btn-outline rounded-none rounded-l-md" href="{{ path('app_companies') }}">
+					<i class="fa-solid fa-address-book"></i>
+					Sociétés</a>
+				<a class="btn btn-sm btn-outline rounded-none rounded-r-md" href="{{ path('app_activities')}}">
+					<i class="fa-solid fa-table-list me-1"></i>
+					Activités</a>
 			</div>
 		</div>
 	</div>

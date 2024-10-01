@@ -40,11 +40,11 @@
 				{{ include('main/partials/_preloader.html.twig') }}
 
 				<div class="flex justify-center w-full">
-					<div class="prime">
-						{% block content %}{% endblock %}
-					</div>
+          <div class="flex flex-col {{ full_width is defined and full_width ? 'w-full' : 'md:w-8/12 w-full' }} window-h p-2">
+            {% block content %}{% endblock %}
+          </div>
 				</div>
-				{% include '_traits/sizer.html.twig' %}
+				{# {% include '_traits/sizer.html.twig' %} #}
 			</div>
 		{% endblock %}
 

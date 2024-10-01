@@ -1,4 +1,4 @@
-{% extends 'logged_in_base.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block title %}Connexion!
 {% endblock %}
@@ -37,9 +37,6 @@
 			<button class="btn btn-lg btn-primary btn-sm w-50" type="submit">
 				Connexion
 			</button>
-			<div class="m-5">
-				<a href="{{ path('app_forgot_password_request') }}">Mot de passe oublié</a>
-			</div>
 		</div>
 	</form>
 {% endblock %}

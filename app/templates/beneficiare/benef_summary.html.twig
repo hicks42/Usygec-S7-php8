@@ -1,0 +1,77 @@
+{% extends 'base_leguay.html.twig' %}
+
+{% block title %}Nouveau beneficiare :
+{% endblock %}
+
+{% block body %}
+
+	<div class="content w-4/5">
+  <div style="display: flex; justify-content: flex-start; align-items: center; margin-bottom: 20px; width: 400px; height: 120px;">
+    <img src='images/LOGO_leguay.png' alt="Logo" style="width: 400px; height: 120px;">
+  </div>
+  <h1>Nouveau bénéficiaire :</h1>
+		<div class="flex justify-center bg-slate-200 p-5 w-full">
+			<div class="flex flex-col">
+				<div class="flex">
+					<label class="w-44 text-right font-bold me-3">
+						Nom :
+					</label>
+					<span>{{ data.lastName }}</span>
+				</div>
+				<div class="flex">
+					<label class="w-44 text-right font-bold me-3">
+						Prénom :
+					</label>
+					<span>{{ data.firstName }}</span>
+				</div>
+				<div class="flex">
+					<label class="w-44 text-right font-bold me-3">
+						Date de naissance :
+					</label>
+					<span>{{ data.birthDate }}</span>
+				</div>
+				<div class="flex">
+					<label class="w-44 text-right font-bold me-3">
+						Lieu de naissance :
+					</label>
+					<span>{{ data.birthPlace }}</span>
+				</div>
+				<div class="flex">
+					<label class="w-44 text-right font-bold me-3">
+						Adresse :
+					</label>
+					<span>{{ data.address1 }}</span>
+				</div>
+				{% if data.address2 %}
+					<div class="flex">
+						<label class="w-44 text-right font-bold me-3"></label>
+						<span>{{ data.address2 }}</span>
+					</div>
+				{% endif %}
+				<div class="flex">
+					<label class="w-44 text-right font-bold me-3">
+						Code postal :
+					</label>
+					<span>{{ data.cp }}</span>
+				</div>
+				<div class="flex">
+					<label class="w-44 text-right font-bold me-3">
+						Ville :
+					</label>
+					<span>{{ data.city }}</span>
+				</div>
+				<div class="flex">
+					<label class="w-44 text-right font-bold me-3">
+						Pays :
+					</label>
+					<span>{{ data.country }}</span>
+				</div>
+				<div class="flex justify-center">
+					<a href="{{ path('app_stream_pdf') }}" class="btn btn-primary my-5">
+						Valider
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

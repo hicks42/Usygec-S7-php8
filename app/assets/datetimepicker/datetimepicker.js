@@ -421,30 +421,31 @@ if (window.innerWidth < 450) {
 // $(document).ready(function () {
 //   $("#picker").dateTimePicker({
 //     // positionShift: { top: 30, left: psl },
+//     dateFormat: "DD/MMMM/YYYY",
 //     title: "Selectinez l'heure et la date.",
 //     buttonTitle: "Valider",
 //   });
 //   // $('#picker-no-time').dateTimePicker({ showTime: false, dateFormat: 'DD/MMMM/YYYY', title: 'Select Date' });
 // });
 
-$(document).ready(function () {
-  $("#dueDatePicker").dateTimePicker({
-    // positionShift: { top: 30, left: psl },
-    showTime: false,
-    dateFormat: "DD/MMMM/YYYY",
-    title: "Selectinez l'heure et la date.",
-    buttonTitle: "Valider",
-  });
-  // $('#picker-no-time').dateTimePicker({ showTime: false, dateFormat: 'DD/MMMM/YYYY', title: 'Select Date' });
-});
+// $(document).ready(function () {
+//   $("#dueDatePicker").dateTimePicker({
+//     // positionShift: { top: 30, left: psl },
+//     showTime: false,
+//     dateFormat: "DD/MMMM/YYYY",
+//     title: "Selectinez l'heure et la date.",
+//     buttonTitle: "Valider",
+//   });
+//   // $('#picker-no-time').dateTimePicker({ showTime: false, dateFormat: 'DD/MMMM/YYYY', title: 'Select Date' });
+// });
 
-$(document).ready(function () {
-  $("#reminderPicker").dateTimePicker({
-    // positionShift: { top: 30, left: psl },
-    showTime: false,
-    dateFormat: "DD/MMMM/YYYY",
-    title: "Selectinez la date.",
-    buttonTitle: "Valider",
-  });
-  // $('#picker-no-time').dateTimePicker({ showTime: false, dateFormat: 'DD/MMMM/YYYY', title: 'Select Date' });
-});
+// $(document).ready(function () {
+//   $("#reminderPicker").dateTimePicker({
+//     // positionShift: { top: 30, left: psl },
+//     showTime: false,
+//     dateFormat: "DD/MMMM/YYYY",
+//     title: "Selectinez la date.",
+//     buttonTitle: "Valider",
+//   });
+//   // $('#picker-no-time').dateTimePicker({ showTime: false, dateFormat: 'DD/MMMM/YYYY', title: 'Select Date' });
+// });

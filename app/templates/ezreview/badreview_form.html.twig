@@ -6,60 +6,59 @@
 {% block stylesheets %}
 	{{ parent() }}
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="{{ asset('flatpickr/flatpickr.min.css') }}">
 {% endblock %}
 
 {% block javascripts %}
 	{{ parent() }}
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment-with-locales.min.js" integrity="sha512-LGXaggshOkD/at6PFNcp2V2unf9LzFq6LE+sChH7ceMTDP0g2kn6Vxwgg7wkPP7AAtX+lmPqPdxB47A0Nz0cMQ==" crossorigin="anonymous"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.31/moment-timezone-with-data.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-	{% block importmap %}
-		{{ importmap('datetimepicker') }}
-	{% endblock %}
+	<script src="{{ asset('flatpickr/flatpickr.min.js') }}"></script>
+	<script src="{{ asset('flatpickr/l10n/fr.js') }}"></script>
+	<script src="{{ asset('js/flatpickr-config.js') }}"></script>
 {% endblock javascripts %}
 
 {% block content %}
 	<div class="flex flex-col justify-center w-full">
 		<div class="relative w-full h-[200px] bg-cover bg-center bg-no-repeat" style="background-image: url('{{ (structure.imageName ? vich_uploader_asset(structure) | imagine_filter('company_image_banner') : asset('/images/placeholder.png')) }}');" alt="{{ structure.name }}">
-			<div class="absolute bottom-3 left-28 p-6 bg-slate-900/70 rounded-lg ">
+			<div class="absolute bottom-3 md:left-20 left-10 p-6 bg-slate-900/70 rounded-lg ">
 				<h1 class="text-yellow-400">Faites nous part de votre mécontentement :</h1>
 			</div>
 		</div>
-		<div class="flex justify-center">
-			<div class="w-1/2">
+		<div class="flex justify-center px-2">
+			<div class="md:w-1/2 w-full">
 				{{ form_start(form) }}
 				<div class="flex-row t-3">
 					<div class="w-full">
-						{{ form_row(form.email) }}
+						{{ form_widget(form.email) }}
 					</div>
 				</div>
 
-				<div class="flex flex-row justify-between mt-5">
-					<div class="md:w-1/2 sm:w-full">
+				<div class="flex md:flex-row flex-col justify-between mt-5">
+					<div class="md:w-1/2 w-full text-gray-300">
 						Indiquez la date et l'heure de votre rendez vous :
 					</div>
 
-					<div class="md:w-1/2 sm:w-full flex justify-center justify-md-end">
-						<div id="picker"></div>
-						{{ form_row(form.date_rdv, { 'type': "hidden", 'id': 'result'}) }}
+					<div class="rdv-div md:w-1/2 w-full flex justify-center justify-md-end my-2">
+						{{ form_widget(form.date_rdv) }}
 					</div>
 				</div>
 
 				<div class="flex flex-row justify-between mt-5">
-					<div class="basis-10/12">
+					<div class="basis-10/12 text-gray-300">
 						Sur une échelle de 1 à 10, (1 étant fortement insatisfait à 10 : extrêmement satisfait), comment évaluez-vous nos services:
 					</div>
 					<div class="dropdown basis-2/12">
-						{{ form_row(form.note) }}
+						{{ form_widget(form.note) }}
 					</div>
 				</div>
 				<div class="flex flex-row mt-5">
 					<div class="basis-full">
-						{{ form_row(form.message) }}
+						{{ form_widget(form.message) }}
 					</div>
 				</div>
-				<div class="w-full">
-					{{ form_row(form.submit, { 'label': 'Envoyer' }) }}
+				<div class="w-full text-center">
+					{{ form_widget(form.submit, { 'label': 'Envoyer' }) }}
 				</div>
 				{{ form_end(form) }}
 			</div>
