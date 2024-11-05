@@ -84,7 +84,7 @@ class ActivityController extends AbstractController
       'keyword' => $keyword,
       'sort_by' => $sortBy,
       'sort_order' => $sortOrder,
-      'full_width' => true
+      'width_size' => 'full'
     ]);
   }
 

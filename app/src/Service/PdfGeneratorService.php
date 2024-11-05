@@ -24,6 +24,16 @@ final class PdfGeneratorService
     return $this->wrapper->getStreamResponse($html, $filename);
   }
 
+  public function generatePdfAttachment(string $html): string
+  {
+    $dompdf = $this->factory->create();
+    $dompdf->loadHtml($html);
+    $dompdf->setPaper('A4', 'portrait');
+    $dompdf->render();
+
+    return $dompdf->output();
+  }
+
   public function output(string $html)
   {
     $dompdf = $this->factory->create();

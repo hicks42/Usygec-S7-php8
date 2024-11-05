@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Clauses index
+{% endblock %}
+
+{% block content %}
+	<div class="flex justify-between w-full mb-3">
+		<h1>Liste des clauses</h1>
+    <a href="{{ path('app_clauses_new') }}">
+			<div class="btn btn-success w-32"><i class="fa-solid fa-file-circle-plus"></i> Clause</div>
+		</a>
+	</div>
+
+
+	<div class="head-row flex justify-between rounded-md mb-1">
+		<div class="sm:basis-1/12 basis-1/12 text-gray-200 text-center">Id</div>
+		<div class="sm:basis-3/12 basis-3/12 text-gray-200">Name</div>
+		<div class="sm:basis-4/12 basis-4/12 text-gray-200">Description</div>
+		<div class="sm:basis-3/12 basis-2/12 text-gray-200 text-center">Modal</div>
+		<div class="sm:basis-1/12 basis-2/12 text-gray-200 text-center">actions</div>
+	</div>
+
+	{% for clause in clauses %}
+		<div class="flex flex-row justify-between bg-slate-200 hover:bg-slate-300 border-gray-300 border-b py-3">
+			<div class="sm:basis-1/12 basis-1/12 ms-2 text-center">{{ clause.id }}</div>
+			<div class="sm:basis-3/12 basis-3/12 ms-2 mx-2">{{ clause.name }}</div>
+			<div class="sm:basis-4/12 basis-4/12 text-ellipsis overflow-hidden text-start">{{ clause.description|slice(0, 50) }}</div>
+			<div class="sm:basis-3/12 basis-2/12 ms-2 mx-2">{{ clause.modal }}</div>
+			<div class="flex justify-around sm:basis-1/12 basis-2/12 text-nowrap">
+				<a href="{{ path('app_clauses_show', {'id': clause.id}) }}">
+					<div class="btn btn-sm btn-success">
+						<i class="fa-solid fa-eye"></i>
+					</div>
+				</a>
+				<a href="{{ path('app_clauses_edit', {'id': clause.id}) }}">
+					<div class="btn btn-sm btn-secondary">
+						<i class="fa-solid fa-pen"></i>
+					</div>
+				</a>
+			</div>
+		</div>
+	{% else %}
+		<div>
+			<div colspan="4">Aucune cause disponible</div>
+		</div>
+	{% endfor %}
+{% endblock %}

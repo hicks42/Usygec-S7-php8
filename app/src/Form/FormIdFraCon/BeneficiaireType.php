@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Form\FormBeneficiaire;
+namespace App\Form\FormIdFraCon;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -31,7 +31,7 @@ class BeneficiaireType extends AbstractType
         ]
       ])
       ->add('birthDate', TextType::class, [
-        'label' => 'date de naissance',
+        'label' => 'Date de naissance',
         // 'widget' => 'single_text',
         // 'format' => 'yyyy-MM-dd',
         // 'html5' => false,

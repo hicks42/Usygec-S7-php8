@@ -82,6 +82,10 @@
     @apply text-2xl;
   }
 
+  h3 {
+    @apply font-medium text-xl;
+  }
+
   h4 {
     @apply text-base;
   }

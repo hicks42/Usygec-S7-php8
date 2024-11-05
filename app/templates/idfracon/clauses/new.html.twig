@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Clauses
+{% endblock %}
+
+{% block content %}
+	<div class="rounded-lg bg-slate-200 p-5">
+		<h1>Create new Clauses</h1>
+
+		{{ include('idfracon/clauses/_form.html.twig') }}
+
+	</div>
+		<div class="flex justify-center w-full">
+			<a href="{{ path('app_clauses_index') }}">
+				<div class="btn btn-primary w-52"><i class="fa-solid fa-angles-left"></i> Retour à la liste</div>
+			</a>
+		</div>
+{% endblock %}

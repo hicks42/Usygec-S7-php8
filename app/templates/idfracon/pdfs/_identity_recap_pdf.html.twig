@@ -1,0 +1,37 @@
+<div class="summary-content">
+	<div>
+		<div class="label">Nom :</div>
+		<div class="value">{{ data.lastName }}</div>
+	</div>
+	<div>
+		<div class="label">Prénom :</div>
+		<div class="value">{{ data.firstName }}</div>
+	</div>
+	<div>
+		<div class="label">Date de naissance :</div>
+		<div class="value">{{ data.birthDate }}</div>
+	</div>
+	<div>
+		<div class="label">Lieu de naissance :</div>
+		<div class="value">{{ data.birthPlace }}</div>
+	</div>
+	<div>
+		<div class="label">Adresse :</div>
+		<div class="value">{{ data.address1 }}</div>
+		{% if data.address2 %}
+			<div class="value">{{ data.address2 }}</div>
+		{% endif %}
+	</div>
+	<div>
+		<div class="label">Code postal :</div>
+		<div class="value">{{ data.cp }}</div>
+	</div>
+	<div>
+		<div class="label">Ville :</div>
+		<div class="value">{{ data.city }}</div>
+	</div>
+	<div>
+		<div class="label">Pays :</div>
+		<div class="value">{{ data.country }}</div>
+	</div>
+	<div>

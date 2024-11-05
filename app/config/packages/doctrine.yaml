@@ -1,6 +1,7 @@
 doctrine:
   dbal:
     url: "%env(resolve:DATABASE_URL)%"
+    logging: true
 
     # driver: "pdo_mysql"
     # server_version: "8.0"

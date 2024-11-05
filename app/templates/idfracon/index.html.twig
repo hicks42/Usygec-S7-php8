@@ -1,0 +1,33 @@
+{% extends 'raw.html.twig' %}
+
+{% block title %}Hello BeneficiareController!
+{% endblock %}
+
+{% block content %}
+
+	<div class="w-2/5">
+		<h1>Bienvenue chez Assurance Leguay</h1>
+		<div class="felx flex-row justify-between">
+			<div class="flex-none w-3/4">
+				<p>Sur cette page vous allez pouvoir modifier le bénéficiaire de votre assurance.</p>
+				<p>Mais d'abord identifiez vous grace a france connect</p>
+			</div>
+			{# <div class="flex-initial w-32">
+        <a href="https://franceconnect.gouv.fr/"><img src="https://franceconnect.gouv.fr/images/fc_logo_v2.png" class="w-32"></a>
+      </div> #}
+
+			<div class="fr-connect-group p-5 flex justify-center">
+				<div>
+					<a href="{{ path('app_idfracon_identify')}}" target="_blank">
+						<img src="https://cfspart-idp.impots.gouv.fr/static/part/images/franceconnect-btn-principal.svg" class="w-[209px] h-[56px]">
+					</a>
+					<p>
+						<a id="fclink" href="https://franceconnect.gouv.fr/" target="_blank" rel="noopener" title="Qu’est-ce que FranceConnect ? - nouvelle fenêtre">Qu’est-ce que FranceConnect ?
+							<span class="dgfipicon dgfipicon-sortie-page sortiebig" title="Nouvelle fenêtre"></span>
+						</a>
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

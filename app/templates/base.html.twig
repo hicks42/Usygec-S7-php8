@@ -24,11 +24,11 @@
 				<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
 			{% endblock stylesheets %}
 
-			{% block javascripts %}
-				{% block importmap %}
-					{{ importmap('app') }}
-				{% endblock %}
+		{% block javascripts %}
+			{% block importmap %}
+				{{ importmap('app') }}
 			{% endblock %}
+		{% endblock %}
 
 		{% endblock head %}
 	</head>
@@ -40,13 +40,27 @@
 				{{ include('main/partials/_preloader.html.twig') }}
 
 				<div class="flex justify-center w-full">
-          <div class="flex flex-col {{ full_width is defined and full_width ? 'w-full' : 'md:w-8/12 w-full' }} window-h p-2">
-            {% block content %}{% endblock %}
-          </div>
+					<div class="flex flex-col justify-center window-h p-2
+							          {% if width_size is defined %}
+                            {% if width_size == 'tiny' %}
+                                  md:w-4/12
+                              {% elseif width_size == 'half' %}
+                                  md:w-1/2
+                              {% elseif width_size == 'full' %}
+                                  w-full
+                            {% endif %}
+                        {% else %}
+                            md:w-8/12 w-full
+                        {% endif %}
+                      ">
+
+						{% block content %}
+            {% endblock %}
+
+					</div>
 				</div>
-				{# {% include '_traits/sizer.html.twig' %} #}
 			</div>
 		{% endblock %}
-
+				{% include '_traits/sizer.html.twig' %}
 	</body>
 </html>

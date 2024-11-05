@@ -1,34 +1,39 @@
 // modal Module
 const modalBtns = document.querySelectorAll(".modal-btn");
-// const modalBtn = document.querySelector("#modal-btn");
 const formTitle = document.querySelector("#form-title");
 const submitModalBtn = document.querySelector(".submit-modal");
 const modalContainer = document.querySelector(".modal-container");
 const modalInput = document.querySelector(".modal-container input");
-const closeModaldBtn = document.querySelector(".close-popup");
+const closeModaldBtns = document.querySelectorAll(".close-popup");
 
 modalBtns.forEach((modalBtn) => {
   modalBtn.addEventListener("click", openModal);
 });
-closeModaldBtn.addEventListener("click", closeModal);
-submitModalBtn.addEventListener("click", uploadFile);
+closeModaldBtns.forEach((closeModaldBtn) => {
+  closeModaldBtn.addEventListener("click", closeModal);
+});
 
 // Modal
 function openModal(e) {
   const modalType = e.target.getAttribute("data-modal-type");
-  switch (modalType) {
-    case "email-csv":
-      addStructureIdRow(e);
-      break;
-    case "company-csv":
-      break;
-    default:
-      console.log(`Déso pas de modalType`);
-  }
 
-  const popup = modalContainer.children[0];
-  modalContainer.classList.add("active");
-  popup.classList.add("active");
+  handleModalType(modalType);
+}
+
+function handleModalType(modalType) {
+  if (modalType !== null && modalType !== undefined) {
+    switch (modalType) {
+      case "email-csv":
+        showModal(modalType);
+        addStructureIdRow(e);
+        break;
+      default:
+        showModal(modalType);
+        break;
+    }
+  } else {
+    console.error(`Pas de modal avec l/id : "${modalType}" !`);
+  }
 }
 
 function addStructureIdRow(e) {
@@ -44,13 +49,15 @@ function addStructureIdRow(e) {
   }
 }
 
-function closeModal(e) {
-  const popup = modalContainer.children[0];
-  modalContainer.classList.remove("active");
-  popup.classList.remove("active");
+function showModal(modalType) {
+  const targetedModal = document.getElementById(modalType);
+
+  const popup = targetedModal.children[0];
+  targetedModal.classList.add("active");
+  popup.classList.add("active");
 }
 
-function uploadFile(e) {
-  modalContainer.classList.remove("active");
-  popup.classList.remove("active");
+function closeModal(e) {
+  const modals = document.querySelectorAll(".modal-container");
+  modals.forEach((modal) => modal.classList.remove("active"));
 }

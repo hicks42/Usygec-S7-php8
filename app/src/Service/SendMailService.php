@@ -3,11 +3,13 @@
 namespace App\Service;
 
 use Twig\Environment;
-use App\Entity\EntityEZR\Structure;
+use App\Service\MailerService;
+use App\Service\PdfGeneratorService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Crypto\DkimSigner;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mime\Crypto\DkimOptions;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
@@ -72,5 +74,47 @@ class SendMailService
 
     // On envoie le mail
     $this->mailer->send($signedEmail);
+  }
+
+  public function sendEmailWithPdf(
+    $context,
+    $pdfAtt
+  ): Response {
+
+    $this->sendWithPdfAttachment(
+      'noreply@usygec.fr',
+      'recipient@example.com',
+      'Votre PDF est prêt',
+      'email_template',
+      // ['someData' => $someData],
+      $context,
+      $pdfAtt,
+      'document.pdf'
+    );
+
+    return new Response('Email envoyé avec le PDF en pièce jointe');
+  }
+
+  public function sendWithPdfAttachment(
+    string $from,
+    string $to,
+    string $subject,
+    string $template,
+    array $context,
+    string $pdfAtt, // Contenu du PDF en string
+    string $pdfFilename
+  ): void {
+    $email = (new TemplatedEmail())
+      ->from($from)
+      ->to($to)
+      ->subject($subject)
+      ->html($this->twig->render("main/emails/" . $template . ".html.twig", [
+        'context' => $context,
+      ]))
+      // Ajouter le PDF comme pièce jointe et spécifier le nom du fichier ici
+      ->attach($pdfAtt, $pdfFilename, 'application/pdf');
+
+    // Envoyer l'email
+    $this->mailer->send($email);
   }
 }
