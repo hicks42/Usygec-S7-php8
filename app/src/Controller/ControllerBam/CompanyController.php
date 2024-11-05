@@ -3,28 +3,29 @@
 namespace App\Controller\ControllerBam;
 
 use App\Entity\User;
+use App\Form\FormBam\CsvType;
+use App\Form\FormBam\ClientType;
 use App\Entity\EntityBam\Company;
+use App\Form\FormBam\CompanyType;
 use App\Entity\EntityBam\Activity;
 use App\Entity\EntityBam\Category;
-use App\Form\FormBam\ClientType;
-use App\Form\FormBam\CompanyType;
 use App\Form\FormBam\ActivityType;
-use App\Form\FormBam\CsvType;
 use App\Repository\UserRepository;
-use App\Repository\RepositoryBam\CompanyRepository;
-use App\Repository\RepositoryBam\ActivityRepository;
 use App\Service\CompanyCsvManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\VarDumper\VarDumper;
 use Knp\Component\Pager\PaginatorInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use App\Repository\RepositoryBam\CompanyRepository;
+use App\Repository\RepositoryBam\ActivityRepository;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -142,6 +143,7 @@ class CompanyController extends AbstractController
       'sort_order' => $sortOrder,
       'sort_by' => $sortBy,
       'name_sort_order' => $nameSortOrder,
+      'width_size' => 'full'
     ]);
   }
 

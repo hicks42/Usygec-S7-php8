@@ -1,0 +1,16 @@
+{% extends 'raw.html.twig' %}
+
+{% block title %}Indentifiez vous
+{% endblock %}
+
+{% block content %}
+	<div class="flex justify-center w-full">
+		<div class="flex flex-col justify-center window-h w-full md:w-1/2 p-2">
+			<div class="flex flex-col justify-center bg-slate-200 w-full xl:1/2 p-5">
+      <div><h1>Indentifiez vous.</h1></div>
+				{% include 'idfracon/form/_id_form.html.twig' with { 'formName': "idfracon_data_user" } %}
+			</div>
+		</div>
+	</div>
+
+{% endblock %}

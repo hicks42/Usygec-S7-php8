@@ -1,0 +1,97 @@
+<style>
+	.content {
+		width: 100%;
+	}
+
+	.logo-container {
+		display: flex;
+		justify-content: flex-start;
+		/* align-items: center; */
+		margin-bottom: 20px;
+		width: 400px;
+		height: 120px;
+	}
+
+	.logo {
+		width: 400px;
+		height: 120px;
+	}
+
+	body {
+		font-family: Verdana, Geneva, sans-serif;
+	}
+
+	h1 {
+		text-align: left;
+		font-size: 32px;
+		margin-top: 30px;
+		margin-bottom: 5px;
+	}
+
+	h2 {
+		text-align: left;
+		font-size: 24px;
+		margin: 0;
+	}
+
+	h3 {
+		text-align: left;
+		font-size: 16px;
+	}
+
+	.beneficiary-info {
+		width: 70%;
+		background-color: #F2F2F2;
+		padding: 5px;
+		margin: 0 100px;
+		display: inline-block;
+	}
+
+	.colored-info {
+		width: 90%;
+		background-color: #F2F2F2;
+		padding: 5px;
+		margin: 5px;
+		display: inline-block;
+	}
+
+	.summary-content {
+		margin: 10px;
+		height: auto;
+	}
+
+	.label {
+		width: 300px;
+		display: inline-block;
+		text-align: right;
+		font-weight: bold;
+		margin-right: 10px;
+	}
+
+	.value {
+		display: inline-block;
+	}
+</style>
+
+<div class="content">
+	<div class="logo-container">
+		<img src="images/LOGO_leguay.png" alt="Logo" class="logo">
+	</div>
+	<h1>Identité de l'assuré :</h1>
+	<div class="user-info">
+		{% include('idfracon/pdfs/_identity_recap_pdf.html.twig') with {'data': data.session_user} %}
+	</div>
+	<div class="clause-info">
+		<h1>Clause choisie :</h1>
+		{% include('idfracon/pdfs/_clause_recap_pdf.html.twig') with {'data': data.selected_clause} %}
+	</div>
+	{% if data.selected_add is defined %}
+		<div class="clause-info">
+			{% include('idfracon/pdfs/_' ~ data.form_name ~ '_recap_pdf.html.twig') with {'data': data.selected_add} %}
+		</div>
+	{% endif %}
+	<h1>Authentification :</h1>
+	<div class="colored-info">
+		{% include('idfracon/pdfs/_auth_recap_pdf.html.twig') %}
+	</div>
+</div>

@@ -46,6 +46,10 @@ RUN apt-get update && apt-get upgrade -y
 
 # COPY ./vhosts/vhosts.conf /etc/apache2/sites-available/vhosts.conf
 
+# RUN pecl install xdebug
+# COPY xdebug.ini /usr/local/etc/php/php.ini-development
+# EXPOSE 900
+
 EXPOSE 80
 EXPOSE 443
 

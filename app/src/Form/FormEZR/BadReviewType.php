@@ -26,11 +26,15 @@ class BadReviewType extends AbstractType
         'label' => false,
         'model_timezone' => 'UTC',
         'view_timezone' => 'Europe/Paris',
-        'format' => 'yyyy-MM-dd  HH:mm',
+        // 'format' => 'dd-MM-yyyy  HH:mm',
+        'format' => 'dd-MM-yyyy  HH:mm',
         'widget' => 'single_text',
         'input'  => 'datetime_immutable',
         'html5' => false,
-        'attr' => ['id' => 'datetimepicker'],
+        'attr' => [
+          'placeholder' => 'jj/mm/aaaa h.m',
+          'class' => 'rdvflatpicker form-control w-1/4 md:me-5 ms-1',
+        ]
       ])
       ->add('note', ChoiceType::class, [
         'label' => false,

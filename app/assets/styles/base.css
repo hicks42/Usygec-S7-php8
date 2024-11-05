@@ -82,6 +82,10 @@
     @apply text-2xl;
   }
 
+  h3 {
+    @apply font-medium text-xl;
+  }
+
   h4 {
     @apply text-base;
   }
@@ -90,17 +94,17 @@
     @apply text-2xl text-white font-spartan mt-4;
   }
 
+  a {
+    @apply text-blue-600 font-spartan mt-4;
+  }
+
   p,
   div {
-    @apply font-poppins text-gray-500;
+    @apply font-poppins text-gray-500 lg:text-base text-sm;
   }
 
   .debug {
     @apply border border-white;
-  }
-
-  .prime {
-    @apply flex flex-col md:w-8/12 w-full window-h p-2;
   }
 
   label {
@@ -136,7 +140,7 @@
   }
 
   .badge {
-    @apply text-xs rounded-full p-1;
+    @apply text-xs rounded-full p-[4px];
   }
 
   .window-h {

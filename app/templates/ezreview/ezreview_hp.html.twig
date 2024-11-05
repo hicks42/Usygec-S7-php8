@@ -1,4 +1,4 @@
-{% extends 'logged_in_base.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block title %}Actions disponibles pour
 	{{ user.company}}
@@ -78,7 +78,7 @@
 	{% endif %}
 </div>
 
-<div class="modal-container flex justify-around">
+<div id="email-csv" class="modal-container flex justify-around">
 	<div class="modal-popup">
 		<button class="close-popup">x</button>
 		<div class="flex justify-center">

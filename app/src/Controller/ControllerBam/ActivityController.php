@@ -27,7 +27,7 @@ class ActivityController extends AbstractController
     $this->user = $this->security->getUser();
   }
 
-  #[Route("/activities/", name:"app_activities", methods:["GET"])]
+  #[Route("/activities/", name: "app_activities", methods: ["GET"])]
   #[IsGranted('ROLE_USER')]
   public function index(ActivityRepository $activityRepository, Request $request, PaginatorInterface $paginator): Response
   {
@@ -84,10 +84,11 @@ class ActivityController extends AbstractController
       'keyword' => $keyword,
       'sort_by' => $sortBy,
       'sort_order' => $sortOrder,
+      'width_size' => 'full'
     ]);
   }
 
-  #[Route("/activities/{id<[0-9]+>}/add-activity", name:"app_add_activity", methods:["GET", "POST"])]
+  #[Route("/activities/{id<[0-9]+>}/add-activity", name: "app_add_activity", methods: ["GET", "POST"])]
   #[IsGranted('ROLE_USER')]
   public function new(Request $request, EntityManagerInterface $em, ActivityRepository $activityRepository, $id): Response
   {
@@ -101,7 +102,7 @@ class ActivityController extends AbstractController
       $activity->setCompany($company);
       $activityRepository->add($activity, true);
 
-      return $this->redirectToRoute('app_company_activities', ["id" => $id], Response::HTTP_SEE_OTHER);
+      return $this->redirectToRoute('app_activities', ["id" => $id], Response::HTTP_SEE_OTHER);
     }
 
     return $this->render('bam/activities/new.html.twig', [
@@ -111,7 +112,7 @@ class ActivityController extends AbstractController
     ]);
   }
 
-  #[Route("/activities/{id<[0-9]+>}", name:"app_activities_show", methods:["GET"])]
+  #[Route("/activities/{id<[0-9]+>}", name: "app_activities_show", methods: ["GET"])]
   #[IsGranted('ROLE_USER')]
   public function show(Activity $activity): Response
   {
@@ -120,7 +121,7 @@ class ActivityController extends AbstractController
     ]);
   }
 
-  #[Route("/activities/{id}/edit", name:"app_activities_edit", methods:["GET", "POST"])]
+  #[Route("/activities/{id}/edit", name: "app_activities_edit", methods: ["GET", "POST"])]
   #[IsGranted('ROLE_USER')]
   public function edit(Request $request, EntityManagerInterface $em, Activity $activity, ActivityRepository $activityRepository): Response
   {
@@ -143,7 +144,7 @@ class ActivityController extends AbstractController
     ]);
   }
 
-  #[Route("/activities/{id}", name:"app_activities_delete", methods:["POST"])]
+  #[Route("/activities/{id}", name: "app_activities_delete", methods: ["POST"])]
   #[IsGranted('ROLE_USER')]
   public function delete(Request $request, Activity $activity, ActivityRepository $activityRepository): Response
   {
@@ -152,6 +153,6 @@ class ActivityController extends AbstractController
       $activityRepository->remove($activity, true);
     }
 
-    return $this->redirectToRoute('app_company_activities', ["id" => $companyId], Response::HTTP_SEE_OTHER);
+    return $this->redirectToRoute('app_activities', ["id" => $companyId], Response::HTTP_SEE_OTHER);
   }
 }

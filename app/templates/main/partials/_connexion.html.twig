@@ -7,19 +7,20 @@
 {% endif %}
 
 	<div class="my-0">
-		{% if is_granted('ROLE_ADMIN') %}
 			<ul class="list-none mx-2">
+		{% if is_granted('ROLE_ADMIN') %}
 				<li class="text-gray-500 p-1">
 					<a href="{{ path('app_register') }}" class="font-ubuntu text-base mt-1 p-2">
 						<i class="fa-solid fa-user-plus me-1"></i>Utilisateur</a>
 				</li>
+		{% else %}
 				<li class="text-gray-500 p-1">
-					<a href="{{ path('accounts_index') }}" class="font-ubuntu text-base mt-1">
+					<a href="{{ path('app_clauses_index') }}" class="font-ubuntu text-base mt-1">
 						<i class="fa-solid fa-eye me-1"></i>
-						Utilisateurs</a>
+						Clauses</a>
 				</li>
-			</ul>
 		{% endif %}
+			</ul>
 	</div>
 
 	<div class="my-0">

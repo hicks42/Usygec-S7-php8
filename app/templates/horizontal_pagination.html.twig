@@ -1,9 +1,9 @@
 {% if pageCount > 1 %}
-    <ul class="pagination flex justify-between">
+    <ul class="pagination flex justify-between basis-full">
         {% if previous is defined %}
-                 <li class="arrow">
-                     <a rel="prev" href="{{ path(route, query|merge({(pageParameterName): previous})) }}" class="rounded-l-lg bg-teal-500 text-slate-100 px-2">&laquo; {{ 'label_previous'|trans({}, 'KnpPaginatorBundle') }}</a>
-                 </li>
+          <li class="arrow">
+              <a rel="prev" href="{{ path(route, query|merge({(pageParameterName): previous})) }}" class="rounded-l-lg bg-slate-500 text-slate-100 py-1 px-2">&laquo; {{ 'label_previous'|trans({}, 'KnpPaginatorBundle') }}</a>
+          </li>
         {% else %}
             <li class="arrow unavailable">
                 <a>
@@ -30,7 +30,7 @@
         {% for page in pagesInRange %}
             {% if page != current %}
                 <li>
-                    <a href="{{ path(route, query|merge({(pageParameterName): page})) }}" class="rounded-lg bg-teal-500 text-slate-100 px-2">
+                    <a href="{{ path(route, query|merge({(pageParameterName): page})) }}" class="rounded-lg bg-slate-500 text-slate-100 py-1 px-2">
                         {{ page }}
                     </a>
                 </li>
@@ -57,13 +57,13 @@
                 {% endif %}
             {% endif %}
             <li>
-                <a href="{{ path(route, query|merge({(pageParameterName): pageCount})) }}" class="rounded-lg bg-teal-500 text-slate-100 px-2">{{ pageCount }}</a>
+                <a href="{{ path(route, query|merge({(pageParameterName): pageCount})) }}" class="rounded-lg bg-slate-500 text-slate-100 py-1 px-2">{{ pageCount }}</a>
             </li>
         {% endif %}
 
         {% if next is defined %}
             <li class="arrow">
-                <a rel="next" href="{{ path(route, query|merge({(pageParameterName): next})) }}" class="rounded-r-lg bg-teal-500 text-slate-100 px-2">
+                <a rel="next" href="{{ path(route, query|merge({(pageParameterName): next})) }}" class="rounded-r-lg bg-slate-500 text-slate-100 py-1 px-2">
                     {{ 'label_next'|trans({}, 'KnpPaginatorBundle') }} &nbsp;&raquo;
                 </a>
             </li>

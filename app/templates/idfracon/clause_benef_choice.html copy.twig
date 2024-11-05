@@ -1,0 +1,26 @@
+{% extends 'raw.html.twig' %}
+
+{% block title %}Clause beneficiare :
+{% endblock %}
+
+{% block content %}
+
+	<div class="content w-4/5">
+		<div style="display: flex; justify-content: flex-start; align-items: center; margin-bottom: 20px; width: 400px; height: 120px;">
+			<img src='images/LOGO_leguay.png' alt="Logo" style="width: 400px; height: 120px;">
+		</div>
+		<h1>Choisir le type de clause :</h1>
+		<div class="flex justify-center bg-slate-200 p-5 w-full">
+			<div class="flex flex-col">
+				<div class="card w-full p-3 m-3">
+					<h3>Choix par defaut</h3>
+					<div>Ce choix valide la clause par defaut ne demande aucune modification.</div>
+					<a href="#">choix par default</a>
+				</div>
+				<div class="card w-full p-3 m-3">
+					<a href="#">choix particulier</a>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

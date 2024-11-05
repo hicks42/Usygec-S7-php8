@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\User;
 use League\Csv\Reader;
 use App\Form\EmailCsvType;
-use App\Service\MailJetService;
 use App\Form\ChangeMailFormType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -22,13 +21,12 @@ class AccountController extends AbstractController
   private $mailService;
   private $security;
 
-  public function __construct(Security $security, MailJetService $mailService)
+  public function __construct(Security $security)
   {
-    $this->mailService = $mailService;
     $this->security = $security;
   }
 
-  #[Route("/ezreview/accounts", name:"accounts_index")]
+  #[Route("/ezreview/accounts", name: "accounts_index")]
   #[IsGranted('ROLE_ADMIN')]
   public function index(UserRepository $userRepo): Response
   {
@@ -37,7 +35,7 @@ class AccountController extends AbstractController
     return $this->render('ezreview/account/account_index.html.twig', compact('users'));
   }
 
-  #[Route("/ezreview/account/{id<[0-9]+>}/edit", name:"account_edit", methods:[ "GET", "POST"])]
+  #[Route("/ezreview/account/{id<[0-9]+>}/edit", name: "account_edit", methods: ["GET", "POST"])]
   #[IsGranted('ROLE_ADMIN')]
   public function edit(Request $request, EntityManagerInterface $em, User $user): Response
   {
@@ -62,7 +60,7 @@ class AccountController extends AbstractController
     ]);
   }
 
-  #[Route("/account/{id<\d+>}/delete", name:"account_delete", methods:["POST"])]
+  #[Route("/account/{id<\d+>}/delete", name: "account_delete", methods: ["POST"])]
   #[IsGranted('ROLE_ADMIN')]
   public function delete(Request $request, EntityManagerInterface $em, User $user): Response
   {

@@ -32,6 +32,10 @@
   }
 
   .btn-sm {
-    @apply text-sm w-auto px-2 py-1;
+    @apply text-sm w-auto px-1 py-1;
+  }
+
+  .sort-control {
+    @apply text-yellow-400;
   }
 }

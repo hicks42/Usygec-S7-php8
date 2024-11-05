@@ -158,7 +158,7 @@ class EzreviewController extends AbstractController
         'noreply@usygec.fr',                    //from
         $userMail,                              //to
         'Retour de l\'enquète de satisfaction', //subject
-        'badreview_template',                   //template
+        'survey_return',                        //template
         $context                                //context
       );
       $this->addFlash('success', 'Votre mail a bien été envoyé');

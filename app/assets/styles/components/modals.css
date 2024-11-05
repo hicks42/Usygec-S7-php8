@@ -1,6 +1,6 @@
 @layer components {
   .modal-container {
-    @apply fixed top-0 left-0  opacity-0 w-full h-screen flex justify-center transition-all items-center pointer-events-none;
+    @apply fixed top-0 left-0 opacity-0 w-full h-screen flex justify-center transition-all items-center pointer-events-none z-20;
   }
 
   .modal-container.active {

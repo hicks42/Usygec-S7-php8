@@ -1,0 +1,48 @@
+{% extends 'raw.html.twig' %}
+
+{% block title %}Choix particulier
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<script type="module">
+		import '{{ asset('js/idefracon_clause.js') }}';
+    import '{{ asset('js/modal.js') }}';
+	</script>
+{% endblock javascripts %}
+
+{% block content %}
+	<div class="content w-4/5">
+		<div class="flex justify-center bg-slate-200 m-3 p-5 w-full">
+			<div class="flex flex-col">
+				<h1>Choisir le type de clause bénéficiaire:</h1>
+
+				{% for clause in clauses %}
+					<div id="clause_{{ clause.id }}" class="card relative p-3 m-3 hover:shadow-sm hover:border-slate-400">
+						<h3>{{ clause.name }}</h3>
+						{{ clause.description }}
+
+						{% if clause.modal is not null %}
+							<a href="#" data-id="{{ clause.id }}" data-modal-type="{{ clause.modal }}" class="modal-btn absolute inset-0 z-10"></a>
+						{% else %}
+
+							<a href="{{ path('app_final_recap', {"clauseId": clause.id}) }}" class="clause-btn absolute inset-0 z-10"></a>
+							{# {% include 'idfracon/traits/_modal_standard.html.twig' with { 'data': clause, 'modal_id': 'modal_' ~ clause.id } %} #}
+
+						{% endif %}
+					</div>
+
+				{% else %}
+					<div class="flex justify-center my-8">
+						<h3>Il n'y a pas de clauses enregistrée dans le systeme.</h3>
+					</div>
+				{% endfor %}
+
+			</div>
+		</div>
+	</div>
+
+	{% include 'idfracon/form/_modal_id_form.html.twig' %}
+	{% include 'idfracon/form/_modal_clause_part_form.html.twig' %}
+
+{% endblock %}

@@ -5,7 +5,7 @@ services:
       context: ./docker
     # environment:
     #   - DEBIAN_FRONTEND=noninteractive
-    container_name: SYMFONY-6-www-container
+    container_name: USYGEC-S7-www-container
     ports:
       - "8080:80"
       - "443:443"

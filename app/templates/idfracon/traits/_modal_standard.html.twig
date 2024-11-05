@@ -1,0 +1,12 @@
+<div id="{{ modal_id }}" class="modal-container flex justify-around">
+	<div class="modal-popup">
+		<button class="close-popup">x</button>
+		<div id="modal-content" class="flex justify-center w-full my-8">
+			<div class="w-full">
+				<div class="w-full bg-slate-200 p-5">
+					{% include 'idfracon/traits/_clause_recap.html.twig' with { 'clause': clause } %}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
