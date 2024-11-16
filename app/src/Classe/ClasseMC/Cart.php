@@ -6,6 +6,8 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class Cart
 {
+  private $session;
+
   public function __construct(SessionInterface $session)
   {
     $this->session = $session;
@@ -15,7 +17,7 @@ class Cart
   {
     $cart = $this->session->get('cart', []);
 
-    if(!empty($cart[$id]))    {
+    if (!empty($cart[$id])) {
       $cart[$id]++;
     } else {
       $cart[$id] = 1;

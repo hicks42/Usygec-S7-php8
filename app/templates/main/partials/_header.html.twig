@@ -10,8 +10,10 @@
 		</a>
 	</div>
 	<div class="w-4/5 flex justify-end">
-		{% if user is defined %}
+		{% if app.user %}
 			{{ include('main/partials/_connexion.html.twig') }}
+    {# {% elseif app.user is same as("adrien.leguay@leguayassurances.com") %}
+			{{ include('main/partials/_header_idfracon.html.twig') }} #}
 		{% else %}
 			{{ include('main/partials/_sub_menu.html.twig') }}
 		{% endif %}

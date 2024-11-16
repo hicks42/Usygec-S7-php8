@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Changer de mot de passe
+{% endblock %}
+
+{% block content %}
+	<div class="card p-3">
+		<h1>Changer de mot de passe
+{% if user is defined %} pour {{ user.nickName }}
+{% endif %}</h1>
+		<div class="flex justify-center">
+			{{ form_start(resetForm) }}
+			{{ form_row(resetForm.plainPassword) }}
+			<div class="flex justify-center w-full my-3">
+				<button class="btn btn-primary">Changer</button>
+			</div>
+			{{ form_end(resetForm) }}
+		</div>
+	</div>
+{% endblock %}

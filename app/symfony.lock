@@ -383,7 +383,7 @@
         ]
     },
     "symfonycasts/reset-password-bundle": {
-        "version": "1.22",
+        "version": "1.23",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "main",
