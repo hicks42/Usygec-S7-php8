@@ -4,14 +4,16 @@ namespace App\Controller\ControllerIdFraCon;
 
 use App\Entity\EntityIdFraCon\Clauses;
 use App\Form\FormIdFraCon\ClausesType;
-use App\Repository\RepositoryIdFraCon\ClausesRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use App\Repository\RepositoryIdFraCon\ClausesRepository;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/clauses')]
+#[IsGranted('ROLE_IDFRACON')]
 class ClausesController extends AbstractController
 {
   #[Route('/', name: 'app_clauses_index', methods: ['GET'])]

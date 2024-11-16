@@ -12,6 +12,7 @@ use App\Form\FormIdFraCon\ClauseParticuliereType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Session\Session;
 use App\Repository\RepositoryIdFraCon\ClausesRepository;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -19,10 +20,20 @@ class IdFraConController extends AbstractController
 {
 
   #[Route('/idfracon', name: 'app_idfracon')]
+  #[IsGranted('ROLE_IDFRACON')]
   public function index(SessionInterface $session): Response
   {
     $session->clear();
     return $this->render('idfracon/index.html.twig', [
+      'controller_name' => 'IdfraconController',
+    ]);
+  }
+
+  #[Route('/idfracon/entry', name: 'app_entry')]
+  public function idfracon(SessionInterface $session): Response
+  {
+    $session->clear();
+    return $this->render('idfracon/entry.html.twig', [
       'controller_name' => 'IdfraconController',
     ]);
   }
