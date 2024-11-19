@@ -11,17 +11,14 @@ document.addEventListener("DOMContentLoaded", function () {
     const form = document.querySelector(`form[name="${formName}"]`);
     form.appendChild(hiddenInput);
 
-    if (form && clauseId) {
-      const actionUrl = `/select-clause/${clauseId}`;
-      console.log(`Action définie pour le formulaire : ${actionUrl}`);
-    }
-
     document.querySelectorAll(".submit-modal").forEach((submitButton) => {
       submitButton.addEventListener("click", function (event) {
         event.preventDefault();
 
         const form = submitButton.closest("form");
         if (form) {
+          const actionUrl = `/select-clause/${clauseId}`;
+          console.log(`Action définie pour le formulaire : ${actionUrl}`);
           form.submit();
         }
       });

@@ -9,21 +9,21 @@
 	{% endif %}
 
 	<div class="my-0">
-		<ul class="list-none mx-2">
+		<ul class="list-none flex flex-col justify-evenly mx-2">
 			{% if is_granted('ROLE_ADMIN') %}
-				<li class="text-gray-500 p-1">
-					<a href="{{ path('app_register') }}" class="font-ubuntu text-base mt-1 p-2">
-						<i class="fa-solid fa-user-plus me-1"></i>Utilisateur</a>
+				<li class="my-1">
+					<a href="{{ path('app_register') }}" class="bg-purple-300 m-1 border border-slate-400 rounded font-ubuntu p-1">
+						<i class="fa-solid fa-user-plus me-1"></i></a>
 				</li>
-				<li class="text-gray-500 p-1">
-					<a href="{{ path('accounts_index') }}" class="font-ubuntu text-base mt-1 p-2">
-						<i class="fa-solid fa-eye me-1"></i>Utilisateurs</a>
+				<li class="my-1">
+					<a href="{{ path('accounts_index') }}" class="bg-purple-300 m-1 border border-slate-400 rounded font-ubuntu p-1">
+						<i class="fa-solid fa-users me-1"></i></a>
 				</li>
 			{% endif %}
 		</ul>
 	</div>
 
-	<div class="my-0">
+	<div class="my-0 p-1">
 		<ul class="list-none mx-2">
 			{% if app.user %}
 				{% if 'ROLE_ADMIN' in app.user.roles %}
@@ -39,13 +39,13 @@
 							{{ app.user.nickName }}</span>
 					</li>
 				{% endif %}
-				<li class="text-gray-500">
-					<div class="d-flax justify-between">
-						<a href=" {{ path('lobby')}}" class="font-ubuntu text-base mt-1">
-							<i class="fa-solid fa-door-open me-1"></i>
+				<li>
+					<div class="d-flax justify-between mt-1">
+						<a href=" {{ path('lobby')}}" class="font-ubuntu text-base mt-1 me-2">
+							<i class="fa-solid fa-door-open"></i>
 							Lobby</a>
 						<a href="#" onclick="event.preventDefault(); document.getElementById('js-logout-form').submit();" class="font-ubuntu text-base mt-1">
-							<i class="fas fa-sign-out-alt ms-2"></i>
+							<i class="fas fa-sign-out-alt"></i>
 							Déconnexion</a>
 					</div>
 				</li>

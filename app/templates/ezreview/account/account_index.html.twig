@@ -13,39 +13,38 @@
 			<div>On peut également supprimer les utilisateurs et leurs dependences.</div>
 			<div class="flex flex-col mt-3">
 				<div class="flex flex-row bg-zinc-500 rounded text-white text-center font-spartan text-lg">
-					<span class="basis-9/12 text-start mt-1 ps-8">Compte</span>
+					<span class="basis-10/12 text-start mt-1 ps-8">Compte</span>
 					<span class="basis-1/12 text-center mt-1">
 						<i class="fa-solid fa-pen-to-square"></i>
 					</span>
-					<span class="basis-1/12 text-center mt-1">
+					{# <span class="basis-1/12 text-center mt-1">
 						<i class="fa-solid fa-pen-to-square"></i>
-					</span>
+					</span> #}
 					<span class="basis-1/12 text-center mt-1">
 						<i class="fa-solid fa-trash-can"></i>
 					</span>
 				</div>
 				{% for user in users %}
 					<div class="flex flex-row align-items-center mt-3 border-bottom text-lg">
-						<div class="basis-9/12">
-						<a href=" {{ path('lobby', {'_switch_user': user.email})}}" class="link-secondary flex justify-start align-middle mt-1 ms-2">
-						  <span class="btn bg-transparent btn-sm align-middle"><svg class="size-6"  fill="lightgrey"><use xlink:href="{{ asset('icons/icons.svg') }}#icon-tray-down"  transform="rotate(270, 12, 12)"></use></svg></span>
-            <div class="align-middle ms-2">{{ user.email }}</div>
+						<div class="basis-10/12">
+						<a href=" {{ path('lobby', {'_switch_user': user.email})}}" class="link-secondary flex justify-start align-middle m-0 ms-2">
+						  <span class="btn bg-transparent btn-sm align-middle overflow-hidden"><svg class="size-6"  fill="lightgrey"><use xlink:href="{{ asset('icons/icons.svg') }}#icon-tray-down"  transform="rotate(270, 12, 12)"></use></svg></span>
+            <div class="align-middle ms-2 mt-2">{{ user.email }}</div>
 							</a>
 						</div>
 						<span class="basis-1/12 text-center">
-							<a href="{{ path('account_edit', {id: user.id}) }}" class="btn btn-sm btn-secondary">
+							<a href="{{ path('account_edit', {id: user.id}) }}" class="btn btn-sm btn-secondary p-1 m-0">
 								<i class="fa-solid fa-gear"></i>
 							</a>
 						</span>
-						<span class="basis-1/12 text-center">
+						{# <span class="basis-1/12 text-center">
 							<a href="{{ path('app_admin_reset_password', {id: user.id}) }}" class="btn btn-secondary btn-sm">
 								<i class="fa-solid fa-lock"></i>
 							</a>
-						</span>
-						<span class="basis-1/12 text-center align-middle">
-							{# <a href="{{ path('account_delete', {id: user.id}) }}" class="btn btn-sm btn-danger m-2">&times; Supprimer</a> #}
+						</span> #}
+						<span class="basis-1/12 text-center">
 							{% if 'ROLE_ADMIN' not in user.roles %}
-								<a href="#" onclick="event.preventDefault(); confirm('Confirmez la suppression de {{user.email}} ?') && document.getElementById('js-user-delete-form-{{user.id}}').submit();" class="btn btn-sm btn-danger">
+								<a href="#" onclick="event.preventDefault(); confirm('Confirmez la suppression de {{user.email}} ?') && document.getElementById('js-user-delete-form-{{user.id}}').submit();" class="btn btn-sm btn-danger p-1 m-0">
 									<i class="fa-solid fa-trash-can"></i>
 								</a>
 								<form id="js-user-delete-form-{{user.id}}" action="{{ path('account_delete', {id: user.id}) }}" method="post" style="display: none;">
@@ -53,9 +52,7 @@
 									<input type="hidden" name="_method" value="POST">
 								</form>
 							{% else %}
-								<span class="basis-1/12 lead m-2 text-center">
 									<i class="fa-solid fa-ban text-muted"></i>
-								</span>
 							{% endif %}
 						</span>
 					</div>

@@ -3,12 +3,15 @@
 namespace App\Form\FormIdFraCon;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Validator\Constraints\LessThanOrEqual;
 
 class IdentityType extends AbstractType
 {
@@ -37,18 +40,28 @@ class IdentityType extends AbstractType
           'class' => 'form-row w-full xl:w-1/2'
         ]
       ])
-      ->add('birthDate', TextType::class, [
+      ->add('birthDate', DateType::class, [
         'label' => 'Date de naissance',
-        // 'widget' => 'single_text',
-        // 'format' => 'yyyy-MM-dd',
-        // 'html5' => false,
+        'widget' => 'single_text',
+        'format' => 'dd/MM/yyyy',
+        'html5' => false,
         'label_attr' => ['class' => 'text-gray-500 mt-4'],
-        'attr' => [
-          'placeholder' => 'Indiquez sa date de naissance',
-          'class' => 'form-control w-full xl:me-2'
-        ],
         'row_attr' => [
           'class' => 'form-row w-full xl:w-1/2'
+        ],
+        'attr' => [
+          'placeholder' => 'jj/mm/aaaa',
+          'class' => 'form-control w-full'
+        ],
+        'constraints' => [
+          new Regex([
+            'pattern' => '/^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/(\d{4})$/',
+            'message' => 'Veuillez entrer une date valide au format jj/mm/aaaa.',
+          ]),
+          new LessThanOrEqual([
+            'value' => 'today',
+            'message' => 'L\'année ne peut pas être supérieure à l\'année en cours.',
+          ])
         ]
       ])
       ->add('birthPlace', TextType::class, [
@@ -126,7 +139,18 @@ class IdentityType extends AbstractType
         'attr' => [
           'class' => 'submit-modal btn btn-primary my-5'
         ]
-      ]);;
+      ]);
+    // Transformer la date en instance DateTime
+    $builder->get('birthDate')->addModelTransformer(new CallbackTransformer(
+      function ($dateAsString) {
+        // Transforme le string en DateTime
+        return $dateAsString ? \DateTime::createFromFormat('d/m/Y', $dateAsString) : null;
+      },
+      function ($dateAsDateTime) {
+        // Transforme l'instance DateTime en string pour le formulaire
+        return $dateAsDateTime ? $dateAsDateTime->format('d/m/Y') : null;
+      }
+    ));
   }
 
   public function configureOptions(OptionsResolver $resolver): void
