@@ -1,0 +1,318 @@
+/* EZReview - Styles pour la page d'enquête de satisfaction */
+/* Design mobile-first moderne */
+
+.ezr-survey {
+  font-family: var(--ezr-font-family);
+  background: linear-gradient(135deg, var(--ezr-gray-50) 0%, var(--ezr-gray-100) 100%);
+  min-height: 100vh;
+  color: var(--ezr-gray-800);
+}
+
+/* Header avec image de l'établissement */
+.ezr-survey-header {
+  position: relative;
+  height: 40vh;
+  min-height: 250px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ezr-survey-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, 
+    rgba(30, 64, 175, 0.8) 0%, 
+    rgba(59, 130, 246, 0.6) 100%);
+  z-index: 1;
+}
+
+.ezr-survey-header-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: white;
+  padding: var(--ezr-spacing-6);
+}
+
+.ezr-survey-title {
+  font-size: var(--ezr-font-size-3xl);
+  font-weight: 700;
+  margin-bottom: var(--ezr-spacing-3);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.ezr-survey-subtitle {
+  font-size: var(--ezr-font-size-lg);
+  opacity: 0.95;
+  font-weight: 500;
+}
+
+/* Contenu principal */
+.ezr-survey-content {
+  max-width: 600px;
+  margin: -60px auto 0;
+  position: relative;
+  z-index: 3;
+  padding: 0 var(--ezr-spacing-4);
+}
+
+.ezr-survey-card {
+  background: white;
+  border-radius: var(--ezr-radius-xl);
+  box-shadow: var(--ezr-shadow-xl);
+  padding: var(--ezr-spacing-8);
+  margin-bottom: var(--ezr-spacing-6);
+}
+
+/* Message d'accueil */
+.ezr-welcome-message {
+  text-align: center;
+  margin-bottom: var(--ezr-spacing-8);
+}
+
+.ezr-welcome-message h2 {
+  font-size: var(--ezr-font-size-2xl);
+  color: var(--ezr-primary-dark);
+  font-weight: 600;
+  margin-bottom: var(--ezr-spacing-4);
+}
+
+.ezr-welcome-text {
+  color: var(--ezr-gray-600);
+  line-height: 1.6;
+  margin-bottom: var(--ezr-spacing-3);
+}
+
+.ezr-establishment-name {
+  color: var(--ezr-primary);
+  font-weight: 600;
+}
+
+/* Call-to-Action principal */
+.ezr-survey-cta {
+  text-align: center;
+  padding: var(--ezr-spacing-8) var(--ezr-spacing-6);
+  background: linear-gradient(135deg, var(--ezr-primary), var(--ezr-primary-light));
+  border-radius: var(--ezr-radius-lg);
+  color: white;
+  margin: var(--ezr-spacing-6) 0;
+}
+
+.ezr-survey-cta h3 {
+  font-size: var(--ezr-font-size-xl);
+  font-weight: 600;
+  margin-bottom: var(--ezr-spacing-4);
+}
+
+.ezr-survey-cta p {
+  margin-bottom: var(--ezr-spacing-6);
+  opacity: 0.9;
+}
+
+.ezr-cta-button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ezr-spacing-2);
+  background: white;
+  color: var(--ezr-primary);
+  padding: var(--ezr-spacing-4) var(--ezr-spacing-8);
+  border-radius: var(--ezr-radius-full);
+  font-weight: 600;
+  font-size: var(--ezr-font-size-lg);
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+}
+
+.ezr-cta-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Informations de confidentialité */
+.ezr-privacy-info {
+  background: var(--ezr-gray-50);
+  border-left: 4px solid var(--ezr-secondary);
+  padding: var(--ezr-spacing-4);
+  border-radius: 0 var(--ezr-radius) var(--ezr-radius) 0;
+  margin: var(--ezr-spacing-6) 0;
+}
+
+.ezr-privacy-title {
+  display: flex;
+  align-items: center;
+  gap: var(--ezr-spacing-2);
+  font-size: var(--ezr-font-size-base);
+  font-weight: 600;
+  color: var(--ezr-secondary);
+  margin-bottom: var(--ezr-spacing-2);
+}
+
+.ezr-privacy-text {
+  font-size: var(--ezr-font-size-sm);
+  color: var(--ezr-gray-600);
+  line-height: 1.5;
+}
+
+/* Avantages pour l'utilisateur */
+.ezr-benefits {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--ezr-spacing-4);
+  margin: var(--ezr-spacing-6) 0;
+}
+
+.ezr-benefit-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--ezr-spacing-3);
+  padding: var(--ezr-spacing-4);
+  background: var(--ezr-gray-50);
+  border-radius: var(--ezr-radius-lg);
+}
+
+.ezr-benefit-icon {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, var(--ezr-primary), var(--ezr-primary-light));
+  border-radius: var(--ezr-radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: white;
+}
+
+.ezr-benefit-content h4 {
+  font-size: var(--ezr-font-size-base);
+  font-weight: 600;
+  color: var(--ezr-gray-800);
+  margin-bottom: var(--ezr-spacing-1);
+}
+
+.ezr-benefit-content p {
+  font-size: var(--ezr-font-size-sm);
+  color: var(--ezr-gray-600);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Footer de la page d'enquête */
+.ezr-survey-footer {
+  text-align: center;
+  padding: var(--ezr-spacing-8) var(--ezr-spacing-4);
+  color: var(--ezr-gray-500);
+}
+
+.ezr-survey-footer p {
+  font-size: var(--ezr-font-size-sm);
+  margin: var(--ezr-spacing-2) 0;
+}
+
+.ezr-powered-by {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ezr-spacing-2);
+  font-weight: 500;
+  color: var(--ezr-primary);
+}
+
+/* Animations */
+.ezr-fade-in-up {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.ezr-survey-card {
+  animation: fadeInUp 0.8s ease-out 0.2s both;
+}
+
+/* Responsive Design */
+@media (min-width: 768px) {
+  .ezr-survey-title {
+    font-size: var(--ezr-font-size-4xl);
+  }
+  
+  .ezr-survey-subtitle {
+    font-size: var(--ezr-font-size-xl);
+  }
+  
+  .ezr-survey-content {
+    max-width: 700px;
+  }
+  
+  .ezr-survey-card {
+    padding: var(--ezr-spacing-10);
+  }
+  
+  .ezr-benefits {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (min-width: 1024px) {
+  .ezr-survey-header {
+    height: 50vh;
+  }
+  
+  .ezr-survey-content {
+    max-width: 800px;
+  }
+}
+
+/* États de chargement */
+.ezr-loading {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Mode sombre pour les appareils qui le préfèrent */
+@media (prefers-color-scheme: dark) {
+  .ezr-survey {
+    background: linear-gradient(135deg, var(--ezr-gray-900) 0%, var(--ezr-gray-800) 100%);
+    color: var(--ezr-gray-100);
+  }
+  
+  .ezr-survey-card {
+    background: var(--ezr-gray-800);
+    color: var(--ezr-gray-100);
+  }
+  
+  .ezr-welcome-message h2 {
+    color: var(--ezr-primary-light);
+  }
+  
+  .ezr-benefit-item {
+    background: var(--ezr-gray-700);
+  }
+}

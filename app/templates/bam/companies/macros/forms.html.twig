@@ -4,18 +4,18 @@
         {{ form_errors(form.name) }}
 	{{ form_row(form.description) }}
         {{ form_errors(form.description) }}
-	<div class="flex flex-col md:flex-row justify-between mt-1">
-		<div class="flex flex-col md:flex-row md:basis-4/12 basis-full justify-between mb-1">
+	<div class="flex flex-col md:flex-row md:gap-4 mt-1">
+		<div class="flex flex-col basis-full md:basis-1/2 mb-1">
 			{{ form_label(form.reminder) }}{{ form_widget(form.reminder, { 'id': 'reminder-' ~ form.vars.id }) }}
 		</div>
-		<div class="flex flex-col md:flex-row md:basis-4/12 basis-full justify-between mb-1">
+		<div class="flex flex-col basis-full md:basis-1/2 mb-1">
 			{{ form_label(form.dueDate) }}{{ form_widget(form.dueDate, { 'id': 'dueDate-' ~ form.vars.id }) }}
 		</div>
-		<div class="activity-buttons flex md:basis-4/12 basis-full justify-around mb-1">
-			<span class="new-active" style="display: none;">
-				{{ form_row(form.isActive, { 'checked': 'checked' }) }}
-			</span>
-		</div>
+	</div>
+	<div class="activity-buttons flex justify-around mt-2">
+		<span class="new-active" style="display: none;">
+			{{ form_row(form.isActive, { 'checked': 'checked' }) }}
+		</span>
 	</div>
 {% endmacro newForm %}
 
@@ -26,14 +26,14 @@
         {{ form_errors(form.name) }}
 		{{ form_row(form.description)}}
         {{ form_errors(form.description) }}
-		<div id="{{ form.vars.name }}" class="flex flex-col md:flex-row md:justify-between mt-1">
-			<div class="flex flex-col md:flex-row md:basis-4/12 basis-full justify-between mb-1">
+		<div id="{{ form.vars.name }}" class="flex flex-col md:flex-row md:gap-4 mt-1">
+			<div class="flex flex-col basis-full md:basis-1/2 mb-1">
 				{{ form_label(form.reminder) }}{{ form_widget(form.reminder, { 'id': 'reminder-' ~ form.vars.id }) }}
 			</div>
-			<div class="flex flex-col md:flex-row md:basis-4/12 basis-full justify-between mb-1">
+			<div class="flex flex-col basis-full md:basis-1/2 mb-1">
 				{{ form_label(form.dueDate) }}{{ form_widget(form.dueDate, { 'id': 'dueDate-' ~ form.vars.id }) }}
 			</div>
-			<div class="activity-buttons md:basis-4/12 basis-full flex justify-around mb-1"></div>
 		</div>
+		<div class="activity-buttons flex justify-around mt-2"></div>
 	</div>
 {% endmacro existForm %}

@@ -17,29 +17,37 @@ class ContactController extends AbstractController
     {
         $form = $this->createForm(ContactType::class);
         $contact = $form->handleRequest($request);
-        $sujet = $contact->get('subject')->getData();
 
-        // dd($contact->get('e_mail')->getData());   //OK
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                try {
+                    $context = [
+                        'mail' => $contact->get('email')->getData(),
+                        'name' => $contact->get('name')->getData(),
+                        'phone' => $contact->get('phone')->getData(),
+                        'subject' => $contact->get('subject')->getData(),
+                        'message' => $contact->get('message')->getData(),
+                    ];
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $context = [
-                'mail' => $contact->get('email')->getData(),
-                'name' => $contact->get('name')->getData(),
-                'phone' => $contact->get('phone')->getData(),
-                'subject' => $contact->get('subject')->getData(),
-                'message' => $contact->get('message')->getData(),
-            ];
+                    $sujet = $contact->get('subject')->getData();
 
-            $mailService->send(
-                $contact->get('email')->getData(),  //from
-                'p.gerin@usygec.fr',                //to
-                'Mail de usygec.fr : ' . $sujet,    //subject
-                'contact_template',                 //template
-                $context                            //context
-            );
+                    $mailService->send(
+                        'site-usygec@usygec.fr',            //from (domaine authentifié)
+                        'p.gerin@usygec.fr',                //to
+                        'Mail de usygec.fr : ' . $sujet,    //subject
+                        'contact_template',                 //template
+                        $context,                           //context
+                        $contact->get('email')->getData()   //replyTo (adresse du visiteur)
+                    );
 
-            $this->addFlash('success', 'Votre mail a bien été envoyé');
-            return $this->redirectToRoute('home');
+                    $this->addFlash('success', 'Votre mail a bien été envoyé');
+                    return $this->redirectToRoute('home');
+                } catch (\Exception $e) {
+                    $this->addFlash('error', 'Erreur lors de l\'envoi : ' . $e->getMessage());
+                }
+            } else {
+                $this->addFlash('error', 'Le formulaire contient des erreurs. Veuillez vérifier les champs.');
+            }
         }
 
         return $this->render('main/contact.html.twig', [

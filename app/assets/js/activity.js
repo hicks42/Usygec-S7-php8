@@ -18,6 +18,10 @@ document.addEventListener("DOMContentLoaded", function () {
     collectionHolder.dataset.index++;
     formBtns(item);
     window.initializeFlatpickr(item.querySelectorAll(".flatpickr"));
+    // Initialiser l'auto-resize pour les nouveaux textareas
+    if (window.initAutoResizeTextareas) {
+      window.initAutoResizeTextareas();
+    }
     item.scrollIntoView({ behavior: "smooth" });
   };
 
@@ -38,18 +42,42 @@ document.addEventListener("DOMContentLoaded", function () {
     saveButton.type = "submit";
 
     const btnsRow = item.querySelector(".activity-buttons");
-    btnsRow.insertAdjacentElement("afterbegin", trashButton);
-    btnsRow.insertAdjacentElement("beforeend", saveButton);
+    if (btnsRow) {
+      btnsRow.insertAdjacentElement("afterbegin", trashButton);
+      btnsRow.insertAdjacentElement("beforeend", saveButton);
 
-    trashButton.addEventListener("click", (e) => {
-      e.preventDefault();
-      item.remove();
-    });
+      trashButton.addEventListener("click", (e) => {
+        e.preventDefault();
+        item.remove();
+      });
 
-    saveButton.addEventListener("click", (e) => {
-      e.preventDefault();
-      saveSituation(item);
-    });
+      saveButton.addEventListener("click", (e) => {
+        e.preventDefault();
+        saveSituation(item);
+      });
+    } else {
+      // Si pas de btnsRow, créer une div pour les boutons
+      const btnsContainer = document.createElement("div");
+      btnsContainer.className = "activity-buttons flex justify-around mt-2";
+      btnsContainer.appendChild(trashButton);
+      btnsContainer.appendChild(saveButton);
+
+      // Chercher le conteneur parent pour ajouter les boutons
+      const dateContainer = item.querySelector(".flex.flex-col.md\\:flex-row");
+      if (dateContainer) {
+        dateContainer.parentElement.appendChild(btnsContainer);
+      }
+
+      trashButton.addEventListener("click", (e) => {
+        e.preventDefault();
+        item.remove();
+      });
+
+      saveButton.addEventListener("click", (e) => {
+        e.preventDefault();
+        saveSituation(item);
+      });
+    }
   };
 
   document.querySelectorAll(".activity-card").forEach((item) => {

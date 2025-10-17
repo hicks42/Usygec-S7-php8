@@ -3,33 +3,28 @@
 namespace App\Service;
 
 use Twig\Environment;
-use App\Service\MailerService;
-use App\Service\PdfGeneratorService;
-use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Crypto\DkimSigner;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mime\Crypto\DkimOptions;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class SendMailService
 {
   private $twig;
   private MailerInterface $mailer;
-  private EntityManagerInterface $em;
   private $dkim_key_path;
   private $project_dir;
-  private $parameterBag;
+  private LoggerInterface $logger;
 
-  public function __construct(MailerInterface $mailer, EntityManagerInterface $em, Environment $twig, $dkim_key_path, $project_dir, ParameterBagInterface $parameterBag)
+  public function __construct(MailerInterface $mailer, Environment $twig, $dkim_key_path, $project_dir, LoggerInterface $logger)
   {
     $this->mailer = $mailer;
-    $this->em = $em;
     $this->twig = $twig;
     $this->dkim_key_path = $dkim_key_path;
     $this->project_dir = $project_dir;
-    $this->parameterBag = $parameterBag;
+    $this->logger = $logger;
   }
 
   public function send(
@@ -37,43 +32,68 @@ class SendMailService
     string $to,
     string $subject,
     string $template,
-    array $context
+    array $context,
+    ?string $replyTo = null
   ): void {
+    try {
+      $this->logger->info('Début de l\'envoi d\'email', [
+        'from' => $from,
+        'to' => $to,
+        'subject' => $subject,
+        'template' => $template,
+        'replyTo' => $replyTo
+      ]);
 
-    // On crée le mail
-    $email = (new TemplatedEmail())
-      ->from($from)
-      ->to($to)
-      ->subject($subject)
-      // ->htmlTemplate("emails/" . $template . ".html.twig")
-      ->html($this->twig->render(
-        "main/emails/" . $template . ".html.twig",
-        [
-          'context' => $context,
-        ]
-      ));
+      // On crée le mail
+      $email = (new TemplatedEmail())
+        ->from($from)
+        ->to($to)
+        ->subject($subject)
+        ->html($this->twig->render(
+          "main/emails/" . $template . ".html.twig",
+          [
+            'context' => $context,
+          ]
+        ));
 
-    //Pour faire passer le mail par mailjet
-    // $email->getHeaders()->addTextHeader('X-Transport', 'mailjet');
-    // $signer = new DkimSigner('file://'.dirname(__DIR__).$this->dkim_key_path, 'usygec.fr', 'email');
+      // Ajouter Reply-To si fourni
+      if ($replyTo) {
+        $email->replyTo($replyTo);
+      }
 
-    if ($this->parameterBag->get('kernel.environment') === 'prod') {
-      $signer = new DkimSigner('file://' . dirname(__DIR__) . '/../../DKIM_key.txt', 'usygec.fr', 'email');
-    } else {
-      $signer = new DkimSigner('file://' . $this->project_dir . $this->dkim_key_path, 'usygec.fr', 'email');
+      // Vérification de l'existence de la clé DKIM
+      $dkimKeyPath = $this->project_dir . $this->dkim_key_path;
+      if (!file_exists($dkimKeyPath)) {
+        $this->logger->error('Clé DKIM introuvable', ['path' => $dkimKeyPath]);
+        throw new \RuntimeException("Clé DKIM introuvable au chemin: {$dkimKeyPath}");
+      }
+
+      $this->logger->info('Signature DKIM du mail', ['dkim_path' => $dkimKeyPath]);
+
+      // Utiliser le chemin DKIM configuré dans .env pour tous les environnements
+      $signer = new DkimSigner('file://' . $dkimKeyPath, 'usygec.fr', 'email');
+
+      $signedEmail = $signer->sign(
+        $email,
+        (new DkimOptions())
+          ->bodyCanon('relaxed')
+          ->headerCanon('relaxed')
+          ->headersToIgnore(['Message-ID'])
+          ->toArray()
+      );
+
+      // On envoie le mail
+      $this->logger->info('Envoi du mail signé');
+      $this->mailer->send($signedEmail);
+      $this->logger->info('Mail envoyé avec succès');
+
+    } catch (\Exception $e) {
+      $this->logger->error('Erreur lors de l\'envoi du mail', [
+        'error' => $e->getMessage(),
+        'trace' => $e->getTraceAsString()
+      ]);
+      throw $e;
     }
-
-    $signedEmail = $signer->sign(
-      $email,
-      (new DkimOptions())
-        ->bodyCanon('relaxed')
-        ->headerCanon('relaxed')
-        ->headersToIgnore(['Message-ID'])
-        ->toArray()
-    );
-
-    // On envoie le mail
-    $this->mailer->send($signedEmail);
   }
 
   public function sendEmailWithPdf(

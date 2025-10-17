@@ -1,0 +1,111 @@
+<!-- Modal Time2Gether -->
+<div id="modal-t2g" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4" onclick="closeModal('t2g')">
+    <div class="bg-gray-900 rounded-2xl max-w-5xl w-full max-h-[90vh] overflow-y-auto modal-no-scrollbar border border-gray-700" onclick="event.stopPropagation()">
+        <div class="relative">
+            <!-- Header avec image -->
+            <div class="relative h-64 overflow-hidden">
+                <img src="{{ asset('images/time2gether/header_t2g_dark.jpg') }}" alt="Time2Gether Header" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent"></div>
+                <button onclick="closeModal('t2g')" class="absolute top-4 right-4 bg-gray-800/80 hover:bg-gray-700 text-white rounded-full p-2 transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="p-8">
+                <div class="flex items-center mb-6">
+                    <div class="w-16 h-16 rounded-xl overflow-hidden mr-4 border-2 border-blue-500">
+                        <img src="{{ asset('images/time2gether/icon.jpg') }}" alt="Time2Gether logo" class="w-full h-full object-cover">
+                    </div>
+                    <div>
+                        <span class="inline-block rounded-full bg-blue-500/20 border border-blue-500/30 px-3 py-1 text-xs font-medium text-blue-300 mb-2">
+                            React Native • Mobile
+                        </span>
+                        <h2 class="text-3xl font-bold text-white">Time2Gether</h2>
+                    </div>
+                </div>
+
+                <p class="text-gray-300 text-lg leading-relaxed mb-6">
+                    <strong>Time2Gether</strong> est une application mobile collaborative conçue pour simplifier l'organisation
+                    de moments entre amis, famille ou collègues. Fini les discussions interminables par messages :
+                    l'application permet de proposer des dates, destinations et activités, puis de décider ensemble
+                    grâce à un système de votes démocratiques.
+                </p>
+
+                <!-- Galerie d'images -->
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
+                    <div class="rounded-lg overflow-hidden border border-gray-700 cursor-pointer hover:opacity-80 transition-opacity" onclick="openImageZoom('{{ asset('images/time2gether/Projets.png') }}', 'Projets')">
+                        <img src="{{ asset('images/time2gether/Projets.png') }}" alt="Projets" class="w-full h-48 object-cover">
+                    </div>
+                    <div class="rounded-lg overflow-hidden border border-gray-700 cursor-pointer hover:opacity-80 transition-opacity" onclick="openImageZoom('{{ asset('images/time2gether/dates.png') }}', 'Dates')">
+                        <img src="{{ asset('images/time2gether/dates.png') }}" alt="Dates" class="w-full h-48 object-cover">
+                    </div>
+                    <div class="rounded-lg overflow-hidden border border-gray-700 cursor-pointer hover:opacity-80 transition-opacity" onclick="openImageZoom('{{ asset('images/time2gether/propdates.png') }}', 'Propositions')">
+                        <img src="{{ asset('images/time2gether/propdates.png') }}" alt="Propositions" class="w-full h-48 object-cover">
+                    </div>
+                    <div class="rounded-lg overflow-hidden border border-gray-700 cursor-pointer hover:opacity-80 transition-opacity" onclick="openImageZoom('{{ asset('images/time2gether/decisions.png') }}', 'Décisions')">
+                        <img src="{{ asset('images/time2gether/decisions.png') }}" alt="Décisions" class="w-full h-48 object-cover">
+                    </div>
+                    <div class="rounded-lg overflow-hidden border border-gray-700 cursor-pointer hover:opacity-80 transition-opacity" onclick="openImageZoom('{{ asset('images/time2gether/projet-explication.png') }}', 'Explication')">
+                        <img src="{{ asset('images/time2gether/projet-explication.png') }}" alt="Explication" class="w-full h-48 object-cover">
+                    </div>
+                </div>
+
+                <h3 class="text-xl font-bold text-white mb-4">Fonctionnalités principales</h3>
+                <div class="grid md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-gray-800 p-4 rounded-lg border border-gray-700">
+                        <div class="flex items-start">
+                            <svg class="w-6 h-6 text-blue-400 mt-1 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                            </svg>
+                            <div>
+                                <h4 class="font-semibold text-white mb-1">Système de votes</h4>
+                                <p class="text-sm text-gray-400">Proposez et votez pour des dates, lieux et activités</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-800 p-4 rounded-lg border border-gray-700">
+                        <div class="flex items-start">
+                            <svg class="w-6 h-6 text-blue-400 mt-1 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                            </svg>
+                            <div>
+                                <h4 class="font-semibold text-white mb-1">Notifications automatiques</h4>
+                                <p class="text-sm text-gray-400">Recevez des rappels et alertes pour ne rien manquer</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-800 p-4 rounded-lg border border-gray-700">
+                        <div class="flex items-start">
+                            <svg class="w-6 h-6 text-blue-400 mt-1 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                            </svg>
+                            <div>
+                                <h4 class="font-semibold text-white mb-1">Projets collaboratifs</h4>
+                                <p class="text-sm text-gray-400">Gérez plusieurs projets simultanément avec vos groupes</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-800 p-4 rounded-lg border border-gray-700">
+                        <div class="flex items-start">
+                            <svg class="w-6 h-6 text-blue-400 mt-1 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                            </svg>
+                            <div>
+                                <h4 class="font-semibold text-white mb-1">Interface intuitive</h4>
+                                <p class="text-sm text-gray-400">Design moderne et facile à utiliser sur mobile</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
+                    <p class="text-sm text-blue-300">
+                        <strong>Technologies :</strong> React Native, Expo, API REST, Notifications Push
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

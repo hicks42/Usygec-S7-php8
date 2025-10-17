@@ -37,7 +37,7 @@ class ChangePasswordFormType extends AbstractType
               'max' => 4096,
             ]),
             new PasswordStrength([
-              'minStrength' => 1,
+              'minScore' => PasswordStrength::STRENGTH_WEAK,
               'message' => 'Votre mot de passe doit contenir des lettres majuscules, des chiffres et des caractères spéciaux.',
             ]),
             new NotCompromisedPassword(),

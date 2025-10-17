@@ -12,13 +12,24 @@ if (is_array($env = @include dirname(__DIR__) . '/.env.local.php')) {
 }
 
 $authFiles = [
-  'vault/DKIM_key.txt' => 'DKIM_KEY',
-  'vault/db/password.txt' => 'DB_PASSWORD',
+  // DKIM & Mailgun
+  'vault/mailgun/dkim_private.key' => 'DKIM_KEY',
+  'vault/mailgun/api_key.txt' => 'MAILGUN_API_KEY',
+  'vault/mailgun/password.txt' => 'MAILGUN_PASSWORD',
+
+  // Database
+  'vault/database/credentials.txt' => 'DB_CREDENTIALS',
+  'vault/database/password.txt' => 'DB_PASSWORD',
+
+  // JWT
   'vault/jwt/private.pem' => 'JWT_PRIVATE_KEY',
   'vault/jwt/public.pem' => 'JWT_PUBLIC_KEY',
-  'vault/mailgun/password.txt' => 'MAILGUN_PASSWORD',
+
+  // Mailjet
   'vault/mailjet/private.txt' => 'MAILJET_PRIVATE_KEY',
   'vault/mailjet/public.txt' => 'MAILJET_PUBLIC_KEY',
+
+  // Recaptcha
   'vault/recaptcha/key.txt' => 'RECAPTCHA_KEY',
   'vault/recaptcha/secret.txt' => 'RECAPTCHA_SECRET',
 ];

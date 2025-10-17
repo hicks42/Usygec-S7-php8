@@ -1,12 +1,14 @@
-{% for type, messages in app.flashes(['success', 'error', 'info']) %}
+{% for type, messages in app.flashes(['success', 'error', 'info', 'warning']) %}
 	{% for message in messages %}
 		<div class="flash-container active" role="document">
-			<div class="alert alert-{{ type }} flex flex-col text-center p-5 rounded-pill" data="data" role="alert">
+			<div class="alert alert-{{ type }} flex flex-col text-center p-5 rounded-pill relative" data="data" role="alert">
 				<div class="text-center">
 					{% if type == 'success' %}
 						<img class="logo w-50" src="{{ asset('images/icones/ok-icon.png') }}" alt="Success"/>
 					{% elseif type == 'info' %}
 						<img class="logo w-50" src="{{ asset('images/icones/info-icon.png') }}" alt="Info"/>
+					{% elseif type == 'warning' %}
+						<img class="logo w-50" src="{{ asset('images/icones/info-icon.png') }}" alt="Warning"/>
 					{% elseif type == 'error' %}
 						<img class="logo w-50" src="{{ asset('images/icones/error-icon.png') }}" alt="Error"/>
 					{% endif %}
@@ -16,3 +18,21 @@
 		</div>
 	{% endfor %}
 {% endfor %}
+
+<script>
+	// Auto-fermeture des messages flash après 2 secondes
+	document.addEventListener('DOMContentLoaded', function() {
+		const flashContainers = document.querySelectorAll('.flash-container');
+		flashContainers.forEach(function(container) {
+			setTimeout(function() {
+				// Ajouter une animation de fade out
+				container.style.transition = 'opacity 0.5s ease-out';
+				container.style.opacity = '0';
+				// Supprimer l'élément après l'animation
+				setTimeout(function() {
+					container.remove();
+				}, 500);
+			}, 2000);
+		});
+	});
+</script>

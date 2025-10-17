@@ -114,19 +114,111 @@ class CompanyController extends AbstractController
     $formcsv = $this->createForm(CsvType::class);
     $formcsv->handleRequest($request);
 
-    if ($formcsv->isSubmitted() && $formcsv->isValid()) {
+    if ($formcsv->isSubmitted()) {
+      error_log('=== CSV Form submitted ===');
+
+      if (!$formcsv->isValid()) {
+        $errors = [];
+        foreach ($formcsv->getErrors(true) as $error) {
+          $errors[] = $error->getMessage();
+        }
+        error_log('Form validation errors: ' . implode(', ', $errors));
+        $this->addFlash('error', 'Formulaire invalide : ' . implode(', ', $errors));
+        return $this->redirectToRoute('app_companies', ["user" => $user], Response::HTTP_SEE_OTHER);
+      }
 
       /** @var UploadedFile */
       $csvFile = $formcsv->get('csvFile')->getData();
-      if ($csvFile) {
 
-        $companyCsvImporter->importCompaniesFromCsv($csvFile, $user);
-
-        $this->addFlash('success', 'Sociétés Enregistrée');
+      if (!$csvFile) {
+        error_log('No file uploaded');
+        $this->addFlash('error', 'Aucun fichier n\'a été téléchargé');
         return $this->redirectToRoute('app_companies', ["user" => $user], Response::HTTP_SEE_OTHER);
       }
-      $this->addFlash('error', 'Fichier non conforme');
-      return $this->redirectToRoute('ezreview_hp', ["user" => $user], Response::HTTP_SEE_OTHER);
+
+      error_log('Processing CSV file: ' . $csvFile->getClientOriginalName());
+
+      try {
+        $result = $companyCsvImporter->importCompaniesFromCsv($csvFile, $user);
+        error_log('Import result: ' . json_encode($result));
+
+        // Si succès complet (aucune erreur)
+        if ($result['count'] > 0 && empty($result['errors'])) {
+          if ($result['skipped'] > 0) {
+            $this->addFlash('success', sprintf('%d société(s) importée(s) avec succès, %d doublon(s) ignoré(s)',
+              $result['count'], $result['skipped']));
+          } else {
+            $this->addFlash('success', sprintf('%d société(s) importée(s) avec succès', $result['count']));
+          }
+          return $this->redirectToRoute('app_companies', ["user" => $user], Response::HTTP_SEE_OTHER);
+        }
+
+        // Si des erreurs existent, afficher la modal
+        if (!empty($result['errors'])) {
+          return $this->render('bam/companies/index.html.twig', [
+            'formcsv' => $formcsv->createView(),
+            'user' => $user,
+            'pagination' => $paginator->paginate(
+              $filteredResult,
+              $request->query->getInt('page', 1),
+              10
+            ),
+            'categories' => $categories,
+            'sort_order' => $sortOrder,
+            'sort_by' => $sortBy,
+            'name_sort_order' => $nameSortOrder,
+            'width_size' => 'full',
+            'csv_import_result' => $result
+          ]);
+        }
+
+        // Si aucune société importée mais pas d'erreurs structurelles
+        if ($result['count'] == 0) {
+          $this->addFlash('warning', sprintf(
+            'Aucune société importée. %d doublon(s) ignoré(s).',
+            $result['skipped']
+          ));
+        }
+
+        return $this->redirectToRoute('app_companies', ["user" => $user], Response::HTTP_SEE_OTHER);
+
+      } catch (\Exception $e) {
+        error_log('CSV Import exception: ' . $e->getMessage());
+        error_log('Exception trace: ' . $e->getTraceAsString());
+
+        // Préparer les erreurs pour la modal
+        $errorResult = [
+          'success' => false,
+          'count' => 0,
+          'errors' => [[
+            'type' => 'exception',
+            'message' => 'Erreur critique lors de l\'import',
+            'details' => $e->getMessage(),
+            'solution' => 'Vérifiez le format de votre fichier CSV'
+          ]],
+          'skipped' => 0,
+          'duplicates' => [],
+          'totalLines' => 0,
+          'invalidLines' => 0,
+          'emptyLines' => 0,
+        ];
+
+        return $this->render('bam/companies/index.html.twig', [
+          'formcsv' => $formcsv->createView(),
+          'user' => $user,
+          'pagination' => $paginator->paginate(
+            $filteredResult,
+            $request->query->getInt('page', 1),
+            10
+          ),
+          'categories' => $categories,
+          'sort_order' => $sortOrder,
+          'sort_by' => $sortBy,
+          'name_sort_order' => $nameSortOrder,
+          'width_size' => 'full',
+          'csv_import_result' => $errorResult
+        ]);
+      }
     }
     // Paginate the filtered result
     $pagination = $paginator->paginate(

@@ -1,0 +1,33 @@
+{% macro projectCard(project) %}
+<div class="relative group cursor-pointer" data-modal="{{ project.modal_id }}">
+    <div class="absolute -inset-1 bg-gradient-to-r {{ project.gradient }} rounded-xl blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200"></div>
+    <div class="relative bg-gray-800 rounded-xl shadow-lg flex flex-col overflow-hidden border border-gray-700 hover:scale-105 transition-transform duration-300">
+        <div class="relative h-48 bg-gradient-to-br from-gray-900 to-gray-800 overflow-hidden">
+            <img src="{{ asset(project.image) }}" alt="{{ project.image_alt }}" class="w-full h-full object-cover {{ project.image_position|default('object-center') }}">
+            <div class="absolute inset-0 bg-gradient-to-t from-gray-800 via-transparent to-transparent"></div>
+        </div>
+        <div class="p-6 flex flex-col flex-grow">
+            <div class="w-14 h-14 {{ project.icon_bg }} rounded-xl flex items-center justify-center mb-4 -mt-12 relative z-10 shadow-lg border border-gray-700 {{ project.icon_overflow|default('') }}">
+                {% if project.icon_image is defined %}
+                    <img src="{{ asset(project.icon_image) }}" alt="{{ project.title }} logo" class="w-full h-full object-cover">
+                {% else %}
+                    {{ project.icon_svg|raw }}
+                {% endif %}
+            </div>
+            <span class="inline-block rounded-full {{ project.badge_bg }} border {{ project.badge_border }} px-3 py-1 text-xs font-medium {{ project.badge_text }} mb-3 w-fit">
+                {{ project.badge }}
+            </span>
+            <h3 class="text-xl font-bold text-white mb-2">{{ project.title }}</h3>
+            <p class="text-gray-300 text-sm leading-relaxed mb-4 flex-grow">
+                {{ project.description }}
+            </p>
+            <button class="{{ project.button_color }} hover:{{ project.button_hover }} text-sm font-medium flex items-center">
+                En savoir plus
+                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+</div>
+{% endmacro %}

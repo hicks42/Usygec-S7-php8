@@ -3,12 +3,7 @@
 namespace App\Controller\ControllerEZR;
 
 use Endroid\QrCode\QrCode;
-use Endroid\QrCode\Logo\Logo;
-use Endroid\QrCode\Color\Color;
 use Endroid\QrCode\Writer\PngWriter;
-use Endroid\QrCode\Encoding\Encoding;
-use Endroid\QrCode\RoundBlockSizeMode;
-use Endroid\QrCode\ErrorCorrectionLevel;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use App\Repository\RepositoryEZR\StructureRepository;
@@ -24,22 +19,14 @@ class QRGenController extends AbstractController
   {
     $url = $this->generateUrl('survey', ['id' => $id], UrlGeneratorInterface::ABSOLUTE_URL);
     $structure = $structureRepo->findOneById($id);
+    
+    // Create QR code
+    $qrCode = new QrCode($url);
     $writer = new PngWriter();
-    $qrCode = QrCode::create('Life is too short to be generating QR codes')
-    ->setEncoding(new Encoding('UTF-8'))
-    ->setErrorCorrectionLevel(ErrorCorrectionLevel::Low)
-    ->setSize(300)
-    ->setMargin(10)
-    ->setRoundBlockSizeMode(RoundBlockSizeMode::Margin)
-    ->setForegroundColor(new Color(0, 0, 0))
-    ->setBackgroundColor(new Color(255, 255, 255));
-    $logo = Logo::create('images/companies/tny-logo-usygec.png')
-      ->setResizeToWidth(60);
-
-    $qrCode->setSize(400)->setForegroundColor(new Color(0, 0, 0))->setBackgroundColor(new Color(255, 255, 255));
-    $myqrcode = $writer->write(
-      $qrCode,
-    )->getDataUri();
+    
+    // Generate QR code
+    $result = $writer->write($qrCode);
+    $myqrcode = $result->getDataUri();
 
     return $this->render('ezreview/qr_gen.html.twig', [
       'structure' => $structure,

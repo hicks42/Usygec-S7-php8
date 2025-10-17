@@ -13,6 +13,16 @@
     overflow-y: auto;
   }
 
+  /* Hide scrollbar for modal content */
+  .modal-no-scrollbar {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+  }
+
+  .modal-no-scrollbar::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
+
   .modal-popup.active {
     @apply opacity-100 translate-y-1 md:translate-y-4;
   }

@@ -1,6 +1,6 @@
 @layer components {
   .btn {
-    @apply font-ubuntu inline-block w-28 px-4 py-2 text-center rounded;
+    @apply font-ubuntu inline-block min-w-28 px-4 py-2 text-center rounded;
   }
 
   .btn-primary {
