@@ -1,0 +1,262 @@
+/* EZReview - Styles spécifiques pour l'impression des QR codes */
+/* Format A4 optimisé pour l'impression */
+
+.ezr-qr-print {
+  font-family: var(--ezr-font-family);
+  background: white;
+  color: var(--ezr-gray-800);
+  line-height: 1.4;
+}
+
+/* Layout principal pour impression A4 */
+.ezr-qr-page {
+  width: 210mm;
+  min-height: 297mm;
+  padding: 20mm;
+  margin: 0 auto;
+  background: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* En-tête de la page */
+.ezr-qr-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid var(--ezr-primary);
+}
+
+.ezr-qr-logo {
+  max-width: 120px;
+  max-height: 60px;
+  object-fit: contain;
+}
+
+.ezr-qr-brand {
+  text-align: right;
+}
+
+.ezr-qr-brand h1 {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--ezr-primary);
+  margin: 0;
+}
+
+.ezr-qr-brand p {
+  font-size: 12px;
+  color: var(--ezr-gray-500);
+  margin: 5px 0 0 0;
+}
+
+/* Section principale du QR */
+.ezr-qr-main {
+  text-align: center;
+  margin: 40px 0;
+}
+
+.ezr-qr-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--ezr-primary-dark);
+  margin-bottom: 20px;
+}
+
+.ezr-qr-subtitle {
+  font-size: 18px;
+  color: var(--ezr-gray-600);
+  margin-bottom: 30px;
+  font-weight: 500;
+}
+
+/* Conteneur du QR code */
+.ezr-qr-container {
+  display: inline-block;
+  padding: 30px;
+  background: white;
+  border: 3px solid var(--ezr-primary);
+  border-radius: 15px;
+  margin: 20px 0;
+  box-shadow: 0 4px 20px rgba(30, 64, 175, 0.1);
+}
+
+.ezr-qr-code {
+  display: block;
+  width: 200px;
+  height: 200px;
+  margin: 0 auto;
+}
+
+/* Instructions */
+.ezr-qr-instructions {
+  background: var(--ezr-gray-50);
+  border-left: 4px solid var(--ezr-primary);
+  padding: 20px;
+  margin: 30px 0;
+  border-radius: 0 8px 8px 0;
+}
+
+.ezr-qr-instructions h3 {
+  font-size: 18px;
+  color: var(--ezr-primary-dark);
+  margin: 0 0 15px 0;
+  font-weight: 600;
+}
+
+.ezr-qr-instructions ol {
+  margin: 0;
+  padding-left: 20px;
+  color: var(--ezr-gray-700);
+}
+
+.ezr-qr-instructions li {
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+/* Informations de l'établissement */
+.ezr-establishment-info {
+  background: linear-gradient(135deg, var(--ezr-primary), var(--ezr-primary-light));
+  color: white;
+  padding: 25px;
+  border-radius: 12px;
+  margin: 30px 0;
+}
+
+.ezr-establishment-name {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0 0 10px 0;
+}
+
+.ezr-establishment-details {
+  font-size: 14px;
+  opacity: 0.9;
+  margin: 5px 0;
+}
+
+/* Footer */
+.ezr-qr-footer {
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid var(--ezr-gray-200);
+  text-align: center;
+  color: var(--ezr-gray-500);
+  font-size: 12px;
+}
+
+/* Multiples QR codes sur une page */
+.ezr-qr-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  margin: 30px 0;
+}
+
+.ezr-qr-item {
+  text-align: center;
+  padding: 20px;
+  border: 1px solid var(--ezr-gray-200);
+  border-radius: 8px;
+  background: white;
+}
+
+.ezr-qr-item h4 {
+  font-size: 16px;
+  color: var(--ezr-primary-dark);
+  margin: 0 0 15px 0;
+}
+
+.ezr-qr-item .ezr-qr-code {
+  width: 120px;
+  height: 120px;
+}
+
+/* Styles d'impression */
+@media print {
+  body {
+    margin: 0;
+    padding: 0;
+  }
+  
+  .ezr-qr-page {
+    width: 100%;
+    min-height: 100vh;
+    margin: 0;
+    padding: 15mm;
+    box-shadow: none;
+  }
+  
+  .ezr-qr-code {
+    -webkit-print-color-adjust: exact;
+    color-adjust: exact;
+  }
+  
+  .ezr-establishment-info {
+    -webkit-print-color-adjust: exact;
+    color-adjust: exact;
+  }
+  
+  .ezr-qr-container {
+    -webkit-print-color-adjust: exact;
+    color-adjust: exact;
+    border-color: var(--ezr-primary) !important;
+  }
+  
+  /* Éviter les coupures de page */
+  .ezr-qr-container,
+  .ezr-establishment-info,
+  .ezr-qr-instructions {
+    break-inside: avoid;
+  }
+  
+  /* Masquer les éléments non nécessaires */
+  .ezr-no-print {
+    display: none !important;
+  }
+  
+  /* Ajustements pour l'impression */
+  .ezr-qr-title {
+    font-size: 28px;
+  }
+  
+  .ezr-qr-subtitle {
+    font-size: 16px;
+  }
+}
+
+/* Mode responsive pour aperçu écran */
+@media screen and (max-width: 768px) {
+  .ezr-qr-page {
+    width: 100%;
+    min-height: auto;
+    padding: 20px;
+    margin: 0;
+    box-shadow: none;
+  }
+  
+  .ezr-qr-header {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .ezr-qr-brand {
+    text-align: center;
+    margin-top: 15px;
+  }
+  
+  .ezr-qr-title {
+    font-size: 24px;
+  }
+  
+  .ezr-qr-code {
+    width: 150px;
+    height: 150px;
+  }
+  
+  .ezr-qr-grid {
+    grid-template-columns: 1fr;
+  }
+}

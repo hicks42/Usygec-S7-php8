@@ -57,16 +57,98 @@ class CompanyCsvManager
     return $response;
   }
 
-  public function importCompaniesFromCsv(UploadedFile $file, $user)
+  public function importCompaniesFromCsv(UploadedFile $file, $user): array
   {
     $items = array();
     $row = 0;
+    $skipped = 0;
+    $imported = 0;
+    $totalLines = 0;
+    $invalidLines = 0;
+    $emptyLines = 0;
+    $detectedSeparator = null;
+    $detectedColumns = 0;
+    $errors = []; // Tableau pour collecter toutes les erreurs détaillées
+    $duplicates = []; // Tableau pour les doublons
 
     if (($handle = fopen($file->getPathname(), 'r')) !== false) {
-      fgetcsv($handle, 1000, ";");
-      while (($data = fgetcsv($handle, 1000, ";")) !== false) {
-        $companyName = $data[3];
-        $postalCode = intval($data[10]);
+      // Lire la première ligne pour analyse
+      $firstLine = fgets($handle);
+      rewind($handle);
+
+      // Détecter le séparateur automatiquement
+      $commaCount = substr_count($firstLine, ',');
+      $semicolonCount = substr_count($firstLine, ';');
+
+      // Choisir le séparateur qui donne le plus de colonnes (≥ 11)
+      if ($semicolonCount >= 11) {
+        $detectedSeparator = ';';
+      } elseif ($commaCount >= 11) {
+        $detectedSeparator = ',';
+      } else {
+        $detectedSeparator = 'inconnu';
+      }
+
+      // Lire l'en-tête avec le séparateur détecté
+      $header = fgetcsv($handle, 1000, $detectedSeparator);
+      $detectedColumns = count($header);
+
+      // Vérifier que le format est correct
+      if ($detectedSeparator === 'inconnu' || $detectedColumns < 12) {
+        fclose($handle);
+        $errors[] = [
+          'type' => 'format',
+          'message' => 'Format de fichier incorrect',
+          'details' => sprintf(
+            "Attendu : 12 colonnes | Trouvé : %d colonne(s) avec séparateur %s",
+            $detectedColumns,
+            $detectedSeparator === ',' ? 'virgule (,)' : ($detectedSeparator === ';' ? 'point-virgule (;)' : 'inconnu')
+          ),
+          'solution' => 'Format attendu : 12 colonnes séparées par ";" ou "," (Civ, Prénom du contact, Nom du contact, Société, Categorie, Téléphone, Mobile, Mail, Adresse 1, Adresse 2, CP, Ville)'
+        ];
+        return [
+          'success' => false,
+          'count' => 0,
+          'errors' => $errors,
+          'skipped' => 0,
+          'duplicates' => [],
+          'totalLines' => 0,
+          'invalidLines' => 0,
+          'emptyLines' => 0,
+        ];
+      }
+
+      // Traiter les lignes avec le séparateur détecté
+      while (($data = fgetcsv($handle, 1000, $detectedSeparator)) !== false) {
+        $totalLines++;
+        $lineNumber = $totalLines + 1; // +1 pour compter l'en-tête
+
+        // Vérifier que la ligne a au moins 12 colonnes
+        if (count($data) < 12) {
+          $invalidLines++;
+          $errors[] = [
+            'type' => 'invalid_columns',
+            'line' => $lineNumber,
+            'message' => sprintf('Ligne %d : nombre de colonnes insuffisant', $lineNumber),
+            'details' => sprintf('Trouvé : %d colonne(s) | Attendu : 12 colonnes', count($data))
+          ];
+          continue;
+        }
+
+        $companyName = $data[3] ?? '';
+        $postalCode = isset($data[10]) ? intval($data[10]) : 0;
+
+        // Ignorer les lignes vides
+        if (empty($companyName)) {
+          $emptyLines++;
+          $errors[] = [
+            'type' => 'empty_company',
+            'line' => $lineNumber,
+            'message' => sprintf('Ligne %d : nom de société vide', $lineNumber),
+            'details' => 'La colonne "Société" est obligatoire'
+          ];
+          continue;
+        }
 
         $existingCompany = $this->em->getRepository(Company::class)->findOneBy([
           'name' => $companyName,
@@ -75,37 +157,48 @@ class CompanyCsvManager
         ]);
 
         if ($existingCompany) {
+          $skipped++;
+          $duplicates[] = [
+            'line' => $lineNumber,
+            'company' => $companyName,
+            'cp' => $postalCode
+          ];
           continue;
         }
 
-        $num = count($data);
         $row++;
-        for ($c = 1; $c < $num; $c++) {
-          $items[$row] = array(
-            "Civ" => $data[0],
-            "Prénom du contact" => $data[1],
-            "Nom du contact" => $data[2],
-            "Société" => $data[3],
-            "Categorie" => $data[4],
-            "Téléphone" => $data[5],
-            "Mobile" => $data[6],
-            "Mail" => $data[7],
-            "Adresse 1" => $data[8],
-            "Adresse 2" => $data[9],
-            "CP" => intval($data[10]),
-            "Ville" => $data[11],
-          );
-        }
+        $items[$row] = array(
+          "Civ" => $data[0] ?? '',
+          "Prénom du contact" => $data[1] ?? '',
+          "Nom du contact" => $data[2] ?? '',
+          "Société" => $data[3] ?? '',
+          "Categorie" => $data[4] ?? '',
+          "Téléphone" => $data[5] ?? '',
+          "Mobile" => $data[6] ?? '',
+          "Mail" => $data[7] ?? '',
+          "Adresse 1" => $data[8] ?? '',
+          "Adresse 2" => $data[9] ?? '',
+          "CP" => isset($data[10]) ? intval($data[10]) : 0,
+          "Ville" => $data[11] ?? '',
+        );
       }
+      fclose($handle);
     }
 
-    foreach ($items as $item) {
+    foreach ($items as $lineNum => $item) {
       $newCompany = new Company();
 
       $categoryName = $item["Categorie"];
       $category = $this->em->getRepository(Category::class)->findOneBy(['name' => $categoryName]);
       if (!$category) {
-        throw new \Exception("La catégorie avec le nom '" . $categoryName . "' n'existe pas.");
+        $errors[] = [
+          'type' => 'category_not_found',
+          'line' => $lineNum + 1,
+          'message' => sprintf('Ligne %d : catégorie inexistante', $lineNum + 1),
+          'details' => sprintf('La catégorie "%s" n\'existe pas en base de données', $categoryName),
+          'solution' => 'Veuillez créer cette catégorie d\'abord ou utiliser une catégorie existante'
+        ];
+        continue;
       }
 
       $newCompany->setCiv($item["Civ"]);
@@ -123,10 +216,25 @@ class CompanyCsvManager
       $newCompany->setHandler($user);
 
       $this->em->persist($newCompany);
+      $imported++;
     }
-    fclose($handle);
+
+    // Flush all at once
     $this->em->flush();
-    $this->deleteFile($file);
+
+    // Delete temporary file
+    $this->deleteFile($file->getPathname());
+
+    return [
+      'success' => $imported > 0,
+      'count' => $imported,
+      'skipped' => $skipped,
+      'duplicates' => $duplicates,
+      'totalLines' => $totalLines,
+      'invalidLines' => $invalidLines,
+      'emptyLines' => $emptyLines,
+      'errors' => $errors,
+    ];
   }
 
   private function getCsvWriter(string $fileName): CsvWriter
@@ -139,9 +247,11 @@ class CompanyCsvManager
     return $csvWriter;
   }
 
-  private function deleteFile(string $filename)
+  private function deleteFile(string $filepath): void
   {
     $filesystem = new Filesystem();
-    $filesystem->remove(['uploads/csv/' . $filename]);
+    if (file_exists($filepath)) {
+      $filesystem->remove($filepath);
+    }
   }
 }

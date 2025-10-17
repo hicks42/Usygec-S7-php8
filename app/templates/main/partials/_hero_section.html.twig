@@ -1,0 +1,37 @@
+<!-- Hero Section -->
+<section class="relative overflow-hidden py-20 lg:py-32">
+    <div class="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-purple-600/20"></div>
+    <div class="relative mx-auto max-w-7xl px-6 lg:px-8">
+        <div class="text-center">
+            <div class="mb-4">
+                <span class="inline-block rounded-full bg-blue-500/20 px-4 py-2 text-sm font-medium text-blue-300 border border-blue-500/30">
+                    Développeur Full Stack • Saint-Étienne
+                </span>
+            </div>
+            <h1 class="text-4xl font-bold tracking-tight text-white sm:text-6xl lg:text-7xl">
+                <span class="block">Usygec</span>
+                <span class="block text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">
+                    Applications Web & Mobile
+                </span>
+            </h1>
+            <p class="mx-auto mt-6 max-w-2xl text-lg leading-8 text-gray-300">
+                Bienvenue sur le portfolio de projets et applications professionnelles développées par usygec.
+            </p>
+            <p class="mx-auto mt-6 max-w-2xl text-lg leading-8 text-gray-300">
+                Découvrez mes réalisations en Symfony et React Native, conçues pour répondre
+                à des besoins métiers réels.
+            </p>
+            <p class="mx-auto mt-6 max-w-2xl text-lg leading-8 text-gray-300">
+                Créez votre compte gratuit pour tester les applications en ligne :
+            </p>
+            <div class="mt-10 flex items-center justify-center gap-x-6">
+                <a href="{{ path('app_register') }}" class="rounded-full bg-gradient-to-r from-blue-600 to-purple-600 px-8 py-3 text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                    Créer un compte
+                </a>
+                <a href="{{ path('app_login') }}" class="text-sm font-semibold leading-6 text-gray-300 hover:text-blue-400 transition-colors">
+                    Se connecter <span aria-hidden="true">→</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,289 @@
+/* EZReview - Système de gestion des avis clients */
+/* Design moderne avec palette bleu professionnel */
+
+/* Import des modules spécialisés */
+@import "./qr-print.css";
+@import "./survey.css";
+
+:root {
+  /* Couleurs principales */
+  --ezr-primary: #1e40af;        /* Bleu professionnel */
+  --ezr-primary-light: #3b82f6;  /* Bleu clair */
+  --ezr-primary-dark: #1e3a8a;   /* Bleu foncé */
+  
+  /* Couleurs secondaires */
+  --ezr-secondary: #10b981;      /* Vert success */
+  --ezr-secondary-light: #34d399; /* Vert clair */
+  --ezr-warning: #f59e0b;        /* Orange warning */
+  --ezr-danger: #ef4444;         /* Rouge danger */
+  
+  /* Couleurs neutres */
+  --ezr-gray-50: #f9fafb;
+  --ezr-gray-100: #f3f4f6;
+  --ezr-gray-200: #e5e7eb;
+  --ezr-gray-300: #d1d5db;
+  --ezr-gray-400: #9ca3af;
+  --ezr-gray-500: #6b7280;
+  --ezr-gray-600: #4b5563;
+  --ezr-gray-700: #374151;
+  --ezr-gray-800: #1f2937;
+  --ezr-gray-900: #111827;
+  
+  /* Typographie */
+  --ezr-font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --ezr-font-size-xs: 0.75rem;
+  --ezr-font-size-sm: 0.875rem;
+  --ezr-font-size-base: 1rem;
+  --ezr-font-size-lg: 1.125rem;
+  --ezr-font-size-xl: 1.25rem;
+  --ezr-font-size-2xl: 1.5rem;
+  --ezr-font-size-3xl: 1.875rem;
+  --ezr-font-size-4xl: 2.25rem;
+  
+  /* Espacements */
+  --ezr-spacing-1: 0.25rem;
+  --ezr-spacing-2: 0.5rem;
+  --ezr-spacing-3: 0.75rem;
+  --ezr-spacing-4: 1rem;
+  --ezr-spacing-5: 1.25rem;
+  --ezr-spacing-6: 1.5rem;
+  --ezr-spacing-8: 2rem;
+  --ezr-spacing-10: 2.5rem;
+  --ezr-spacing-12: 3rem;
+  
+  /* Rayons de bordure */
+  --ezr-radius-sm: 0.25rem;
+  --ezr-radius: 0.375rem;
+  --ezr-radius-md: 0.5rem;
+  --ezr-radius-lg: 0.75rem;
+  --ezr-radius-xl: 1rem;
+  --ezr-radius-full: 9999px;
+  
+  /* Ombres */
+  --ezr-shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --ezr-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --ezr-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --ezr-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --ezr-shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+}
+
+/* Reset et base */
+.ezr-container {
+  font-family: var(--ezr-font-family);
+  line-height: 1.5;
+  color: var(--ezr-gray-800);
+  background-color: var(--ezr-gray-50);
+}
+
+.ezr-container * {
+  box-sizing: border-box;
+}
+
+/* Typographie */
+.ezr-title {
+  font-size: var(--ezr-font-size-3xl);
+  font-weight: 700;
+  color: var(--ezr-primary-dark);
+  margin-bottom: var(--ezr-spacing-6);
+}
+
+.ezr-subtitle {
+  font-size: var(--ezr-font-size-xl);
+  font-weight: 600;
+  color: var(--ezr-gray-700);
+  margin-bottom: var(--ezr-spacing-4);
+}
+
+.ezr-text {
+  font-size: var(--ezr-font-size-base);
+  color: var(--ezr-gray-600);
+  line-height: 1.6;
+}
+
+.ezr-text-sm {
+  font-size: var(--ezr-font-size-sm);
+  color: var(--ezr-gray-500);
+}
+
+/* Boutons */
+.ezr-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--ezr-spacing-3) var(--ezr-spacing-6);
+  font-size: var(--ezr-font-size-base);
+  font-weight: 500;
+  border-radius: var(--ezr-radius-md);
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  text-decoration: none;
+}
+
+.ezr-btn-primary {
+  background-color: var(--ezr-primary);
+  color: white;
+}
+
+.ezr-btn-primary:hover {
+  background-color: var(--ezr-primary-dark);
+  transform: translateY(-1px);
+  box-shadow: var(--ezr-shadow-md);
+}
+
+.ezr-btn-secondary {
+  background-color: var(--ezr-gray-200);
+  color: var(--ezr-gray-700);
+}
+
+.ezr-btn-secondary:hover {
+  background-color: var(--ezr-gray-300);
+}
+
+.ezr-btn-success {
+  background-color: var(--ezr-secondary);
+  color: white;
+}
+
+.ezr-btn-success:hover {
+  background-color: var(--ezr-secondary-light);
+}
+
+/* Cards */
+.ezr-card {
+  background-color: white;
+  border-radius: var(--ezr-radius-lg);
+  box-shadow: var(--ezr-shadow);
+  padding: var(--ezr-spacing-6);
+  margin-bottom: var(--ezr-spacing-4);
+}
+
+.ezr-card-header {
+  margin-bottom: var(--ezr-spacing-4);
+  padding-bottom: var(--ezr-spacing-4);
+  border-bottom: 1px solid var(--ezr-gray-200);
+}
+
+/* Formulaires */
+.ezr-form-group {
+  margin-bottom: var(--ezr-spacing-4);
+}
+
+.ezr-label {
+  display: block;
+  font-size: var(--ezr-font-size-sm);
+  font-weight: 500;
+  color: var(--ezr-gray-700);
+  margin-bottom: var(--ezr-spacing-2);
+}
+
+.ezr-input {
+  width: 100%;
+  padding: var(--ezr-spacing-3);
+  border: 1px solid var(--ezr-gray-300);
+  border-radius: var(--ezr-radius);
+  font-size: var(--ezr-font-size-base);
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.ezr-input:focus {
+  outline: none;
+  border-color: var(--ezr-primary);
+  box-shadow: 0 0 0 3px rgb(59 130 246 / 0.1);
+}
+
+/* Layout */
+.ezr-container-fluid {
+  width: 100%;
+  padding: 0 var(--ezr-spacing-4);
+}
+
+.ezr-row {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 calc(var(--ezr-spacing-4) * -1);
+}
+
+.ezr-col {
+  flex: 1;
+  padding: 0 var(--ezr-spacing-4);
+}
+
+/* Utilitaires */
+.ezr-text-center {
+  text-align: center;
+}
+
+.ezr-text-left {
+  text-align: left;
+}
+
+.ezr-text-right {
+  text-align: right;
+}
+
+.ezr-mb-0 { margin-bottom: 0; }
+.ezr-mb-1 { margin-bottom: var(--ezr-spacing-1); }
+.ezr-mb-2 { margin-bottom: var(--ezr-spacing-2); }
+.ezr-mb-3 { margin-bottom: var(--ezr-spacing-3); }
+.ezr-mb-4 { margin-bottom: var(--ezr-spacing-4); }
+.ezr-mb-6 { margin-bottom: var(--ezr-spacing-6); }
+.ezr-mb-8 { margin-bottom: var(--ezr-spacing-8); }
+
+.ezr-mt-0 { margin-top: 0; }
+.ezr-mt-1 { margin-top: var(--ezr-spacing-1); }
+.ezr-mt-2 { margin-top: var(--ezr-spacing-2); }
+.ezr-mt-3 { margin-top: var(--ezr-spacing-3); }
+.ezr-mt-4 { margin-top: var(--ezr-spacing-4); }
+.ezr-mt-6 { margin-top: var(--ezr-spacing-6); }
+.ezr-mt-8 { margin-top: var(--ezr-spacing-8); }
+
+/* Responsive */
+@media (min-width: 768px) {
+  .ezr-title {
+    font-size: var(--ezr-font-size-4xl);
+  }
+  
+  .ezr-container-fluid {
+    padding: 0 var(--ezr-spacing-6);
+  }
+  
+  .ezr-row {
+    margin: 0 calc(var(--ezr-spacing-6) * -1);
+  }
+  
+  .ezr-col {
+    padding: 0 var(--ezr-spacing-6);
+  }
+}
+
+/* Animations */
+@keyframes ezr-fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.ezr-fade-in {
+  animation: ezr-fadeIn 0.3s ease-out;
+}
+
+/* Print styles pour les QR codes */
+@media print {
+  .ezr-no-print {
+    display: none !important;
+  }
+  
+  .ezr-print-only {
+    display: block !important;
+  }
+  
+  .ezr-container {
+    background-color: white;
+  }
+  
+  .ezr-card {
+    box-shadow: none;
+    border: 1px solid var(--ezr-gray-300);
+    break-inside: avoid;
+  }
+}

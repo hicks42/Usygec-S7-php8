@@ -17,8 +17,11 @@
 
 	<script src="{{ asset('flatpickr/flatpickr.min.js') }}"></script>
 	<script src="{{ asset('flatpickr/l10n/fr.js') }}"></script>
-	<script src="{{ asset('js/flatpickr-config.js') }}"></script>
-	<script src="{{ asset('js/activity.js') }}"></script>
+	<script type="module">
+		import '{{ asset('js/flatpickr-config.js') }}';
+		import '{{ asset('js/activity.js') }}';
+		import '{{ asset('js/auto-resize-textarea.js') }}';
+	</script>
 {% endblock javascripts %}
 
 {% block content %}
@@ -93,23 +96,25 @@
 					{% endif %}
 				</p>
 			</div>
-			<div class="flex flex-row justify-center mt-10 my-3" role="group">
-				<div class="flex justify-center w-full">
-					<div class="btn-group btn-group-sm" role="group">
-						<a class="btn btn-sm btn-outline rounded-none rounded-l-md" href="{{ path('app_companies') }}">
-							<i class="fa-solid fa-address-book"></i>
-							Sociétés</a>
-						<a class="btn btn-sm btn-secondary border-2 rounded-none" href="{{ path('app_companies_edit', {'id': company.id}) }}">
-							<i class="fa-solid fa-user-pen"></i>
-							Modifier</a>
-						<a class="btn btn-sm btn-outline rounded-none rounded-r-md" href="{{ path('app_activities')}}">
-							<i class="fa-solid fa-table-list me-1"></i>
-							Activités</a>
-					</div>
-				</div>
-			</div>
-		</div>
 
+      {# Boutons Navigation #}
+					<div class="btn-group btn-group-sm text-center flex flex-nowrap items-stretch lg:text-xs m-0 w-full" role="group">
+						<a class="btn btn-sm btn-outline rounded-none rounded-l-md lg:w-auto flex md:flex-row flex-col w-4/12 !min-w-0 items-center justify-center" href="{{ path('app_companies') }}">
+							<i class="fa-solid fa-address-book"></i>
+							<span class="ml-1">Sociétés</span>
+						</a>
+						<a class="btn btn-sm btn-secondary outline outline-1 outline-gray-500 rounded-none lg:w-auto flex md:flex-row flex-col w-4/12 !min-w-0 items-center justify-center mx-2" href="{{ path('app_companies_edit', {'id': company.id}) }}">
+							<i class="fa-solid fa-user-pen"></i>
+							<span class="ml-1">Modifier</span>
+						</a>
+						<a class="btn btn-sm btn-outline rounded-none rounded-r-md lg:w-auto flex md:flex-row flex-col w-4/12 !min-w-0 items-center justify-center" href="{{ path('app_activities')}}">
+							<i class="fa-solid fa-table-list"></i>
+							<span class="ml-1">Activités</span>
+						</a>
+					</div>
+      {# Fin Boutons Navigation #}
+
+		</div>
 		<div id="right-side" class="flex flex-col lg:basis-8/12 basis-full lg:ms-2 border-t border-stone-200 bg-gray-50 min-h-dvh shadow-inner p-2">
 			{% import "bam/companies/macros/forms.html.twig" as formMacros %}
 			{{ form_start(form, {"method": "POST"}) }}
@@ -124,17 +129,18 @@
 					</div>
 				</div>
 
-				<div id="tools-container" class="flex justify-between pt-2 md:justify-end mb-2 md:basis-6/12 basis-full">
-					<button id="filter-button" class="btn btn-sm btn-primary" type="button">
+				<div id="tools-container" class="flex flex-row flex-nowrap gap-1 pt-2 md:justify-end mb-2 md:ml-1 md:basis-6/12 w-full">
+					<button id="filter-button" class="btn btn-sm btn-primary flex flex-col w-4/12 !min-w-0 items-center" type="button">
 						<i class="fa-solid fa-filter"></i>
-						Cacher</button>
-					<button type="button" class="add-activity-btn btn btn-sm btn-success mx-1" data-collection-holder-class="activities">
-						<i class="fa-solid fa-file-circle-plus me-1"></i>Ajouter
+						<span class="md:ml-1 text-xs">Cacher</span>
 					</button>
-
-					<button type="submit" class="btn btn-sm btn-warning">
-						<i class="fa-solid fa-file-arrow-down me-1"></i>
-						Enregistrer
+					<button type="button" class="add-activity-btn btn btn-sm btn-success flex flex-col w-4/12 !min-w-0 items-center" data-collection-holder-class="activities">
+						<i class="fa-solid fa-file-circle-plus"></i>
+						<span class="md:ml-1 text-xs">Ajouter</span>
+					</button>
+					<button type="submit" class="btn btn-sm btn-warning flex flex-col w-4/12 !min-w-0 items-center">
+						<i class="fa-solid fa-file-arrow-down"></i>
+						<span class="md:ml-1 text-xs">Enregistrer</span>
 					</button>
 				</div>
 
@@ -148,29 +154,32 @@
 
 					{# ici commencent les activities existantes #}
 					{% for row in form.children['activities'].children|reverse %}
-						<div class="activity-card card bg-stone-100 my-5 border-gray-300 p-2 pb-0">
-							<div class="flex me-1 pt-1 justify-between basis-full">
+						<div class="activity-card card bg-stone-100 my-5 border-gray-300 p-2">
+							<div class="flex me-1 pt-1 justify-between basis-full mb-2 border-b border-gray-300 pb-2">
 								<div class="flex lg:flex-row gap-2 flex-column justify-between basis-10/12">
-									<div class="lg:basis-2/12 basis-full">
-										Activité N° :
+									<div class="lg:basis-2/12 basis-6/12 text-center">
+										Activité <br>N° :
 										<strong>{{ row.vars.name + 1 }}</strong>
 									</div>
-									<div class="lg:basis-4/12 basis-full">
-										Ajouté le :
+								</div>
+								<div class="basis-6/12 float-end">{{ form_row(row.isActive)}}</div>
+							</div>
+							<div class="flex pt-1 justify-between basis-full">
+
+									<div class="lg:basis-6/12 basis-full ">
+										Ajouté le :<br>
 										<strong>
 											{{ row.vars.data.createdAt|format_datetime('medium', 'short', locale='fr', timezone='Europe/Paris') }}
 										</strong>
 									</div>
-									<div class="lg:basis-4/12 basis-full">
-										Modifié le :
+									<div class="lg:basis-6/12 basis-full ">
+										Modifié le :<br>
 										<strong>
 											{{ row.vars.data.updatedAt|format_datetime('medium', 'short', locale='fr', timezone='Europe/Paris') }}
 										</strong>
 									</div>
-								</div>
-								<div class="basis-2/12 float-end">{{ form_row(row.isActive)}}</div>
-							</div>
 
+							</div>
 							<div class="activ-row">
 								{{ formMacros.existForm(row) }}
 							</div>

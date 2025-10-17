@@ -36,4 +36,12 @@ return [
     'path' => './assets/js/dtpkr_init.js',
     'entrypoint' => true,
   ],
+  'auto-resize-textarea' => [
+    'path' => './assets/js/auto-resize-textarea.js',
+    'entrypoint' => true,
+  ],
+  'homepage-modals' => [
+    'path' => './assets/js/homepage-modals.js',
+    'entrypoint' => true,
+  ],
 ];

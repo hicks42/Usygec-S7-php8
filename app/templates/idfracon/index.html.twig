@@ -5,28 +5,29 @@
 
 {% block content %}
 
-	<div class="w-2/5">
-		<h1>Bienvenue chez Assurance Leguay</h1>
+	<div class="card w-full md:w-2/5 p-5">
+		<h1>Bienvenue dans IdFraCon</h1>
 		<div class="felx flex-row justify-between">
 			<div class="flex-none w-3/4">
-				<p>Sur cette page vous allez pouvoir modifier le bénéficiaire de votre assurance.</p>
-				<p>Mais d'abord identifiez vous grace a france connect</p>
+				<p>Cette application va vous permettre de personnaliser les clauses bénéficiaires que vous présentez a vos assurés.</p>
 			</div>
-			{# <div class="flex-initial w-32">
-        <a href="https://franceconnect.gouv.fr/"><img src="https://franceconnect.gouv.fr/images/fc_logo_v2.png" class="w-32"></a>
-      </div> #}
-
-			<div class="fr-connect-group p-5 flex justify-center">
-				<div>
-					<a href="{{ path('app_idfracon_identify')}}" target="_blank">
-						<img src="https://cfspart-idp.impots.gouv.fr/static/part/images/franceconnect-btn-principal.svg" class="w-[209px] h-[56px]">
+			<div class="flex flex-col p-5">
+				<div class="w-full my-3">
+					<h2>Creation, modification, supression des clauses.</h2>
+          <div class="flex flex-row">
+					<a href="{{ path('app_clauses_index')}}" class="mt-0">
+						<i class="fa-regular fa-pen-to-square text-4xl mx-3"></i>
 					</a>
-					<p>
-						<a id="fclink" href="https://franceconnect.gouv.fr/" target="_blank" rel="noopener" title="Qu’est-ce que FranceConnect ? - nouvelle fenêtre">Qu’est-ce que FranceConnect ?
-							<span class="dgfipicon dgfipicon-sortie-page sortiebig" title="Nouvelle fenêtre"></span>
-						</a>
-					</p>
-				</div>
+					<p class="mt-2">Creation, modification, supression des clauses.</p>
+				</div></div>
+				<div class="w-full my-3">
+					<h2>IdFraCon</h2>
+          <div class="flex flex-row">
+					<a href="{{ path('app_entry')}}" class="mt-0">
+						<i class="fa-solid fa-cubes text-4xl mx-3"></i>
+					</a>
+					<p class="mt-2">Accés direct à l'application.</p>
+				</div></div>
 			</div>
 		</div>
 	</div>

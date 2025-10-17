@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use League\Csv\Reader;
 use App\Form\EmailCsvType;
+use App\Form\UserEditType;
 use App\Form\ChangeMailFormType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -15,6 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AccountController extends AbstractController
 {
@@ -26,7 +28,7 @@ class AccountController extends AbstractController
     $this->security = $security;
   }
 
-  #[Route("/ezreview/accounts", name: "accounts_index")]
+  #[Route("/usygec/accounts", name: "accounts_index")]
   #[IsGranted('ROLE_ADMIN')]
   public function index(UserRepository $userRepo): Response
   {
@@ -35,21 +37,34 @@ class AccountController extends AbstractController
     return $this->render('ezreview/account/account_index.html.twig', compact('users'));
   }
 
-  #[Route("/ezreview/account/{id<[0-9]+>}/edit", name: "account_edit", methods: ["GET", "POST"])]
+  #[Route("/usygec/account/{id<[0-9]+>}/edit", name: "account_edit", methods: ["GET", "POST"])]
   #[IsGranted('ROLE_ADMIN')]
-  public function edit(Request $request, EntityManagerInterface $em, User $user): Response
+  public function edit(Request $request, EntityManagerInterface $em, User $user, UserPasswordHasherInterface $passwordHasher): Response
   {
-    $form = $this->createForm(ChangeMailFormType::class, $user, [
+    $form = $this->createForm(UserEditType::class, $user, [
       'method' => 'POST',
     ]);
 
+    $form = $this->createForm(UserEditType::class, $user);
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
 
+      $user->setRoles($form->get('roles')->getData());
+      $plainPassword = $form->get('plainPassword')->getData();
+
+      if ($plainPassword) {
+        $hashedPassword = $passwordHasher->hashPassword(
+          $user,
+          $plainPassword
+        );
+        $user->setPassword($hashedPassword);
+      }
+
+      $em->persist($user);
       $em->flush();
 
-      $this->addFlash('success', 'Votre compte a été modifié !');
+      $this->addFlash('success', 'Utilisateur mis à jour avec succès.');
 
       return $this->redirectToRoute('accounts_index');
     }

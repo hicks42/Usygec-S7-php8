@@ -1,0 +1,50 @@
+
+###> lexik/jwt-authentication-bundle ###
+/config/jwt/*.pem
+###< lexik/jwt-authentication-bundle ###
+
+###> vault secrets ###
+/vault/**/*
+!/vault/.gitkeep
+!/vault/*/.gitkeep
+###< vault secrets ###
+
+###> symfony/framework-bundle ###
+/.env
+/.env.local
+/.env.local.php
+/.env.*.local
+/config/secrets/prod/prod.decrypt.private.php
+/public/bundles/
+/var/
+/vendor/
+###< symfony/framework-bundle ###
+
+###> custom exclusions ###
+# Fichiers et dossiers cachés
+.*
+!.gitignore
+
+# Fichiers markdown
+*.md
+
+# Scripts et outils
+Makefile
+conex
+deployit
+composer-remote
+fixpermissions
+
+# Dossiers temporaires
+__trash/
+___TRASH/
+###< custom exclusions ###
+
+###> liip/imagine-bundle ###
+/public/media/cache/
+###< liip/imagine-bundle ###
+
+###> symfony/asset-mapper ###
+/public/assets/
+/assets/vendor/
+###< symfony/asset-mapper ###

@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion!
+{% endblock %}
+
+{% block content %}
+	<div class="card p-3">
+		    <h1>Modifier l'utilisateur</h1>
+
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <div  class="flex justify-center w-full my-3">
+          <button type="submit" class="btn btn-primary">Enregistrer</button>
+        </div>
+    {{ form_end(form) }}
+{% endblock %}

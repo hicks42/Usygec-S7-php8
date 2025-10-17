@@ -1,23 +1,100 @@
-{% extends 'raw.html.twig' %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code - {{ structure.name }} | EZReview</title>
+    <link href="{{ asset('styles/custom-components.css') }}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="ezr-qr-print">
+    <div class="ezr-qr-page">
+        <!-- En-tête -->
+        <div class="ezr-qr-header">
+            <div>
+                {% if structure.imageName %}
+                    <img src="{{ vich_uploader_asset(structure) | imagine_filter('company_image_banner') }}" 
+                         alt="{{ structure.name }}" class="ezr-qr-logo">
+                {% endif %}
+            </div>
+            <div class="ezr-qr-brand">
+                <h1>EZReview</h1>
+                <p>Système de gestion des avis clients</p>
+            </div>
+        </div>
 
-{% block title %}Survey.
-{% endblock %}
+        <!-- Contenu principal -->
+        <div class="ezr-qr-main">
+            <h2 class="ezr-qr-title">Donnez votre avis</h2>
+            <p class="ezr-qr-subtitle">Scannez ce QR code avec votre smartphone</p>
+            
+            <!-- QR Code -->
+            <div class="ezr-qr-container">
+                <img src="{{ myqrcode }}" alt="QR Code pour {{ structure.name }}" class="ezr-qr-code">
+            </div>
+        </div>
 
-{% block content %}
-	<div class="flex flex-col justify-center w-full">
-  <div class="relative w-full h-[200px] bg-cover bg-center bg-no-repeat" style="background-image: url('{{ (structure.imageName ? vich_uploader_asset(structure) | imagine_filter('company_image_banner') : asset('/images/placeholder.png')) }}');" alt="{{ structure.name }}">
-  <div class="absolute bottom-3 left-28 p-6 bg-slate-900/70 rounded-lg "><h1 class="text-yellow-400">Votre avis nous interesse.</h1></div>
-  </div>
-			{# <img src="{{ (structure.imageName ? vich_uploader_asset(structure) | imagine_filter('company_image_banner') : asset('/images/placeholder.png')) }}" alt="{{ structure.name }}"> #}
-		<div class="flex justify-center px-2">
-			<div class="flex flex-col w-1/2">
+        <!-- Informations de l'établissement -->
+        <div class="ezr-establishment-info">
+            <h3 class="ezr-establishment-name">{{ structure.name }}</h3>
+            {% if structure.adresse1 %}
+                <div class="ezr-establishment-details">
+                    📍 {{ structure.adresse1 }}{% if structure.adresse2 %}, {{ structure.adresse2 }}{% endif %}
+                    {% if structure.cp or structure.city %}
+                        <br>&nbsp;&nbsp;&nbsp;&nbsp;{{ structure.cp }} {{ structure.city }}
+                        {% if structure.country %}, {{ structure.country }}{% endif %}
+                    {% endif %}
+                </div>
+            {% endif %}
+            {% if structure.phone %}
+                <div class="ezr-establishment-details">📞 {{ structure.phone }}</div>
+            {% endif %}
+        </div>
 
-					<div class="mt-24 text-gray-300 text-3xl">Qu'avez vous pensé de votre visite à {{structure}}</div>
-					<div class="flex justify-center mt-16">
-						<img src="{{ myqrcode }}"/>
-					</div>
-          <div class="mt-4 text-gray-300">Flashez ce QR-Code pour acceder au questionnaire de satisfaction.</div>
-			</div>
-		</div>
-	</div>
-{% endblock %}
+        <!-- Instructions -->
+        <div class="ezr-qr-instructions">
+            <h3>Comment procéder ?</h3>
+            <ol>
+                <li>Ouvrez l'appareil photo de votre smartphone</li>
+                <li>Pointez l'objectif vers le QR code ci-dessus</li>
+                <li>Touchez la notification qui apparaît à l'écran</li>
+                <li>Remplissez notre enquête de satisfaction en ligne</li>
+                <li>Votre avis nous aide à améliorer nos services !</li>
+            </ol>
+        </div>
+
+        <!-- Footer -->
+        <div class="ezr-qr-footer">
+            <p>Merci pour votre confiance | EZReview - Votre satisfaction, notre priorité</p>
+            <p>Générée le {{ "now"|date("d/m/Y à H:i") }}</p>
+        </div>
+
+        <!-- Boutons d'action (cachés à l'impression) -->
+        <div class="ezr-no-print" style="position: fixed; top: 20px; right: 20px; z-index: 1000;">
+            <button onclick="window.print()" class="ezr-btn ezr-btn-primary" style="margin-right: 10px;">
+                🖨️ Imprimer
+            </button>
+            <a href="{{ path('ezreview_hp') }}" class="ezr-btn ezr-btn-secondary">
+                ← Retour
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Auto-focus sur l'impression si paramètre URL
+        if (new URLSearchParams(window.location.search).get('print') === '1') {
+            window.onload = function() {
+                setTimeout(() => window.print(), 500);
+            };
+        }
+        
+        // Ajouter des raccourcis clavier
+        document.addEventListener('keydown', function(e) {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'p') {
+                e.preventDefault();
+                window.print();
+            }
+        });
+    </script>
+</body>
+</html>

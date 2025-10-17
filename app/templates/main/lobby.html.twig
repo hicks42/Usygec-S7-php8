@@ -15,6 +15,7 @@
 					<div class="text-base mt-16">
 						<div class="font-title text-slate-400 text-2xl">A quel service voulez vous accéder ?</div>
 
+            {% if is_granted('ROLE_EZR') %}
 						<div class="row flex pt-10">
 							<div class="basis-1/6 justify-end text-center text-amber-400 mt-4">
 								<a href="{{ path('ezreview_hp') }}" class="text-3xl text-amber-400 ">
@@ -29,7 +30,9 @@
 								<p class="font-text  text-slate-400">Une application pour faciliter les commentaires positifs sur Google</p>
 							</div>
 						</div>
+						{% endif %}
 
+            {% if is_granted('ROLE_BAM') %}
 						<div class="row flex pt-10">
 							<div class="basis-1/6 justify-end text-center text-amber-400 mt-4">
 								<a href="{{ path('app_activities') }}" class="text-3xl text-amber-400 ">
@@ -41,8 +44,9 @@
 								<div class="font-text text-slate-400">Une application pour suivre l'intercation avec vos clients</div>
 							</div>
 						</div>
+						{% endif %}
 
-						{# {% if app.user and app.user.email == 'adrien.leguay@leguayassurances.com' %} #}
+						{% if is_granted('ROLE_IDFRACON') %}
 							<div class="row flex pt-10">
 								<div class="basis-1/6 justify-end text-center text-amber-400 mt-4">
 									<a href="{{ path('app_activities') }}" class="text-3xl text-amber-400 ">
@@ -54,8 +58,7 @@
 									<div class="font-text text-slate-400">Une application pour changer le bénéficiaire de votre assurance</div>
 								</div>
 							</div>
-						{# {% endif %} #}
-						{# {% include 'partials/_test-h.html.twig' %} #}
+						{% endif %}
 					</div>
 				</div>
 			</div>

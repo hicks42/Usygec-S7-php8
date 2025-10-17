@@ -1,0 +1,29 @@
+#!/bin/sh
+# Script pour corriger les permissions sur le serveur distant après déploiement
+
+echo "🔧 Correction des permissions sur le serveur distant..."
+
+sshpass -p "Zem6109vf42" ssh usygecy@ftp.cluster031.hosting.ovh.net << 'ENDSSH'
+
+# Correction des permissions des dossiers (755 = rwxr-xr-x)
+echo "📁 Correction des permissions des dossiers..."
+find ~/app/public/assets -type d -exec chmod 755 {} \;
+find ~/app/var -type d -exec chmod 755 {} \; 2>/dev/null || true
+
+# Correction des permissions des fichiers (644 = rw-r--r--)
+echo "📄 Correction des permissions des fichiers..."
+find ~/app/public/assets -type f -exec chmod 644 {} \;
+
+# Correction des permissions du cache (775 pour écriture)
+echo "💾 Correction des permissions du cache..."
+chmod -R 775 ~/app/var/cache 2>/dev/null || true
+
+# Vérification des permissions des assets
+echo "✅ Vérification des fichiers CSS..."
+ls -lh ~/app/public/assets/styles/*.css 2>/dev/null | head -5
+
+echo "✅ Permissions corrigées !"
+
+ENDSSH
+
+echo "✅ Script terminé"

@@ -85,7 +85,7 @@
 		<h1>Clause choisie :</h1>
 		{% include('idfracon/pdfs/_clause_recap_pdf.html.twig') with {'data': data.selected_clause} %}
 	</div>
-	{% if data.selected_add is defined %}
+	{% if data.selected_add is not null %}
 		<div class="clause-info">
 			{% include('idfracon/pdfs/_' ~ data.form_name ~ '_recap_pdf.html.twig') with {'data': data.selected_add} %}
 		</div>

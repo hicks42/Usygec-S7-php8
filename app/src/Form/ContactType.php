@@ -52,12 +52,12 @@ class ContactType extends AbstractType
                 'attr' => [
                     'class' => 'btn btn-primary mt-3'
                 ]
-            ])
-            ->add('captcha', Recaptcha3Type::class, [
-                'constraints' => new Recaptcha3(),
-                'action_name' => 'contact',
-                'locale' => 'fr',
             ]);
+            // ->add('captcha', Recaptcha3Type::class, [
+            //     'constraints' => new Recaptcha3(),
+            //     'action_name' => 'contact',
+            //     'locale' => 'fr',
+            // ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

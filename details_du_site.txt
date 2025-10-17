@@ -1,0 +1,20 @@
+site de valorisation pour les applications réalisés par patrice Gerin.
+usygec.fr est fait en php avec le framework symphony.
+
+Diverses réalisations qui sont surtout des exercices destinés à mettre en pratique les notions acquises suite au formation en ligne.
+
+EZR (fait une description succinte des fonctionalités)
+
+Le B.A.M. (Business Activity Manager) en Symphony
+une application originale de gestion d'activités professionnelles.
+Il s’agit d’un CRM simplifié qu’il faut plus comprendre comme une alternative à l'empilement de post-it sur le bureau.
+Un mur de type réseau social trace les échanges avec vos partenaires et un système de reminder aide aux suivis des actions à entreprendre ou des échéances qui aprochent.
+
+Time2Gether en ReactNative.
+Time2Gether est une application mobile pour organiser des moments avec vos amis , votre famille ou vos collègues. Bref, des projets de temps à passer ensemble.
+
+On veut tous passer plus de temps avec nos proches, mais l’organisation est lourde, le suivi astreignant, et les responsabilités diffuses. Trop souvent certains de ces projets ne sont pas finalisés.
+
+Voici une application qui vous permet d'arrêter, collaborativement ou non, la date, la destination, l'hébergement ou autre, dans un temps imparti. Le suivi est assuré automatiquement par des notifications.
+
+Fini la charge mentale, T2G vous soulage du suivi. Cette application ordonne, classe et centralise  les propositions et les décisions. Vos vacances, week-end, voyage, convention ou simple visite au musée se mettent en place presque d’eux même.

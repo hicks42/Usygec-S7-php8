@@ -1,0 +1,17 @@
+#!/bin/sh
+# Script pour installer les dépendances Composer sur le serveur distant
+
+echo "📦 Installation des dépendances Composer sur le serveur distant..."
+
+sshpass -p "Zem6109vf42" ssh usygecy@ftp.cluster031.hosting.ovh.net << 'ENDSSH'
+
+cd ~/app
+
+echo "🔄 Exécution de composer install..."
+/usr/local/php8.2/bin/php composer.phar install --no-dev --optimize-autoloader --no-interaction 2>&1
+
+echo "✅ Composer install terminé"
+
+ENDSSH
+
+echo "✅ Dépendances Composer installées avec succès"

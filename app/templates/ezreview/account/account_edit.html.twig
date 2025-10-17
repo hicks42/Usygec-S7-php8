@@ -1,25 +1,35 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Modification email
+{% block title %}Parametrage du compte de
+	{{ user.nickName }}
 {% endblock %}
 
 {% block content %}
+	<div class="card p-3">
 		<div class="lg:basis-1/2 md:basis-8/12 basis-full m-1">
-				{{ form_start(form, {"method": "POST"}) }}
+			{{ form_start(form, {"method": "POST"}) }}
 			<div class="w-full my-2">
-				<h3>Modifier l'email du compte</h3>
+				<h3>Parametrer compte de
+					{{ user.nickName }}</h3>
 				{{ form_row(form.email) }}
+				{{ form_row(form.plainPassword) }}
+				{% for child in form.roles %}
+					<div class="flex items-center my-2">
+						{{ form_widget(child, { 'attr': { 'class': 'my-checkbox mr-2' } }) }}
+						{{ form_label(child, null, { 'attr': { 'class': 'ml-2 text-gray-700' } }) }}
+					</div>
+				{% endfor %}
 
-				<div class="flex flex-row justify-center w-full h-8">
+				<div class="flex flex-row justify-around w-full my-5">
 
-					<span class="btn btn-outline btn-sm mx-2">
-						<a href="{{ path('accounts_index') }}"><i class="fa-solid fa-angles-left"></i>Retour</a>
-					</span>
+					<a href="{{ path('accounts_index') }}" class="btn btn-outline btn-sm mt-0 p-2">
+						<i class="fa-solid fa-angles-left"></i>Retour</a>
 
-					<button type="submit" class="btn btn-primary btn-sm text-nowrap mx-2 my-0">Enregistrer les modifications</button>
-
+					<button type="submit" class="btn btn-primary btn-sm text-nowrap p-2">Enregistrer les modifications</button>
 				</div>
+
 			</div>
-					{{ form_end(form) }}
+			{{ form_end(form) }}
 		</div>
+	</div>
 {% endblock %}

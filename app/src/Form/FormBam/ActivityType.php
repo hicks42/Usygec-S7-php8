@@ -32,7 +32,8 @@ class ActivityType extends AbstractType
         'required' => true,
         'attr' => [
           'placeholder' => 'Description',
-          'class' => 'form-control w-full mt-1'
+          'class' => 'form-control w-full mt-1 resize-none overflow-hidden',
+          'rows' => 2
         ]
       ])
       ->add('reminder', DateType::class, [
@@ -42,14 +43,14 @@ class ActivityType extends AbstractType
         'widget' => 'single_text',
         'format' => 'dd-MM-yyyy',
         'row_attr' => [
-          'class' => 'float-start'
+          'class' => ''
         ],
         'label_attr' => [
-          'class' => 'text-nowrap w-1/4 align-self-center ms-1',
+          'class' => 'text-nowrap mb-1',
         ],
         'attr' => [
           'placeholder' => 'jj/mm/aaaa',
-          'class' => 'flatpickr form-control w-1/4 md:me-5 ms-1',
+          'class' => 'flatpickr form-control w-full',
         ]
       ])
       ->add('dueDate', DateType::class, [
@@ -59,14 +60,14 @@ class ActivityType extends AbstractType
         'widget' => 'single_text',
         'format' => 'dd-MM-yyyy',
         'row_attr' => [
-          'class' => 'float-start'
+          'class' => ''
         ],
         'label_attr' => [
-          'class' => 'text-nowrap w-25 align-self-center ms-1',
+          'class' => 'text-nowrap mb-1',
         ],
         'attr' => [
           'placeholder' => 'jj/mm/aaaa',
-          'class' => 'flatpickr form-control md:me-5 ms-1',
+          'class' => 'flatpickr form-control w-full',
         ]
       ])
       ->add('isActive', CheckboxType::class, [

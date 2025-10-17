@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Demande envoyez
+{% endblock %}
+
+{% block content %}
+<div class="card p-3">
+	<p>Un compte correspond a votre adressse courriel existe, un courriel contenant un lien vous sera envoyé.
+
+		Ce lien expirera dans
+		{{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.
+	</p>
+	<p>Si vous n'avait pas reçu de courriel, merci de verifier le dossier de spams ou
+		<a href="{{ path('app_forgot_password_request') }}">essayez à nouveau</a>.</p>
+</div>
+{% endblock %}

@@ -3,10 +3,10 @@
 		<button class="close-popup">x</button>
 		<div id="modal-content" class="flex justify-center w-full my-8">
 			<div class="w-full">
-				<div class="w-full bg-slate-300 p-5">
+				<div class="w-full bg-slate-300 p-1 md:p-5">
+					<h1 class="h3 mb-3 font-weight-normal">Détaillez votre demande:</h1>
 
 					{{ form_start(form_clause_part) }}
-					<h1 class="h3 mb-3 font-weight-normal">Détaillez votre demande:</h1>
 					<div class="flex flex-wrap justify-between w-full">
 						{{ form_row(form_clause_part.clauseText) }}
 						{{ form_row(form_clause_part.submit) }}

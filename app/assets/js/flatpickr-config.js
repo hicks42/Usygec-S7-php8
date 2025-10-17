@@ -29,15 +29,29 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   };
 
-  // Fonction pour initialiser Flatpickr sur une nouvelle activités
-  window.initializeFlatpickr = function (element) {
-    flatpickr(element, {
-      altInput: true,
-      altFormat: "j F, Y",
-      dateFormat: "d-m-Y",
-      locale: French,
-      firstDayOfWeek: 1,
-    });
+  // Fonction pour initialiser Flatpickr sur une nouvelle activité
+  window.initializeFlatpickr = function (elements) {
+    // Si c'est une NodeList ou un tableau, itérer sur chaque élément
+    if (elements.length !== undefined) {
+      elements.forEach((element) => {
+        flatpickr(element, {
+          altInput: true,
+          altFormat: "j F, Y",
+          dateFormat: "d-m-Y",
+          locale: French,
+          firstDayOfWeek: 1,
+        });
+      });
+    } else {
+      // Si c'est un seul élément
+      flatpickr(elements, {
+        altInput: true,
+        altFormat: "j F, Y",
+        dateFormat: "d-m-Y",
+        locale: French,
+        firstDayOfWeek: 1,
+      });
+    }
   };
 
   // Appel initial pour s'assurer que les éléments existants sont initialisés

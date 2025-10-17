@@ -8,6 +8,25 @@
 	<script type="module">
 		import '{{ asset('js/modal.js') }}';
 	</script>
+	<script>
+		document.addEventListener("DOMContentLoaded", function () {
+			const hasError = {{ app.flashes('error')|length > 0 or app.flashes('warning')|length > 0 ? 'true' : 'false' }};
+			const hasSuccess = {{ app.flashes('success')|length > 0 or app.flashes('info')|length > 0 ? 'true' : 'false' }};
+
+			if (hasError) {
+				// Rouvrir la modal en cas d'erreur ou warning
+				const csvModal = document.getElementById('company-csv');
+				if (csvModal) {
+					csvModal.classList.add('active');
+					const popup = csvModal.querySelector('.modal-popup');
+					if (popup) popup.classList.add('active');
+				}
+			}
+
+				// En cas de succès, la modal reste fermée (pas besoin de code)
+			// Le flash message s'affichera normalement et disparaîtra après 5 secondes
+		});
+	</script>
 {% endblock javascripts %}
 
 {% block content %}
@@ -28,7 +47,7 @@
 			</a>
 		</div>
 	</div>
-		<div class="flex justify-center lg:basis-1/2 basis-full">
+		<div class="flex justify-center">
 			<a class="btn btn-sm btn-secondary border-2 me-1" href="{{ path('csv_export') }}">
 				<i class="fa-solid fa-file-arrow-down me-1"></i>
 				Exporter en CSV</a>
@@ -178,14 +197,50 @@
 			<button class="close-popup">x</button>
 			<div class="flex justify-center my-8">
 				<div class="">
-					{{ form_start(formcsv, {"method": "POST"}) }}
+					{{ form_start(formcsv, {
+						"action": path('app_companies'),
+						"method": "POST",
+						"attr": {"enctype": "multipart/form-data"}
+					}) }}
 					<h6 id="form-title" class="my-4">Choisir un fichier CSV contenant les sociétés.</h6>
 					{{ form_row(formcsv.csvFile) }}
 					<button type="submit" class="submit-modal">Traiter</button>
-					{# {{ form_widget(formcsv._token) }} #}
 					{{ form_end(formcsv) }}
 				</div>
 			</div>
 		</div>
 	</div>
+
+	{# Modal d'erreur CSV #}
+	<div id="csv-error-modal" class="modal-container flex justify-around">
+		<div class="modal-popup max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+			<button class="close-popup">x</button>
+			<div class="p-6">
+				<h6 class="text-2xl font-bold text-red-600 mb-4 flex items-center gap-2">
+					<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+						<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+					</svg>
+					Erreurs lors de l'import CSV
+				</h6>
+				<div class="errors-list">
+					{# Le contenu sera injecté dynamiquement par JavaScript #}
+				</div>
+				<div class="mt-6 flex justify-end">
+					<button class="close-popup btn btn-primary">Fermer</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	{# Script pour afficher la modal d'erreur si nécessaire #}
+	{% if csv_import_result is defined and csv_import_result.errors is not empty %}
+		<script>
+			document.addEventListener('DOMContentLoaded', function() {
+				const result = {{ csv_import_result|json_encode|raw }};
+				if (window.showCsvErrorModal) {
+					window.showCsvErrorModal(result);
+				}
+			});
+		</script>
+	{% endif %}
 {% endblock %}

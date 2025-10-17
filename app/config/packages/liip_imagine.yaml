@@ -2,6 +2,9 @@ liip_imagine:
   # valid drivers options include "gd" or "gmagick" or "imagick"
   driver: "imagick"
 
+  twig:
+    mode: lazy
+
   filter_sets:
     square_thumbnail_medium:
       filters:

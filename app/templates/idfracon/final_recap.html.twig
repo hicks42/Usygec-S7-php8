@@ -5,24 +5,28 @@
 
 {% block content %}
 
-	<div class="content w-4/5">
-    <img src="{{ asset('images/LOGO_leguay.png') }}" alt="Logo">
-		<div class="flex flex-col justify-center bg-slate-200 p-5 w-full m-2">
+	<div class="content w-full md:w-4/5">
+		<img src="{{ asset('images/LOGO_leguay.png') }}" alt="Logo">
+		<div class="flex flex-col justify-center bg-slate-200 p-5 w-full my-1">
 			<div class="flex justify-center">
 				<h1>Recapitulatif :</h1>
 			</div>
 		</div>
-		<div class="flex flex-col justify-center bg-slate-200 p-5 w-full m-2">
 
+		<div class="flex flex-col justify-center bg-slate-200 p-5 w-full my-1">
 			<h2 class="font-semibold">Votre identité :</h2>
 			<div class="flex justify-center w-full">
 				{% include 'idfracon/traits/_identity_recap.html.twig' with { 'data': session_user } %}</div>
+			<div class="flex justify-center">
+				<a href="{{ path('app_idfracon_identify') }}" class="btn btn-primary my-5">
+					Modifier
+				</a>
+			</div>
 		</div>
-		<div class="flex justify-center flex-col bg-slate-200 p-5 w-full m-2">
 
-				{# <h2 class="font-semibold">Votre selection :</h2> #}
+		<div class="flex justify-center flex-col bg-slate-200 p-5 w-full my-1">
 			{% if selected_add is not null %}
-      <h2 class="font-semibold">Clause selectionné :</h2>
+				<h2 class="font-semibold">Clause selectionné :</h2>
 				<div class="my-2">
 					{% include 'idfracon/traits/_clause_recap.html.twig' with { 'clause': selected_clause } %}
 				</div>
@@ -31,15 +35,16 @@
 						{% include 'idfracon/traits/_' ~ form_name ~ '_recap.html.twig' with { 'data': selected_add } %}
 					</div>
 				</div>
-
 			{% else %}
 				<h2 class="font-semibold">Clause selectionnée :</h2>
 				{% include 'idfracon/traits/_clause_recap.html.twig' with { 'clause': selected_clause } %}
-
 			{% endif %}
 
-			<div class="flex justify-center">
-				<a href="{{ path('app_goodbye') }}" class="btn btn-primary my-5">
+			<div class="flex justify-around my-5">
+				<a href="{{ path('app_clause_choice') }}" class="btn btn-primary me-2">
+					Modifier
+				</a>
+				<a href="{{ path('app_goodbye') }}" class="btn btn-primary ms-2">
 					Valider
 				</a>
 			</div>
