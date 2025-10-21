@@ -223,4 +223,83 @@ class Structure
 
         return $this;
     }
+
+    /**
+     * Génère l'URL Google pour laisser un avis (avec Place ID)
+     * Cette URL ouvre directement le popup "Donner un avis" sur Google
+     *
+     * @return string|null L'URL complète ou null si pas de PID
+     */
+    public function getGoogleReviewUrl(): ?string
+    {
+        if (empty($this->Pid)) {
+            return null;
+        }
+
+        return "https://search.google.com/local/writereview?placeid=" . $this->Pid;
+    }
+
+    /**
+     * Génère un lien de fallback vers Google Maps (recherche par nom + adresse)
+     * Ce lien fonctionne SANS Place ID et redirige vers la page Google Maps de l'établissement
+     * L'utilisateur pourra ensuite cliquer sur "Avis" pour donner son avis
+     *
+     * @return string L'URL de recherche Google Maps
+     */
+    public function getGoogleFallbackUrl(): string
+    {
+        // Construire la requête de recherche avec les informations disponibles
+        $parts = [];
+
+        // Nom de l'établissement (obligatoire)
+        if (!empty($this->name)) {
+            $parts[] = $this->name;
+        }
+
+        // Adresse
+        if (!empty($this->adresse1)) {
+            $parts[] = $this->adresse1;
+        }
+
+        // Code postal
+        if (!empty($this->cp)) {
+            $parts[] = $this->cp;
+        }
+
+        // Ville
+        if (!empty($this->city)) {
+            $parts[] = $this->city;
+        }
+
+        // Pays (optionnel, pour éviter les ambiguïtés)
+        if (!empty($this->country)) {
+            $parts[] = $this->country;
+        }
+
+        // Construire la requête
+        $query = implode(', ', $parts);
+
+        // Encoder et générer l'URL Google Maps
+        // Ce lien ouvre Google Maps avec la recherche pré-remplie
+        // L'utilisateur verra l'établissement et pourra cliquer sur "Avis"
+        return "https://www.google.com/maps/search/" . urlencode($query);
+    }
+
+    /**
+     * Retourne l'URL optimale pour laisser un avis Google
+     * Priorise le lien avec PID (direct vers formulaire d'avis)
+     * Sinon utilise le lien fallback (recherche Google Maps)
+     *
+     * @return string L'URL pour laisser un avis
+     */
+    public function getBestGoogleReviewUrl(): string
+    {
+        // Si on a un PID, utiliser l'URL directe (optimal)
+        if (!empty($this->Pid)) {
+            return $this->getGoogleReviewUrl();
+        }
+
+        // Sinon, utiliser le lien fallback (recherche Google Maps)
+        return $this->getGoogleFallbackUrl();
+    }
 }

@@ -49,42 +49,22 @@ class SendMailService
         ->from($from)
         ->to($to)
         ->subject($subject)
-        ->html($this->twig->render(
-          "main/emails/" . $template . ".html.twig",
-          [
-            'context' => $context,
-          ]
-        ));
+        ->htmlTemplate("main/emails/" . $template . ".html.twig")
+        ->context([
+          'context' => $context,
+        ]);
 
       // Ajouter Reply-To si fourni
       if ($replyTo) {
         $email->replyTo($replyTo);
       }
 
-      // Vérification de l'existence de la clé DKIM
-      $dkimKeyPath = $this->project_dir . $this->dkim_key_path;
-      if (!file_exists($dkimKeyPath)) {
-        $this->logger->error('Clé DKIM introuvable', ['path' => $dkimKeyPath]);
-        throw new \RuntimeException("Clé DKIM introuvable au chemin: {$dkimKeyPath}");
-      }
-
-      $this->logger->info('Signature DKIM du mail', ['dkim_path' => $dkimKeyPath]);
-
-      // Utiliser le chemin DKIM configuré dans .env pour tous les environnements
-      $signer = new DkimSigner('file://' . $dkimKeyPath, 'usygec.fr', 'email');
-
-      $signedEmail = $signer->sign(
-        $email,
-        (new DkimOptions())
-          ->bodyCanon('relaxed')
-          ->headerCanon('relaxed')
-          ->headersToIgnore(['Message-ID'])
-          ->toArray()
-      );
-
-      // On envoie le mail
-      $this->logger->info('Envoi du mail signé');
-      $this->mailer->send($signedEmail);
+      // Le mail sera envoyé par le mailer qui va :
+      // 1. Rendre le template avec TemplatedEmail
+      // 2. Embarquer les images automatiquement
+      // Le DKIM sera signé via la configuration du transport dans messenger.yaml
+      $this->logger->info('Envoi du mail');
+      $this->mailer->send($email);
       $this->logger->info('Mail envoyé avec succès');
 
     } catch (\Exception $e) {

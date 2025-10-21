@@ -18,7 +18,10 @@ class BadReviewType extends AbstractType
   public function buildForm(FormBuilderInterface $builder, array $options): void
   {
     $builder
-      ->add('email', HiddenType::class)
+      ->add('email', HiddenType::class, [
+        'required' => false,
+        'data' => 'anonymous@ezreview.local'
+      ])
       // ->add('lieu_rdv', TextType::class, [
       //     'label' => 'Le lieu de votre rendez vous :'
       // ])
@@ -39,8 +42,8 @@ class BadReviewType extends AbstractType
       ->add('note', ChoiceType::class, [
         'label' => false,
         'choices' => range(0, 10),
-        // 'row_attr' => ['class' => 'flex justify-center'],
-        'placeholder' => '0',
+        'required' => true,
+        'placeholder' => false,
         'attr' => [
           'class' => 'btn btn-secondary dropdown-toggle w-full p-1',
         ],
