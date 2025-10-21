@@ -12,15 +12,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class HomepageController extends AbstractController
 {
-    #[Route("/scip/home", name:"home-mc")]
-    public function index(EntityManagerInterface $em): Response
-    {
-        $promos = $em->getRepository(Produit::class)->findBy(['isPromo' => 'true'], ['id' => 'DESC']);
-        $actus = $em->getRepository(Actu::class)->findBy(['isOnline' => 'true'], ['id' => 'DESC']);
+  #[Route("/scpi/home", name: "home-scpi")]
+  public function index(EntityManagerInterface $em): Response
+  {
+    $promos = $em->getRepository(Produit::class)->findBy(['isPromo' => true], ['id' => 'DESC']);
+    $actus = $em->getRepository(Actu::class)->findBy(['isOnline' => true], ['id' => 'DESC']);
 
-        return $this->render(
-            'main/index.html.twig',
-            compact('promos', 'actus'),
-        );
-    }
+    return $this->render(
+      'scpi/homepage.html.twig',
+      compact('promos', 'actus'),
+    );
+  }
 }

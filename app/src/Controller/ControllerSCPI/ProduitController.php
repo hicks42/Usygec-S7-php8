@@ -2,7 +2,7 @@
 
 namespace App\Controller\ControllerSCPI;
 
-use App\Classe\ClasseMC\Search;
+use App\Classe\ClasseSCPI\Search;
 use App\Entity\EntitySCPI\Produit;
 use App\Form\FormMC\SearchType;
 use App\Repository\RepositorySD\ProduitRepository;
@@ -21,7 +21,7 @@ class ProduitController extends AbstractController
     $this->em = $em;
   }
 
-  #[Route("/produits", name: "produits")]
+  #[Route("scpi/produits", name: "produits")]
   public function index(Request $request): Response
   {
     $produits = $this->em->getRepository(Produit::class)->findAll();
@@ -33,18 +33,18 @@ class ProduitController extends AbstractController
       $produits = $this->em->getRepository(Produit::class)->findWithSearch($search);
     }
 
-    return $this->render('produit/produits.html.twig', [
+    return $this->render('scpi/produit/produits.html.twig', [
       'produits' => $produits,
       'form' => $form->createView()
     ]);
   }
 
-  #[Route("/produit/{slug}", name: "produit_show")]
+  #[Route("scpi/produit/{slug}", name: "produit_show")]
   public function show(ProduitRepository $repo, $slug): Response
   {
     $produit = $repo->findOneBySlug($slug);
     return $this->render(
-      'produit/produit_show.html.twig',
+      'scpi/produit/produit_show.html.twig',
       compact('produit'),
     );
   }

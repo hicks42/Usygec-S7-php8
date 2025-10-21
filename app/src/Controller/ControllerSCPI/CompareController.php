@@ -2,7 +2,7 @@
 
 namespace App\Controller\ControllerSCPI;
 
-use App\Classe\Compare;
+use App\Classe\ClasseSCPI\Compare;
 use App\Entity\EntitySCPI\Produit;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,7 +19,7 @@ class CompareController extends AbstractController
   }
 
 
-  #[Route("/comparator/{str}", name:"compare_array", methods:["GET"])]
+  #[Route("scip/comparator/{str}", name: "compare_array", methods: ["GET"])]
   public function view($str)
   {
     // gathering all the fields direct and associated
@@ -75,7 +75,7 @@ class CompareController extends AbstractController
       $compareDetail = null;
     }
 
-    return $this->render('produit/compare.html.twig', [
+    return $this->render('scip/produit/compare.html.twig', [
       'col1' => $col1,
       'lastcols' => $lastcols,
       'compare' => $compareDetail,
@@ -83,7 +83,7 @@ class CompareController extends AbstractController
     ]);
   }
 
-  #[Route("/comparateur", name:"compare", methods:["GET"])]
+  #[Route("scip/comparateur", name: "compare", methods: ["GET"])]
   public function index(Compare $compare)
   {
 
@@ -100,12 +100,12 @@ class CompareController extends AbstractController
       $compareDetail = null;
     }
 
-    return $this->render('produit/compare.html.twig', [
+    return $this->render('scip/produit/compare.html.twig', [
       'compare' => $compareDetail
     ]);
   }
 
-  #[Route("/compare/add/{id}", name:"add_to_compare")]
+  #[Route("scip/compare/add/{id}", name: "add_to_compare")]
   public function add(Compare $compare, $id)
   {
     $compare->add($id);
@@ -113,7 +113,7 @@ class CompareController extends AbstractController
     return $this->redirectToRoute('compare');
   }
 
-  #[Route("/compare/erase", name:"erase_compare")]
+  #[Route("scip/compare/erase", name: "erase_compare")]
   public function remove(Compare $compare)
   {
     $compare->remove();

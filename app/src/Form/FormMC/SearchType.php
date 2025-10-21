@@ -2,7 +2,7 @@
 
 namespace App\Form\FormMC;
 
-use App\Classe\ClasseMC\Search;
+use App\Classe\ClasseSCPI\Search;
 use App\Entity\EntitySCPI\Categorie;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;

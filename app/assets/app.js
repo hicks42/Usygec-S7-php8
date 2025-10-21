@@ -1,5 +1,6 @@
 // import "./bootstrap.js";
 import "./styles/app.css";
+import "./styles/scpi.css";
 
 import "./js/count-up.min.js";
 import "./js/flashmessage.js";

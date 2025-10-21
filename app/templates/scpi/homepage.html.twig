@@ -1,27 +1,21 @@
 <!DOCTYPE html>
-<html lang="{{ app.request.locale }}">
+<html lang="fr">
 	<head>
-		{% block head %}
-			<meta charset="UTF-8">
-			<meta name="viewport" content="width=device-width, initial-scale=1.0">
-			<meta description="Décorations artisanales - Création de suspension en bois flottés et feuilles en macramé">
-			<title>
-				{% block title %}Homepage SCIP
-				{% endblock %}
-			</title>
-			{% block stylesheets %}
-				{{ encore_entry_link_tags('app') }}
-				<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-			{% endblock stylesheets %}
-			{% block javascripts %}
-				{{ encore_entry_script_tags('app') }}
-			{% endblock javascripts %}
-		{% endblock head %}
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>{% block title %}Homepage SCPI{% endblock %}</title>
+
+		{% block stylesheets %}
+			<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+		{% endblock %}
+
+		{% block javascripts %}
+			{{ importmap('app') }}
+		{% endblock %}
 	</head>
-	{% block body %}
-		<body>
+	<body>
 			<div class="bg">
-				{{ include('./traits/_hpheader.html.twig') }}
+				{{ include('scpi/traits/_hpheader.html.twig') }}
 				<main role="main" class="container">
 					{% block content %}
 						<div class="main-wrapper">
@@ -53,13 +47,8 @@
 							<a href="http://intranet.magnacarta.fr/" class="btn hp-button">intranet</a>
 							</div>
 							</div>-->
-						{% endblock content %}
-					</main>
-					{# <div class="flex justify-center"></div> #}
-					{# {{ render(controller('App\\Controller\\NavController::navbar')) }} #}
-					{{ include('traits/_footer.html.twig') }}
-				</div>
-			</body>
-		{% endblock body %}
-	</body>
+					{% endblock content %}
+				</main>
+			</div>
+		</body>
 </html>

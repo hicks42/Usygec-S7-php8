@@ -59,6 +59,7 @@
     "twig/cssinliner-extra": "^3.10",
     "twig/extra-bundle": "*",
     "twig/intl-extra": "*",
+    "twig/string-extra": "^3.21",
     "twig/twig": "*",
     "vich/uploader-bundle": "*"
   },

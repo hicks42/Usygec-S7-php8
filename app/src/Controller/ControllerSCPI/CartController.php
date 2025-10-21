@@ -2,7 +2,7 @@
 
 namespace App\Controller\ControllerSCPI;
 
-use App\Classe\ClasseMC\Cart;
+use App\Classe\ClasseSCPI\Cart;
 use App\Entity\EntitySCPI\Produit;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -11,48 +11,48 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CartController extends AbstractController
 {
-    private $em;
+  private $em;
 
-    public function __construct(EntityManagerInterface $em)
-    {
-        $this->em = $em;
+  public function __construct(EntityManagerInterface $em)
+  {
+    $this->em = $em;
+  }
+
+  #[Route("scpi/mon-panier", name: "cart", methods: ["GET"])]
+  public function index(Cart $cart)
+  {
+    $cartDetail = [];
+    foreach ($cart->get() as $id => $quantity) {
+      $cartDetail[] = [
+        'produit' => $this->em->getRepository(Produit::class)->findOneById($id),
+        'quantity' => $quantity,
+      ];
     }
 
-    #[Route("/mon-panier", name:"cart", methods:["GET"])]
-    public function index(Cart $cart)
-    {
-        $cartDetail = [];
-        foreach ($cart->get() as $id => $quantity){
-            $cartDetail[] = [
-                'produit' => $this->em->getRepository(Produit::class)->findOneById($id),
-                'quantity' => $quantity,
-            ];
-        }
+    return $this->render('scpi/cart/cart.html.twig', [
+      'cart' => $cartDetail
+    ]);
+  }
 
-        return $this->render('cart/cart.html.twig', [
-            'cart' => $cartDetail
-        ]);
-    }
+  #[Route("scpi/cart/add/{id}", name: "add_to_cart")]
+  public function add(Cart $cart, $id)
+  {
+    $cart->add($id);
 
-    #[Route("/cart/add/{id}", name:"add_to_cart")]
-    public function add(Cart $cart, $id)
-    {
-        $cart->add($id);
+    return $this->redirectToRoute('cart');
+  }
 
-        return $this->redirectToRoute('cart');
-    }
+  #[Route("scpi/cart/remove/{id}", name: "remove_from_cart")]
+  public function remove(Cart $cart, $id)
+  {
+    $cart->remove($id);
+    return $this->redirectToRoute('cart');
+  }
 
-    #[Route("/cart/remove/{id}", name:"remove_from_cart")]
-    public function remove(Cart $cart, $id)
-    {
-        $cart->remove($id);
-        return $this->redirectToRoute('cart');
-    }
-
-    #[Route("/cart/delete", name:"delete_cart")]
-    public function delete(Cart $cart)
-    {
-        $cart->delete();
-        return $this->redirectToRoute('homepage');
-    }
+  #[Route("scpi/cart/delete", name: "delete_cart")]
+  public function delete(Cart $cart)
+  {
+    $cart->delete();
+    return $this->redirectToRoute('home-scpi');
+  }
 }

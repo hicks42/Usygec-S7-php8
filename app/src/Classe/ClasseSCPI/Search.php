@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Classe\ClasseMC;
+namespace App\Classe\ClasseSCPI;
 
 Class Search {
   /**

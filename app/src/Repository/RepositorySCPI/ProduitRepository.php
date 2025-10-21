@@ -2,7 +2,7 @@
 
 namespace App\Repository\RepositorySCPI;
 
-use App\Classe\ClasseMC\Search;
+use App\Classe\ClasseSCPI\Search;
 use App\Entity\EntitySCPI\Produit;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
