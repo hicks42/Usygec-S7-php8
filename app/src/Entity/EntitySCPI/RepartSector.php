@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Entity\EntitySCIP;
+namespace App\Entity\EntitySCPI;
 
-use App\Entity\EntitySCIP\Produit;
-use App\Repository\RepositorySCIP\RepartSectorRepository;
+use App\Entity\EntitySCPI\Produit;
+use App\Repository\RepositorySCPI\RepartSectorRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**

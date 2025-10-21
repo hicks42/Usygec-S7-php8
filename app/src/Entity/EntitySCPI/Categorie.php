@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Entity\EntitySCIP;
+namespace App\Entity\EntitySCPI;
 
-use App\Repository\RepositorySCIP\CategorieRepository;
+use App\Repository\RepositorySCPI\CategorieRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;

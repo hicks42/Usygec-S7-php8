@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Controller\ControllerSCIP\Admin;
+namespace App\Controller\ControllerSCPI\Admin;
 
-use App\Entity\EntitySCIP\Produit;
+use App\Entity\EntitySCPI\Produit;
 use App\Form\RepartGeoType;
 use App\Form\PerformanceType;
 use App\Form\RepartSectorType;

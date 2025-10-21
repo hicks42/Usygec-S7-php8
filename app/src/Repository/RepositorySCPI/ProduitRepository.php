@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Repository\RepositorySCIP;
+namespace App\Repository\RepositorySCPI;
 
 use App\Classe\ClasseMC\Search;
-use App\Entity\EntitySCIP\Produit;
+use App\Entity\EntitySCPI\Produit;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 

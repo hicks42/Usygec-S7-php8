@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Entity\EntitySCIP;
+namespace App\Entity\EntitySCPI;
 
-use App\Repository\RepositorySCIP\ActuRepository;
+use App\Repository\RepositorySCPI\ActuRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass:ActuRepository::class)]

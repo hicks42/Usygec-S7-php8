@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Controller\ControllerSCIP;
+namespace App\Controller\ControllerSCPI;
 
 use App\Classe\ClasseMC\Search;
-use App\Entity\EntitySCIP\Produit;
+use App\Entity\EntitySCPI\Produit;
 use App\Form\FormMC\SearchType;
 use App\Repository\RepositorySD\ProduitRepository;
 use Doctrine\ORM\EntityManagerInterface;

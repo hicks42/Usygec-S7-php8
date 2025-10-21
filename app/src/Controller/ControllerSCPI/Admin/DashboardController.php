@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Controller\ControllerSCIP\Admin;
+namespace App\Controller\ControllerSCPI\Admin;
 
-use App\Entity\EntitySCIP\Actu;
-use App\Entity\EntitySCIP\User;
-use App\Entity\EntitySCIP\Produit;
-use App\Entity\EntitySCIP\Categorie;
-use App\Controller\ControllerSCIP\Admin\ProduitCrudController;
+use App\Entity\EntitySCPI\Actu;
+use App\Entity\EntitySCPI\User;
+use App\Entity\EntitySCPI\Produit;
+use App\Entity\EntitySCPI\Categorie;
+use App\Controller\ControllerSCPI\Admin\ProduitCrudController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;

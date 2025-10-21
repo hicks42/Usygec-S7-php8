@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Entity\EntitySCIP;
+namespace App\Entity\EntitySCPI;
 
-use App\Repository\RepositorySCIP\PerformanceRepository;
+use App\Repository\RepositorySCPI\PerformanceRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass:PerformanceRepository::class)]

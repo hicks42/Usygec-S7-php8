@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Controller\ControllerSCIP;
+namespace App\Controller\ControllerSCPI;
 
-use App\Entity\EntitySCIP\Actu;
-use App\Entity\EntitySCIP\Produit;
+use App\Entity\EntitySCPI\Actu;
+use App\Entity\EntitySCPI\Produit;
 use App\Repository\ProduitRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;

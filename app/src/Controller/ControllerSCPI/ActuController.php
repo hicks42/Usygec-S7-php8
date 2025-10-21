@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Controller\ControllerSCIP;
+namespace App\Controller\ControllerSCPI;
 
-use App\Entity\EntitySCIP\Actu;
+use App\Entity\EntitySCPI\Actu;
 use App\Form\FormMC\ActuType;
-use App\Repository\RepositorySCIP\ActuRepository;
+use App\Repository\RepositorySCPI\ActuRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

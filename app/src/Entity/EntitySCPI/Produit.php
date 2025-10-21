@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Entity\EntitySCIP;
+namespace App\Entity\EntitySCPI;
 
-use App\Entity\EntitySCIP\Categorie;
-use App\Entity\EntitySCIP\Performance;
-use App\Entity\EntitySCIP\RepartSector;
-use App\Entity\EntitySCIP\RepartGeo;
+use App\Entity\EntitySCPI\Categorie;
+use App\Entity\EntitySCPI\Performance;
+use App\Entity\EntitySCPI\RepartSector;
+use App\Entity\EntitySCPI\RepartGeo;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Traits\Timestampable;
-use App\Repository\RepositorySCIP\ProduitRepository;
+use App\Repository\RepositorySCPI\ProduitRepository;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;

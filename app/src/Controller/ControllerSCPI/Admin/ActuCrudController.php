@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Controller\ControllerSCIP\Admin;
+namespace App\Controller\ControllerSCPI\Admin;
 
-use App\Entity\EntitySCIP\Actu;
+use App\Entity\EntitySCPI\Actu;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity\EntitySCIP;
+namespace App\Entity\EntitySCPI;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Controller\ControllerSCIP\Admin;
+namespace App\Controller\ControllerSCPI\Admin;
 
-use App\Entity\EntitySCIP\User;
+use App\Entity\EntitySCPI\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;

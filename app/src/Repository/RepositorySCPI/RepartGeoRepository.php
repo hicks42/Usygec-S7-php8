@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Repository\RepositorySCIP;
+namespace App\Repository\RepositorySCPI;
 
-use App\Entity\EntitySCIP\RepartGeo;
+use App\Entity\EntitySCPI\RepartGeo;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
