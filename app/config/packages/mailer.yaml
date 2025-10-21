@@ -3,3 +3,4 @@ framework:
     transports:
       main: "%env(MAILER_DSN)%"
       mailjet: "%env(MAILJET_MAILER_DSN)%"
+    message_bus: false

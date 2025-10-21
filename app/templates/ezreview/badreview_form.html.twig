@@ -7,6 +7,81 @@
 	{{ parent() }}
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="{{ asset('flatpickr/flatpickr.min.css') }}">
+	<style>
+		/* Style personnalisé pour le slider de note */
+		.rating-slider {
+			-webkit-appearance: none;
+			appearance: none;
+			width: 100%;
+			height: 12px;
+			border-radius: 6px;
+			background: linear-gradient(to right,
+				#ef4444 0%,
+				#f97316 20%,
+				#f59e0b 40%,
+				#eab308 60%,
+				#84cc16 80%,
+				#22c55e 100%);
+			outline: none;
+			opacity: 0.9;
+			transition: opacity 0.2s;
+		}
+
+		.rating-slider:hover {
+			opacity: 1;
+		}
+
+		.rating-slider::-webkit-slider-thumb {
+			-webkit-appearance: none;
+			appearance: none;
+			width: 32px;
+			height: 32px;
+			border-radius: 50%;
+			background: white;
+			cursor: pointer;
+			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+			border: 3px solid #3b82f6;
+			transition: all 0.2s;
+		}
+
+		.rating-slider::-webkit-slider-thumb:hover {
+			transform: scale(1.15);
+			box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+		}
+
+		.rating-slider::-moz-range-thumb {
+			width: 32px;
+			height: 32px;
+			border-radius: 50%;
+			background: white;
+			cursor: pointer;
+			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+			border: 3px solid #3b82f6;
+			transition: all 0.2s;
+		}
+
+		.rating-slider::-moz-range-thumb:hover {
+			transform: scale(1.15);
+			box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+		}
+
+		/* Style moderne pour Flatpickr */
+		.flatpickr-calendar {
+			border-radius: 16px !important;
+			box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
+			border: 2px solid #e5e7eb !important;
+		}
+
+		.flatpickr-day.selected {
+			background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%) !important;
+			border-color: #3b82f6 !important;
+		}
+
+		.flatpickr-time input:hover,
+		.flatpickr-time input:focus {
+			background: #eff6ff !important;
+		}
+	</style>
 {% endblock %}
 
 {% block javascripts %}
@@ -16,51 +91,215 @@
 	<script src="{{ asset('flatpickr/flatpickr.min.js') }}"></script>
 	<script src="{{ asset('flatpickr/l10n/fr.js') }}"></script>
 	<script src="{{ asset('js/flatpickr-config.js') }}"></script>
+	<script>
+		// Synchronisation du slider avec le select caché et affichage de la note
+		document.addEventListener('DOMContentLoaded', function() {
+			console.log('Script chargé');
+
+			const slider = document.getElementById('ratingSlider');
+			const ratingValue = document.getElementById('ratingValue');
+			// Chercher le select par son name au lieu de l'ID
+			const hiddenSelect = document.querySelector('select[name="bad_review[note]"]');
+			const form = document.querySelector('form[name="bad_review"]');
+
+			console.log('Slider:', slider);
+			console.log('Rating Value:', ratingValue);
+			console.log('Hidden Select:', hiddenSelect);
+			console.log('Form:', form);
+
+			if (slider && ratingValue) {
+				console.log('Éléments trouvés, initialisation...');
+
+				// Initialiser avec la valeur par défaut
+				const initialValue = slider.value;
+				ratingValue.textContent = initialValue;
+
+				if (hiddenSelect) {
+					hiddenSelect.value = initialValue;
+				}
+
+				// Mettre à jour lors du déplacement du slider
+				slider.addEventListener('input', function() {
+					const value = this.value;
+					console.log('Valeur du slider:', value);
+
+					// Mettre à jour l'affichage
+					ratingValue.textContent = value;
+
+					// Synchroniser avec le select caché (pour l'envoi du formulaire)
+					if (hiddenSelect) {
+						hiddenSelect.value = value;
+						console.log('Select synchronisé avec:', hiddenSelect.value);
+					}
+				});
+
+				// Forcer la synchronisation juste avant la soumission du formulaire
+				if (form) {
+					form.addEventListener('submit', function(e) {
+						const currentSliderValue = slider.value;
+						if (hiddenSelect) {
+							hiddenSelect.value = currentSliderValue;
+							console.log('Soumission - Valeur finale du select:', hiddenSelect.value);
+						}
+					});
+				}
+
+				console.log('Event listener ajouté');
+			} else {
+				console.error('Éléments non trouvés!');
+			}
+		});
+	</script>
 {% endblock javascripts %}
 
 {% block content %}
-	<div class="flex flex-col justify-center w-full">
-		<div class="relative w-full h-[200px] bg-cover bg-center bg-no-repeat" style="background-image: url('{{ (structure.imageName ? vich_uploader_asset(structure) | imagine_filter('company_image_banner') : asset('/images/placeholder.png')) }}');" alt="{{ structure.name }}">
-			<div class="absolute bottom-3 md:left-20 left-10 p-6 bg-slate-900/70 rounded-lg ">
-				<h1 class="text-yellow-400">Faites nous part de votre mécontentement :</h1>
+	<div class="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100 py-8 px-4">
+		<div class="max-w-3xl mx-auto">
+			{# En-tête avec image de l'établissement #}
+			<div class="relative w-full h-64 md:h-80 rounded-2xl overflow-hidden shadow-2xl mb-8">
+				<div class="absolute inset-0 bg-cover bg-center bg-no-repeat"
+					 style="background-image: url('{{ (structure.imageName ? vich_uploader_asset(structure) | imagine_filter('company_image_banner') : asset('/images/placeholder.png')) }}');">
+					<div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/50 to-transparent"></div>
+				</div>
+
+				<div class="absolute bottom-0 left-0 right-0 p-6 md:p-8">
+					<div class="flex items-center gap-3 mb-3">
+						<div class="w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center shadow-lg">
+							<svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
+							</svg>
+						</div>
+						<h1 class="text-3xl md:text-4xl font-bold text-white">Votre retour nous importe</h1>
+					</div>
+					<p class="text-blue-100 text-lg">{{ structure.name }}</p>
+				</div>
 			</div>
-		</div>
-		<div class="flex justify-center px-2">
-			<div class="md:w-1/2 w-full">
-				{{ form_start(form) }}
-				<div class="flex-row t-3">
-					<div class="w-full">
-						{{ form_widget(form.email) }}
+
+			{# Formulaire dans une card moderne #}
+			<div class="bg-white rounded-2xl shadow-xl p-6 md:p-10">
+				<div class="mb-8 text-center">
+					<h2 class="text-2xl font-bold text-gray-800 mb-2">Partagez votre expérience</h2>
+					<p class="text-gray-600">Vos retours nous aident à nous améliorer chaque jour</p>
+				</div>
+
+				{{ form_start(form, {'attr': {'class': 'space-y-8'}}) }}
+
+				{# Email caché (requis par le formulaire mais pas affiché) #}
+				<div class="hidden">
+					{{ form_widget(form.email) }}
+				</div>
+
+				{# Date du rendez-vous #}
+				<div class="space-y-2">
+					<label class="flex items-center gap-2 text-sm font-semibold text-gray-700">
+						<svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+						</svg>
+						Date et heure de votre visite
+					</label>
+					<div class="rdv-div">
+						{{ form_widget(form.date_rdv, {'attr': {'class': 'rdvflatpicker w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all'}}) }}
 					</div>
 				</div>
 
-				<div class="flex md:flex-row flex-col justify-between mt-5">
-					<div class="md:w-1/2 w-full text-gray-300">
-						Indiquez la date et l'heure de votre rendez vous :
+				{# Note de satisfaction avec slider #}
+				<div class="bg-gradient-to-br from-blue-50 to-purple-50 rounded-xl p-6 md:p-8 border-2 border-blue-100">
+					<label class="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-3">
+						<svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
+						</svg>
+						Votre niveau de satisfaction
+					</label>
+
+					{# Affichage de la note sélectionnée #}
+					<div class="text-center mb-6">
+						<div class="inline-flex items-center gap-3 bg-white px-6 py-3 rounded-full shadow-lg border-2 border-blue-200">
+							<span class="text-sm text-gray-600">Note :</span>
+							<span id="ratingValue" class="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">0</span>
+							<span class="text-sm text-gray-600">/ 10</span>
+						</div>
 					</div>
 
-					<div class="rdv-div md:w-1/2 w-full flex justify-center justify-md-end my-2">
-						{{ form_widget(form.date_rdv) }}
+					{# Champ select caché (requis par Symfony) - visuellement invisible mais techniquement présent #}
+					<div style="position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0;">
+						{{ form_widget(form.note, {'attr': {'id': 'hiddenNoteSelect', 'tabindex': '-1'}}) }}
+					</div>
+
+					{# Vrai slider HTML5 #}
+					<div class="space-y-4">
+						<div class="flex items-center gap-4">
+							<div class="text-3xl">😞</div>
+							<div class="flex-1">
+								<input
+									type="range"
+									min="0"
+									max="10"
+									value="0"
+									class="rating-slider"
+									id="ratingSlider"
+								>
+							</div>
+							<div class="text-3xl">😊</div>
+						</div>
+
+						{# Graduations #}
+						<div class="flex justify-between px-8 text-xs text-gray-500 font-semibold">
+							<span>0</span>
+							<span>1</span>
+							<span>2</span>
+							<span>3</span>
+							<span>4</span>
+							<span>5</span>
+							<span>6</span>
+							<span>7</span>
+							<span>8</span>
+							<span>9</span>
+							<span>10</span>
+						</div>
+					</div>
+
+					{# Labels descriptifs #}
+					<div class="flex justify-between mt-4 text-xs text-gray-600 px-2">
+						<span class="font-medium">Très insatisfait</span>
+						<span class="font-medium">Très satisfait</span>
 					</div>
 				</div>
 
-				<div class="flex flex-row justify-between mt-5">
-					<div class="basis-10/12 text-gray-300">
-						Sur une échelle de 1 à 10, (1 étant fortement insatisfait à 10 : extrêmement satisfait), comment évaluez-vous nos services:
-					</div>
-					<div class="dropdown basis-2/12">
-						{{ form_widget(form.note) }}
-					</div>
+				{# Message #}
+				<div class="space-y-2">
+					<label class="flex items-center gap-2 text-sm font-semibold text-gray-700">
+						<svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path>
+						</svg>
+						Votre message
+					</label>
+					{{ form_widget(form.message, {'attr': {'class': 'w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all min-h-[150px] resize-y', 'placeholder': 'Partagez-nous votre expérience en détail...'}}) }}
 				</div>
-				<div class="flex flex-row mt-5">
-					<div class="basis-full">
-						{{ form_widget(form.message) }}
-					</div>
+
+				{# Bouton d'envoi #}
+				<div class="pt-4">
+					{{ form_widget(form.submit, {
+						'label': 'Envoyer mon retour',
+						'attr': {
+							'class': 'w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold py-4 px-8 rounded-xl transition-all transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center gap-2'
+						}
+					}) }}
 				</div>
-				<div class="w-full text-center">
-					{{ form_widget(form.submit, { 'label': 'Envoyer' }) }}
-				</div>
+
 				{{ form_end(form) }}
+
+				{# Message de confidentialité #}
+				<div class="mt-8 pt-6 border-t border-gray-200">
+					<div class="flex items-start gap-3 text-sm text-gray-600">
+						<svg class="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+						</svg>
+						<p>
+							Vos informations sont <strong>confidentielles</strong> et ne seront utilisées que pour améliorer nos services.
+							Nous vous remercions de votre confiance.
+						</p>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

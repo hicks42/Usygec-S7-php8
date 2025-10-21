@@ -44,4 +44,8 @@ return [
     'path' => './assets/js/homepage-modals.js',
     'entrypoint' => true,
   ],
+  'pid-help-modal' => [
+    'path' => './assets/js/pid_help_modal.js',
+    'entrypoint' => true,
+  ],
 ];

@@ -14,7 +14,9 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 use App\Repository\RepositoryEZR\StructureRepository;
 use Symfony\Component\String\Slugger\SluggerInterface;
@@ -108,7 +110,11 @@ class EzreviewController extends AbstractController
   {
     $structure = $this->structureRepo->findOneById($id);
     $badRevUrl = $structure->getBadRevUrl();
-    $GooglUrl = "https://search.google.com/local/writereview?placeid=" . $structure->getPid();
+
+    // Utilise le meilleur lien disponible :
+    // - Lien direct avec PID si disponible
+    // - Sinon lien de recherche Google Maps (fallback)
+    $GooglUrl = $structure->getBestGoogleReviewUrl();
     $image = $structure->getImageName();
 
     return $this->render('ezreview/ezreview_survey.html.twig', [
@@ -152,6 +158,7 @@ class EzreviewController extends AbstractController
         'lieu_rdv' => $structure->getName(),
         'date_rdv' => $badreview->get('date_rdv')->getData(),
         'message' => $badreview->get('message')->getData(),
+        'structure' => $structure,
       ];
 
       $sendMailService->send(
@@ -182,6 +189,67 @@ class EzreviewController extends AbstractController
   {
     return $this->redirectToRoute('ezreview_hp');
   }
+
+  /**
+   * API pour extraire le Google Place ID depuis n'importe quelle URL Google Maps
+   */
+  #[Route("/api/ezreview/extract-pid", name: "api_extract_pid", methods: ["POST"])]
+  #[IsGranted('ROLE_USER')]
+  public function extractPlaceId(Request $request, HttpClientInterface $httpClient): JsonResponse
+  {
+    $data = json_decode($request->getContent(), true);
+    $url = $data['url'] ?? '';
+
+    if (empty($url)) {
+      return $this->json([
+        'success' => false,
+        'error' => 'URL manquante'
+      ], 400);
+    }
+
+    try {
+      // Faire une requête HTTP pour récupérer le contenu de la page
+      // Important: max_redirects permet de suivre les redirections (ex: maps.app.goo.gl)
+      $response = $httpClient->request('GET', $url, [
+        'headers' => [
+          'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+          'Accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+          'Accept-Language' => 'fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7',
+        ],
+        'timeout' => 15,
+        'max_redirects' => 10  // Suivre jusqu'à 10 redirections
+      ]);
+
+      $html = $response->getContent();
+
+      // Chercher le Place ID au format ChIJ dans le HTML
+      $pidPattern = '/ChIJ[a-zA-Z0-9_-]{20,}/';
+      preg_match_all($pidPattern, $html, $matches);
+
+      if (!empty($matches[0])) {
+        // Prendre le premier PID trouvé (le plus souvent c'est le bon)
+        $placeId = $matches[0][0];
+
+        return $this->json([
+          'success' => true,
+          'placeId' => $placeId
+        ]);
+      }
+
+      // Si pas trouvé au format ChIJ, chercher dans les meta tags ou autres
+      return $this->json([
+        'success' => false,
+        'error' => 'Aucun Place ID trouvé dans cette page. Vérifiez que l\'URL correspond bien à un établissement Google Maps.'
+      ]);
+
+    } catch (\Exception $e) {
+      return $this->json([
+        'success' => false,
+        'error' => 'Erreur lors de la récupération de la page: ' . $e->getMessage()
+      ], 500);
+    }
+  }
+
 
   /******************************************************************************/
 

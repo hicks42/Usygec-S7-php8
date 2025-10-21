@@ -22,13 +22,13 @@
         <div class="ezr-survey-card">
             <!-- Message d'accueil -->
             <div class="ezr-welcome-message">
-                <h2>Bonjour ! 👋</h2>
+                <h2>Bonjour survey! 👋</h2>
                 <p class="ezr-welcome-text">
-                    Vous avez récemment été accueillis dans notre établissement 
+                    Vous avez récemment été accueillis dans notre établissement
                     <span class="ezr-establishment-name">{{ structure.name }}</span>.
                 </p>
                 <p class="ezr-welcome-text">
-                    Soucieux de l'amélioration continue de nos prestations et afin de répondre au mieux à vos attentes, 
+                    Soucieux de l'amélioration continue de nos prestations et afin de répondre au mieux à vos attentes,
                     nous avons mis en place cette enquête de satisfaction.
                 </p>
             </div>
@@ -102,9 +102,9 @@
             // Ajouter un effet de chargement
             const button = e.currentTarget;
             const originalText = button.innerHTML;
-            
+
             button.innerHTML = '<span class="ezr-loading"></span><span>Ouverture...</span>';
-            
+
             // Restaurer le texte après un délai
             setTimeout(() => {
                 button.innerHTML = originalText;

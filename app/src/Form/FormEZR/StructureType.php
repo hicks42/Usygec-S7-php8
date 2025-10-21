@@ -14,103 +14,111 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class StructureType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options): void
-    {
-        $builder
-            ->add('name', TextType::class, [
-                'label' => 'Nom',
-                'label_attr' => ['class' => 'text-gray-300 mt-1'],
-                'attr' => [
-                    'placeholder' => 'Nom de l\'établissement',
-                    'class' => 'form-control w-full'
-                ]
-            ])
-            ->add('imageFile', VichImageType::class, [
-                'label' => 'Image de l\'établissement',
-                'required' => false,
-                'download_uri' => false,
-                'imagine_pattern' => 'company_image_banner',
-                'label_attr' => ['class' => 'text-gray-300 mt-4'],
-                'attr' => [
-                    'placeholder' => 'Image au format jpg ou png',
-                    'class' => 'form-control text-gray-300 w-full'
-                ],
-                'allow_delete' => true,
-                'delete_label' => 'Supprimer l\'image',
-            ])
-            // ->add('googlUrl', TextareaType::class, [
-            //     'label' => 'Indiquez l\'URL pour un avis positif (Google) :'
-            // ])
-            ->add('Pid', TextType::class, [
-                'required' => false,
-                // 'mapped' => false,
-                'label_attr' => ['class' => 'text-gray-300 mt-4'],
-                'attr' => ['class' => 'form-control w-full'],
-            ])
-            ->add('badRevUrl', TextareaType::class, [
-                'label' => 'Indiquez l\'URL pour un avis negatif :',
-                'required' => false,
-                'label_attr' => ['class' => 'text-gray-300 mt-4'],
-                'attr' => [
-                    'placeholder' => '(optionelle)',
-                    'class' => 'form-control w-full'
-                ]
-            ])
-            ->add('adresse1', TextType::class, [
-                'label' => 'Adresse 1',
-                'label_attr' => ['class' => 'text-gray-300 mt-4'],
-                'attr' => [
-                    'placeholder' => 'Indiquez l\'addresse',
-                    'class' => 'form-control'
-                ]
-            ])
-            ->add('adresse2', TextType::class, [
-                'label' => 'Adresse 2',
-                'required' => false,
-                'label_attr' => ['class' => 'text-gray-300 mt-4'],
-                'attr' => [
-                    'placeholder' => '(optionelle)',
-                    'class' => 'form-control'
-                ]
-            ])
-            ->add('cp', IntegerType::class, [
-                'label' => 'Code postal',
-                'label_attr' => ['class' => 'text-gray-300 mt-4'],
-                'attr' => [
-                    'placeholder' => 'Indiquez le code postal',
-                    'class' => 'form-control'
-                ]
-            ])
-            ->add('city', TextType::class, [
-                'label' => 'Ville',
-                'label_attr' => ['class' => 'text-gray-300 mt-4'],
-                'attr' => [
-                    'placeholder' => 'Indiquez la ville',
-                    'class' => 'form-control'
-                ]
-            ])
-            ->add('country', TextType::class, [
-                'label' => 'Pays',
-                'label_attr' => ['class' => 'text-gray-300 mt-4'],
-                'attr' => [
-                    'placeholder' => 'Indiquez le pays',
-                    'class' => 'form-control'
-                ]
-            ])
-            ->add('phone', TelType::class, [
-                'label' => 'Téléphone',
-                'label_attr' => ['class' => 'text-gray-300 mt-4'],
-                'attr' => [
-                    'placeholder' => 'Le téléphone du contact',
-                    'class' => 'form-control'
-                ]
-            ]);
-    }
+  public function buildForm(FormBuilderInterface $builder, array $options): void
+  {
+    $builder
+      // ÉTAPE 1 : Informations essentielles pour trouver le PID
+      ->add('name', TextType::class, [
+        'label' => 'Nom de l\'établissement',
+        'label_attr' => ['class' => 'text-gray-700 font-semibold mt-1'],
+        'attr' => [
+          'placeholder' => 'Ex: Restaurant Le Bistrot',
+          'class' => 'form-control w-full'
+        ]
+      ])
+      ->add('cp', IntegerType::class, [
+        'label' => 'Code postal',
+        'label_attr' => ['class' => 'text-gray-700 font-semibold mt-4'],
+        'attr' => [
+          'placeholder' => 'Ex: 42000',
+          'class' => 'form-control w-full'
+        ]
+      ])
 
-    public function configureOptions(OptionsResolver $resolver): void
-    {
-        $resolver->setDefaults([
-            'data_class' => Structure::class,
-        ]);
-    }
+      // Place ID (sera pré-rempli automatiquement)
+      ->add('Pid', TextType::class, [
+        'required' => false,
+        'label' => 'Place ID Google',
+        'label_attr' => ['class' => 'text-gray-500 mt-4'],
+        'attr' => [
+          'class' => 'form-control w-full bg-gray-100',
+          'placeholder' => 'ChIJ...',
+          'readonly' => true
+        ],
+        'help' => 'Généré automatiquement via le bouton "Créer le lien"',
+        'help_attr' => ['class' => 'text-gray-400 text-sm']
+      ])
+
+      // ÉTAPE 2 : Reste du formulaire (débloqué après avoir le PID)
+      ->add('imageFile', VichImageType::class, [
+        'label' => 'Image de l\'établissement',
+        'required' => false,
+        'download_uri' => false,
+        'imagine_pattern' => 'company_image_banner',
+        'label_attr' => ['class' => 'text-gray-500 mt-4'],
+        'attr' => [
+          'placeholder' => 'Image au format jpg ou png',
+          'class' => 'form-control text-gray-500 w-full'
+        ],
+        'allow_delete' => true,
+        'delete_label' => 'Supprimer l\'image',
+      ])
+      ->add('adresse1', TextType::class, [
+        'label' => 'Adresse 1',
+        'label_attr' => ['class' => 'text-gray-500 mt-4'],
+        'attr' => [
+          'placeholder' => 'Indiquez l\'adresse',
+          'class' => 'form-control'
+        ]
+      ])
+      ->add('adresse2', TextType::class, [
+        'label' => 'Adresse 2',
+        'required' => false,
+        'label_attr' => ['class' => 'text-gray-500 mt-4'],
+        'attr' => [
+          'placeholder' => '(optionnelle)',
+          'class' => 'form-control'
+        ]
+      ])
+      ->add('city', TextType::class, [
+        'label' => 'Ville',
+        'label_attr' => ['class' => 'text-gray-500 mt-4'],
+        'attr' => [
+          'placeholder' => 'Indiquez la ville',
+          'class' => 'form-control'
+        ]
+      ])
+      ->add('country', TextType::class, [
+        'label' => 'Pays',
+        'label_attr' => ['class' => 'text-gray-500 mt-4'],
+        'attr' => [
+          'placeholder' => 'Indiquez le pays',
+          'class' => 'form-control'
+        ]
+      ])
+      ->add('phone', TelType::class, [
+        'label' => 'Téléphone',
+        'label_attr' => ['class' => 'text-gray-500 mt-4'],
+        'attr' => [
+          'placeholder' => 'Le téléphone du contact',
+          'class' => 'form-control'
+        ]
+      ])
+      ->add('badRevUrl', TextareaType::class, [
+        'label' => 'Indiquez l\'URL pour un avis négatif :',
+        'required' => false,
+        'label_attr' => ['class' => 'text-gray-500 mt-4'],
+        'attr' => [
+          'placeholder' => '(optionnelle)',
+          'class' => 'form-control w-full'
+        ]
+      ]);
+  }
+
+  public function configureOptions(OptionsResolver $resolver): void
+  {
+    $resolver->setDefaults([
+      'data_class' => Structure::class,
+    ]);
+  }
 }

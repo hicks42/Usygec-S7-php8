@@ -1,6 +1,6 @@
 {# form for existing structures #}
 {% macro niceForm(form) %}
-	<div id="accordion" class="bg-slate-400 flex flex-col my-[1px] rounded-md">
+	<div id="accordion" class="bg-slate-300 flex flex-col my-[1px] rounded-md" data-structure-form>
 		<div class="item" id="etbls-{{ form.vars.name }}">
 			<div class="header bg-slate-600 flex flex-row justify-between items-center cursor-pointer font-bold p-6 rounded-md" id="heading-{{ form.vars.name }}">
 				<div class=" text-white">{{ form.name.vars.value }}</div>
@@ -14,7 +14,72 @@
 			<div class="content transition-all duration-1000">
 				{{ form_row(form.name)}}
 				{{ form_row(form.imageFile)}}
-				{{ form_row(form.Pid)}}
+				<div class="relative">
+					{{ form_row(form.Pid, {'attr': {'data-pid-field': ''}}) }}
+					<button type="button" onclick="openPidHelpModalNew(this)" class="absolute top-1 right-0 bg-green-500 hover:bg-green-600 text-white px-3 py-1.5 rounded-md transition-colors flex items-center gap-1.5 text-sm font-medium shadow-sm">
+						<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path>
+						</svg>
+						Trouver le PID
+					</button>
+				</div>
+
+				{# Afficher le lien Google Review (avec PID ou fallback) #}
+				{% set bestUrl = form.vars.data.bestGoogleReviewUrl %}
+				{% set hasPid = form.vars.data.googleReviewUrl is not empty %}
+
+				{% if bestUrl %}
+					<div class="{% if hasPid %}bg-green-50 border-green-200{% else %}bg-blue-50 border-blue-200{% endif %} border rounded-lg p-4 mt-3">
+						<div class="flex items-start gap-2 mb-2">
+							<svg class="w-5 h-5 {% if hasPid %}text-green-600{% else %}text-blue-600{% endif %} flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path>
+							</svg>
+							<div class="flex-1">
+								<label class="text-gray-700 font-semibold text-sm block">
+									{% if hasPid %}
+										✨ Lien direct pour donner un avis Google
+									{% else %}
+										🔍 Lien Google Maps de votre établissement
+									{% endif %}
+								</label>
+								{% if not hasPid %}
+									<p class="text-xs text-gray-600 mt-1">
+										💡 <strong>Astuce :</strong> Remplissez le Place ID pour générer un lien direct vers le formulaire d'avis
+									</p>
+								{% endif %}
+							</div>
+						</div>
+
+						<div class="flex gap-2">
+							<input type="text" readonly value="{{ bestUrl }}"
+								   class="form-control flex-1 bg-white text-sm"
+								   id="google-review-url-{{ form.vars.name }}">
+							<button type="button" onclick="copyToClipboard('google-review-url-{{ form.vars.name }}')"
+									class="btn btn-sm btn-secondary whitespace-nowrap">
+								<svg class="w-4 h-4 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+								</svg>
+								Copier
+							</button>
+							<a href="{{ bestUrl }}" target="_blank"
+							   class="btn btn-sm btn-primary whitespace-nowrap">
+								<svg class="w-4 h-4 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+								</svg>
+								Tester
+							</a>
+						</div>
+
+						<p class="text-gray-500 text-xs mt-2">
+							{% if hasPid %}
+								✅ Ce lien ouvre <strong>directement le formulaire d'avis Google</strong> pour votre établissement
+							{% else %}
+								ℹ️ Ce lien ouvre Google Maps. Vos clients devront cliquer sur <strong>"Avis"</strong> puis <strong>"Écrire un avis"</strong>
+							{% endif %}
+						</p>
+					</div>
+				{% endif %}
+
 				{{ form_row(form.badRevUrl)}}
 				<div class="grid lg:grid-cols-2 grid-cols-1 gap-2">
 					<div class="">
@@ -44,29 +109,87 @@
 
 {# form to make structures #}
 {% macro newForm(form) %}
-	<div class="etbl-card flex flex-col">
-		{{ form_row(form.name)}}
-		{{ form_row(form.imageFile)}}
-		{{ form_row(form.Pid)}}
-		{{ form_row(form.badRevUrl)}}
-		<div class="grid lg:grid-cols-2 grid-cols-1 gap-2">
-			<div class="">
-				{{ form_row(form.adresse1)}}
+	<div class="etbl-card flex flex-col" data-structure-form>
+		{# ÉTAPE 1 : Informations essentielles #}
+		<div class="bg-gradient-to-br from-blue-50 to-green-50 border-2 border-blue-200 rounded-lg p-6 mb-4">
+			<h3 class="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
+				<svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+				</svg>
+				Étape 1 : Informations de base
+			</h3>
+
+			{{ form_row(form.name)}}
+			{{ form_row(form.cp)}}
+
+			{# Gros bouton "Créer le lien" au centre #}
+			<div class="flex justify-center mt-6">
+				<button type="button"
+						onclick="openPidHelpModalNew(this)"
+						class="bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 text-white px-8 py-4 rounded-lg transition-all font-bold text-lg shadow-lg flex items-center gap-3 transform hover:scale-105"
+						data-create-link-btn>
+					<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path>
+					</svg>
+					Créer le lien Google
+				</button>
 			</div>
-			<div class="">
-				{{ form_row(form.adresse2)}}
+
+			<p class="text-center text-sm text-gray-600 mt-3">
+				Ce bouton vous aide à trouver le lien Google Maps de votre établissement
+			</p>
+		</div>
+
+		{# Champ PID (caché, sera rempli automatiquement) #}
+		<div class="hidden">
+			{{ form_row(form.Pid, {'attr': {'data-pid-field': ''}}) }}
+		</div>
+
+		{# ÉTAPE 2 : Reste du formulaire (caché tant qu'il n'y a pas de PID) #}
+		<div class="rest-of-form hidden" data-rest-form>
+			<div class="bg-green-100 border-l-4 border-green-500 p-4 mb-4 rounded">
+				<p class="text-green-800 font-semibold flex items-center gap-2">
+					<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+					</svg>
+					Parfait ! Le Place ID a été trouvé. Complétez maintenant les informations de votre établissement.
+				</p>
 			</div>
-			<div class="">
-				{{ form_row(form.cp)}}
+
+			<h3 class="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
+				<svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+				</svg>
+				Étape 2 : Informations complémentaires
+			</h3>
+
+			{{ form_row(form.imageFile)}}
+
+			<div class="grid lg:grid-cols-2 grid-cols-1 gap-2">
+				<div class="">
+					{{ form_row(form.adresse1)}}
+				</div>
+				<div class="">
+					{{ form_row(form.adresse2)}}
+				</div>
+				<div class="">
+					{{ form_row(form.city)}}
+				</div>
+				<div class="">
+					{{ form_row(form.country)}}
+				</div>
+				<div class="">
+					{{ form_row(form.phone)}}
+				</div>
 			</div>
-			<div class="">
-				{{ form_row(form.city)}}
-			</div>
-			<div class="">
-				{{ form_row(form.country)}}
-			</div>
-			<div class="">
-				{{ form_row(form.phone)}}
+
+			{{ form_row(form.badRevUrl)}}
+
+			<div class="bg-blue-50 border border-blue-200 rounded-lg p-3 mt-3 text-sm text-gray-600">
+				<svg class="w-4 h-4 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h3a3 3 0 000-6h-.025C15.284 5.942 11.697 3 7.5 3A5.5 5.5 0 002 8.5c0 .593.101 1.16.286 1.686M11 19l-3-3m0 0l3-3m-3 3h8"></path>
+				</svg>
+				Le lien Google sera généré automatiquement après avoir enregistré les informations
 			</div>
 		</div>
 	</div>

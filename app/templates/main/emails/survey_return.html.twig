@@ -98,18 +98,23 @@
 </style>
 <div class="mail-container">
 	<div class="content">
+		{% if context.structure.imageName %}
+		<div class="image-container">
+			<img src="{{ email.image('@images/companies/' ~ context.structure.imageName) }}" alt="{{ context.structure.name }}">
+		</div>
+		{% endif %}
 		<div class="mail-content">
-			<h2>Retour de l'enquete</h2>
-			<div class="message">Bonjour.<br>
-				<p>Note donnée  :
-					{{ context.note }}</p>
+			<h2>Retour de l'enquete de satisfaction</h2>
+			<div class="message">Bonjour,<br><br>
+				<p><strong>Note donnée :</strong>
+					{{ context.note }} / 10</p>
 
-				<p>Lieu du rendez-vous :
+				<p><strong>Établissement :</strong>
 					{{ context.lieu_rdv }}</p>
-				<p>Datedu rendez-vous :
+				<p><strong>Date du rendez-vous :</strong>
 					{{ context.date_rdv|format_datetime('full', 'full', locale='fr') }}</p>
 
-				<p>Message :
+				<p><strong>Message du client :</strong><br>
 					{{ context.message|raw }}</p>
 			</div>
 		</div>
