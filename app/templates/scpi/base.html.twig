@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale }}">
+	<head>
+		{% block head %}
+			<meta charset="UTF-8">
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
+			<meta description="Décorations artisanales - Création de suspension en bois flottés et feuilles en macramé">
+			<title>
+				{% block title %}{% endblock %}
+			</title>
+			{% block stylesheets %}
+				{{ encore_entry_link_tags('app') }}
+				<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+			{% endblock stylesheets %}
+
+			{% block javascripts %}
+				{{ encore_entry_script_tags('app') }}
+			{% endblock javascripts %}
+
+		{% endblock head %}
+	</head>
+	{% block body %}
+		<body>
+			<div class="bg">
+				{{ include('traits/_header.html.twig') }}
+				{% block content %}{% endblock content %}
+				{# <div class="flex justify-center"></div> #}
+				{# {{ render(controller('App\\Controller\\NavController::navbar')) }} #}
+				{{ include('traits/_footer.html.twig') }}
+			</div>
+		</body>
+	{% endblock body %}
+</html>

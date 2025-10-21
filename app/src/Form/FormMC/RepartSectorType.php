@@ -2,7 +2,7 @@
 
 namespace App\Form\FormMC;
 
-use App\Entity\EntitySCIP\RepartSector;
+use App\Entity\EntitySCPI\RepartSector;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;

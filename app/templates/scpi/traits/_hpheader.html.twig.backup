@@ -1,0 +1,107 @@
+<header class="SiteHeader">
+	<div class="SiteHeader-contact" class="c-grey">
+		<span class="ttu f-bold">Une question ?</span>&nbsp;&nbsp; Contactez-nous au
+		<span class="f-bold">04 04 04 04</span>&nbsp;&nbsp;
+		<small class="c-grey f-italic">Prix d’un appel local</small>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Suivez-nous sur les réseaux sociaux &nbsp;
+		<a href="https://twitter.com/capitalinvest" target="_blank" class="c-grey">
+		<span class="hidden">Nous suivre sur Twitter</span> <em class="fab fa-twitter"></em></a>
+		&nbsp;
+		<a href="https://www.linkedin.com/company/capitalinvest" target="_blank" class="icon-linkedin c-grey">
+			<span class="hidden">Nous suivre sur Linkedin</span> <i class="fab fa-linkedin"></i>
+		</a>
+	</div>
+	<div class="HomeHeader">
+		<div class="logo-container">
+			<a href="/" class="SiteHeader-logo">
+				<img src="/images/CapitalInvestlight.png" alt="Logo Capital Invest, gestion en patrimoine">
+			</a>
+		</div>
+		<div class="promo-container">
+			{% if promos is defined and promos is not empty %}
+				{% for promo in promos %}
+					{% if promo is not null %}
+					<article class="promo-card">
+						<h1>Promotion du jour !!!</h1>
+						<div class="promo-info">
+							<div class="promo-image">
+								<a href=" {{ path('produit_show', {slug: promo.slug}) }} ">
+									{% if promo.imageName %}
+										<img src="{{ vich_uploader_asset(promo, 'imageFile') | imagine_filter('square_thumbnail_medium') }}" alt="{{ promo.name }}"/>
+									{% else %}
+										<img src="{{ asset('build/images/placeholder.jpg') | imagine_filter('square_thumbnail_medium') }}" alt="{{ promo.name }}"/>
+									{% endif %}
+								</a>
+							</div>
+							<div>
+								<h2>
+									<a href="{{ path('produit_show', {slug: promo.slug}) }}">{{ promo.name }}</a>
+								</h2>
+								<div class="info-container mx-1">
+									<div>
+										<small>Gérér par :</small>
+										{{ promo.socGest|u.truncate(25, ' ...', false)|raw }}
+									</div>
+									<div>
+										<small>Catégorie :</small>
+										{{ promo.categorie ? (promo.categorie|u.truncate(25, ' ...', false)|raw) : 'N/A' }}
+									</div>
+									<div>
+										<small>Capital :</small>
+										{{ promo.capital|u.truncate(25, ' ...', false)|raw }}
+									</div>
+									<div>
+										<small>Thém. :</small>
+										{{ promo.thematique|u.truncate(25, ' ...', false)|raw }}
+									</div>
+									<div>
+										<small>Date de création :</small>
+										{{ promo.createdAt ? (promo.createdAt|date("d/m/Y")) : 'N/A' }}
+									</div>
+									<div>
+										<small>Capitalisation :</small>
+										{{ promo.Capitalisation }}
+										Mds €
+									</div>
+								</div>
+							</div>
+						</div>
+					</article>
+					{% endif %}
+				{% endfor %}
+			{% endif %}
+		</div>
+		<div class="actu-container">
+			{% if actus is defined and actus is not empty %}
+				{% for actu in actus %}
+					{% if actu is not null %}
+					<article class="actu-card">
+						<h1>Actualité</h1>
+						<hr>
+						<div
+							class="actu-info">
+							{# <div class="actu-image">
+							<a href=" {{ path('produit_show', {slug: actu.slug}) }} ">
+							<img src="{{ (actu.imageName ? vich_uploader_asset(actu) : asset('build/images/placeholder.jpg')) | imagine_filter('square_thumbnail_medium') }}" alt="{{ actu.name }}"/>
+							</a>
+							</div> #}
+							<div>
+								<h2>
+									{{ actu.title }}
+								</h2>
+								<div class="actu-info mx-1">{{ actu.content ? (actu.content|u.truncate(100, ' ...', false)|raw) : '' }}
+									<br>
+									<a href="{{ path('actu_show', {slug: actu.slug}) }}">
+										Lire
+									</a>
+								</div>
+							</div>
+						</div>
+					</article>
+					{% endif %}
+				{% endfor %}
+			{% endif %}
+		</div>
+
+	</div>
+</header>

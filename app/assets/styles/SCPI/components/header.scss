@@ -1,0 +1,212 @@
+.SiteHeader {
+  position: relative;
+  z-index: 5;
+  background: #ffffff;
+}
+
+.HomeHeader {
+  position: relative;
+  z-index: 5;
+  background: #ffffff;
+  min-height: 20vh;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.SiteHeader-contact {
+  height: 50px;
+  color: #fff;
+  background: #222222;
+  text-align: center;
+  font-size: 0.8em;
+  line-height: 3.5em;
+}
+
+.SiteHeader-contact {
+  height: 50px;
+  color: #fff;
+  background: #222222;
+  text-align: center;
+  font-size: 0.8em;
+  line-height: 3.5em;
+}
+
+.SiteHeader-menu {
+  position: relative;
+  height: 100px;
+  font-size: 0.8em;
+  line-height: 6.5em;
+}
+
+.SiteHeader-nav {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.SiteHeader-menu li {
+  position: relative;
+  display: inline-block;
+  height: 100%;
+}
+
+.SiteHeader-menu li a {
+  display: inline-block;
+  height: 100%;
+  margin-left: 20px;
+  color: #999999;
+}
+
+.SiteHeader .sub-menu {
+  position: absolute;
+  display: none;
+  left: 0;
+  font-size: 1em;
+  line-height: 1.3em;
+  background: #fff;
+  width: 250px;
+}
+
+.SiteHeader .sub-menu a {
+  display: block;
+  padding: 12px 20px;
+  margin-left: 0;
+  height: auto;
+}
+
+.logo-container {
+  width: 20%;
+}
+
+.btnMenu {
+  position: absolute;
+  display: block;
+  height: 30px;
+  width: 40px;
+  padding: 10px 0;
+  right: 6%;
+  top: 20px;
+  background: none;
+  border: none;
+}
+
+.promo-container {
+  width: 40%;
+}
+
+.promo-card {
+  background-color: white;
+  box-shadow: 5px 5px 9px -2px #6d6d6d;
+  border: 0px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+}
+
+.promo-card > h1 {
+  margin: 0;
+  display: block;
+  background: #b75a4a;
+  padding: 0.5rem;
+  text-align: center;
+  color: white;
+  font-size: 1.5rem;
+}
+
+.promo-info {
+  margin: 0;
+  width: auto;
+  display: flex;
+  flex-direction: row;
+  flex-grow: 2;
+}
+
+.promo-info h2 {
+  margin-top: 5px;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.promo-info h2 > a {
+  color: #6c757d;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.promo-info h2 > a:hover {
+  color: #46515a;
+  font-weight: bold;
+}
+
+.promo-image {
+  border-radius: 0 0 0 5px;
+  overflow: hidden;
+  flex-grow: 1;
+  max-width: 5rem;
+  margin: 0 5px 0 0;
+  max-height: 7rem;
+}
+
+.promo-image img {
+  height: 100%;
+  max-height: 100%;
+  transition: 2s ease-in-out;
+
+  &:hover {
+    transform: scale(1.2);
+  }
+}
+
+.promo-description {
+  width: auto;
+  text-align: justify;
+}
+
+.actu-container {
+  width: 33%;
+  margin: 0 0 0 1rem;
+}
+
+.actu-card {
+  background-color: #f1f1f1;
+  background: linear-gradient(
+    139deg,
+    rgba(252, 252, 252, 1) 0%,
+    rgba(235, 235, 235, 1) 55%,
+    rgba(246, 246, 246, 1) 100%
+  );
+  padding: 1rem;
+  border: 1px solid #d9d9d9;
+  font-family: "Courier New", Courier, monospace;
+}
+
+.actu-card h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.actu-card hr {
+  margin: 0;
+}
+
+.actu-info {
+  margin: 0;
+  width: auto;
+  display: flex;
+  text-align: justify;
+  font-size: small;
+}
+
+.actu-info h2 {
+  font-size: 1rem;
+  margin-top: 0.4rem;
+  color: #6c757d;
+}
+
+@media (max-width: 1400px) {
+  .SiteHeader-menu li a {
+    margin-left: 13px;
+  }
+}

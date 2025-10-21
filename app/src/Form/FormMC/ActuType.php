@@ -2,7 +2,7 @@
 
 namespace App\Form\FormMC;
 
-use App\Entity\EntitySCIP\Actu;
+use App\Entity\EntitySCPI\Actu;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
