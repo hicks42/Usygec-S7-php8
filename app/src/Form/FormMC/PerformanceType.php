@@ -2,7 +2,7 @@
 
 namespace App\Form\FormMC;
 
-use App\Entity\EntitySCIP\Performance;
+use App\Entity\EntitySCPI\Performance;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;

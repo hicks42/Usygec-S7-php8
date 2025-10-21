@@ -1,0 +1,109 @@
+@import "~bootstrap/scss/bootstrap";
+@import "components/produit";
+@import "components/header";
+@import "components/footer";
+@import "components/compare";
+@import "components/homepage";
+
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -ms-interpolation-mode: nearest-neighbor;
+  image-rendering: optimizeQuality;
+  text-rendering: optimizeLegibility;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.bg {
+  background: rgb(183, 90, 74);
+  background: linear-gradient(
+    175deg,
+    rgba(183, 90, 74, 1) 27%,
+    rgba(223, 181, 174, 1) 55%,
+    rgba(255, 255, 255, 1) 70%
+  );
+  min-height: 100vh;
+}
+h1 {
+  margin-top: 2rem;
+}
+
+.main-wrapper > h1 {
+  background: black;
+  width: 50%;
+  margin-top: 0;
+  padding-top: 1.5rem;
+  border-end-end-radius: 2rem;
+  border-end-start-radius: 2rem;
+  padding-bottom: 1rem;
+  color: white;
+  text-align: center;
+}
+
+.container {
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.main-wrapper {
+  padding-bottom: 60px;
+}
+
+.ttu {
+  text-transform: uppercase;
+}
+
+.f-bold {
+  font-family: "CircularStdBold";
+}
+
+.c-grey {
+  color: #999999;
+}
+
+.f-italic {
+  font-family: "CircularStdItalic";
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+ul li a {
+  padding: 0;
+  margin: 0;
+  color: rgb(65, 107, 109);
+}
+
+ul li a:hover {
+  font-weight: bold;
+  color: brown;
+}
+
+a {
+  -webkit-transition: all 200ms ease-out;
+  transition: all 200ms ease-out;
+  text-decoration: none;
+}
+
+@media (min-width: 992px) and (max-width: 1399px) {
+  .hidden-md {
+    display: none !important;
+  }
+}
+
+// @media (min-width: 992px){
+//     .container {
+//         width: 940px;
+//     }}
+
+// @media (min-width: 768px){
+//     .container {
+//         width: 720px;
+//     }}

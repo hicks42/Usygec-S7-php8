@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Le comparateur
+{% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	<link rel="stylesheet" href="http://localhost:8080/wip.scss">
+{% endblock stylesheets %}
+
+{% block javascripts %}
+	{{ parent() }}
+{% endblock javascripts %}
+
+{% block content %}
+	<div class="main-wrapper">
+		<h1>Le Comparateur</h1>
+		<div class="compare-result">
+			{% if compare is null %}
+				<table class="table">
+					<tr>
+						<th>Aucun produit dans le comparateur</th>
+					</tr>
+				</table>
+			{% else %}
+				<table class="table">
+					<tr class="bg-secondary bg-gradient text-white">
+						<th width="16%">IDENTITE</th>
+						{% for item in compare %}
+							{% for column in item.produit.imageName|split('<hr />') %}
+								<td width="28%"><img src="{{ (column ? vich_uploader_asset(item.produit) : asset('build/images/placeholder.jpg')) | imagine_filter('square_thumbnail_htiny') }}" class="border border-white border-2 ml-2 bg-white"></td>
+							{% endfor %}
+						{% endfor %}
+					</tr>
+					{% for key in fieldnames %}
+						{% if key == "sharePrice" %}
+							<tr class="bg-secondary bg-gradient text-white">
+								<th colspan="{{(compare|length)+1}}">CHIFFRES CLES</th>
+							</tr>
+						{% elseif key == "investStrat" %}
+							<tr class="bg-secondary bg-gradient text-white">
+								<th colspan="{{(compare|length)+1}}">STRATEGIE</th>
+							</tr>
+						{% elseif key == "subscriptionCom" %}
+							<tr class="bg-secondary bg-gradient text-white">
+								<th colspan="{{(compare|length)+1}}">FRAIS</th>
+							</tr>
+						{% endif %}
+						{% include 'traits/_line.html.twig' with {'value': key} %}
+					{% endfor %}
+				</table>
+			{% endif %}
+			<p class="flex justify-around">
+				<a href={{ path ('produits') }} class="btn btn-secondary w-50 my-2">Retour aux produits</a>
+			</p>
+		</div>
+	</div>
+	{{ encore_entry_script_tags('donut') }}
+{% endblock content %}

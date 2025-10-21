@@ -1,0 +1,152 @@
+{# @var ea \EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext #}
+{# @var entity \EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto #}
+{% extends ea.templatePath('layout') %}
+{% form_theme new_form with ea.crud.formThemes only %}
+
+{% trans_default_domain ea.i18n.translationDomain %}
+
+{% block body_id 'ea-new-' ~ entity.name %}
+{% block body_class 'ea-new ea-new-' ~ entity.name %}
+
+	{% block configured_head_contents %}
+	{{ parent() }}
+		{% for htmlContent in new_form.vars.ea_crud_form.assets.headContents %}
+	{{ htmlContent|raw }}
+{% endfor %}
+{% endblock %}
+
+	{% block configured_stylesheets %}
+	{{ parent() }}
+	{{ include('@EasyAdmin/includes/_css_assets.html.twig', { assets: new_form.vars.ea_crud_form.assets.cssAssets }, with_context = false) }}
+{{ include('@EasyAdmin/includes/_encore_link_tags.html.twig', { assets: new_form.vars.ea_crud_form.assets.webpackEncoreAssets }, with_context = false) }}
+{% endblock %}
+
+	{% block configured_javascripts %}
+	{{ parent() }}
+	{{ include('@EasyAdmin/includes/_js_assets.html.twig', { assets: new_form.vars.ea_crud_form.assets.jsAssets }, with_context = false) }}
+{{ include('@EasyAdmin/includes/_encore_script_tags.html.twig', { assets: new_form.vars.ea_crud_form.assets.webpackEncoreAssets }, with_context = false) }}
+{% endblock %}
+
+	{% block content_title %}
+	{%- apply spaceless -%}
+	{% set custom_page_title = ea.crud.customPageTitle('new') %}
+	{{ custom_page_title is null
+            ? (ea.crud.defaultPageTitle('new')|trans(ea.i18n.translationParameters, 'EasyAdminBundle'))|raw
+            : (custom_page_title|trans(ea.i18n.translationParameters))|raw }}
+{%- endapply -%}
+{% endblock %}
+
+	{% block page_actions %}
+		{% for action in entity.actions %}
+	{{ include(action.templatePath, { action: action }, with_context = false) }}
+{% endfor %}
+{% endblock %}
+
+	{% block main %}
+		{% block new_form %}
+		{{ form_start(new_form) }}
+
+			<h1>
+		{{ new_form.vars.value.name }}
+		</h1>
+			<div>
+			{{ form_start(new_form) }}
+		{{ form_row(new_form.isPromo) }}
+	</div>
+	</hr>
+
+		<div class="flex justify-between col-md-6"> <h2>IDENTITE</h2>
+	</div>
+	<div class="row justify-between flex-nowrap">
+		<div class="col-md-6 border border-light shadow p-3 mb-5 bg-white rounded m-1">
+			{{ form_row(new_form.imageName) }}
+			{{ form_row(new_form.name) }}
+			{{ form_row(new_form.slug) }}
+			{{ form_row(new_form.createdAt) }}
+		</div>
+		<div class="col-md-6 border border-light shadow p-3 mb-5 bg-white rounded m-1 flex flex-column">
+			<div class="flex justify-between">
+				<div class="col-md-6">
+					{{ form_row(new_form.socGest) }}
+					{{ form_row(new_form.categorie) }}
+					{{ form_row(new_form.capital) }}
+				</div>
+				<div class="col-md-6">
+					{{ form_row(new_form.thematique) }}
+					{{ form_row(new_form.capitalisation) }}
+					{{ form_row(new_form.nbAssoc) }}
+				</div>
+			</div>
+			<div>
+				{{ form_row(new_form.performances, {'attr': {'class': 'form-inline'}}) }}
+			</div>
+		</div>
+	</div>
+	<div class="flex justify-between col-md-6">
+		<h2>CHIFFRES CLES</h2>
+	</div>
+	<div class="row justify-between flex-nowrap">
+		<div class="col-md-6 border border-light shadow p-3 mb-5 bg-white rounded m-1">
+			<div class="flex justify-between">
+				<div class="col-md-6">
+					{{ form_row(new_form.sharePrice) }}
+					{{ form_row(new_form.shareNbr) }}
+					{{ form_row(new_form.shareSubMin) }}
+				</div>
+				<div class="col-md-6">
+					{{ form_row(new_form.fruitionDelay) }}
+					{{ form_row(new_form.withdrawalValue) }}
+					{{ form_row(new_form.immvableNbr) }}
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6 border border-light shadow p-3 mb-5 bg-white rounded m-1 flex flex-column">
+			<div class="flex justify-between">
+				<div class="col-md-6">
+					{{ form_row(new_form.surface) }}
+					{{ form_row(new_form.tenantNbr) }}
+					{{ form_row(new_form.top) }}
+					{{ form_row(new_form.lifeInsuranceAvaible) }}
+				</div>
+				<div class="col-md-6">
+					{{ form_row(new_form.tof) }}
+					{{ form_row(new_form.reserveRan) }}
+					{{ form_row(new_form.worksAdvance) }}
+				</div>
+			</div>
+			<div></div>
+		</div>
+	</div>
+
+	<div class="flex justify-between col-md-6">
+		<h2>STRATEGIE</h2>
+	</div>
+	<div class="row justify-between flex-nowrap">
+		<div class="col-md-6 border border-light shadow p-3 mb-5 bg-white rounded m-1">
+			{{ form_row(new_form.investStrat) }}
+			{{ form_row(new_form.repartSectors) }}
+			{{ form_row(new_form.repartGeos) }}
+		</div>
+		<div class="col-md-6 border border-light shadow p-3 mb-5 bg-white rounded m-1 flex flex-column">
+			{{ form_row(new_form.infoTrim) }}
+			{{ form_row(new_form.lifeAssetTrim) }}
+		</div>
+	</div>
+
+	<div class="flex justify-between col-md-6">
+		<h2>FRAIS</h2>
+	</div>
+	<div class="row justify-between flex-nowrap">
+		<div class="col-md-12 border border-light shadow p-3 mb-5 bg-white rounded m-1">
+			{{ form_row(new_form.subscriptionCom) }}
+			{{ form_row(new_form.ManageCom) }}
+			{{ form_row(new_form.arbMovCom) }}
+			{{ form_row(new_form.pilotWorksCom) }}
+			{{ form_row(new_form.witCessionCom) }}
+			{{ form_row(new_form.shareMutaCom) }}
+		</div>
+	</div>
+
+	{{ form_rest(new_form) }}
+	{{ form_end(new_form) }}
+{% endblock new_form %}{% endblock %}

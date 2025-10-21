@@ -1,0 +1,128 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Produits
+{% endblock title %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	<link rel="stylesheet" href="http://localhost:8080/wip.scss">
+{% endblock stylesheets %}
+
+{% block javascripts %}
+	{{ parent() }}
+	{{ encore_entry_script_tags('compare') }}
+{% endblock javascripts %}
+
+{% block content %}
+	<main role="main" class="container">
+		<div id="compare-popup">
+			<div id="compare-popupheader">
+				<button class="close-compare">x</button>
+				<h5>comparateur</h5>
+			</div>
+			<div class="compare-card-container">
+				<div class="compare-card"></div>
+				<div class="compare-card"></div>
+				<div class="compare-card"></div>
+			</div>
+			<div
+				class="flex justify-around w-50">
+				{# <a href="{{ path('erase_compare') }}" class="razBtn">RAZ comaparateur</a> #}
+				<button class="btn razBtn">
+					<i class="fa-solid fa-delete-left me-2"></i>Retirer le dernier</button>
+				<button class="btn compareBtn">
+					<i class="fas fa-code-compare me-2"></i>
+					Comparez</button>
+			</div>
+		</div>
+
+		<div class="main-wrapper">
+
+			{% if produits|length > 0 %}
+				<h1>Produits</h1>
+
+				<div class="recherche">
+					{{ form_start(form) }}
+					<div class="input-group mb-3">
+						{{ form_widget(form.string, {'attr': {'class': 'xxx_class'}}) }}
+						<input class="btn btn-secondary z-index-0" type="submit" value="Rechercher" formnovalidate>
+					</div>
+					{{ form_widget(form.categorie) }}
+					{{ form_end(form) }}
+				</div>
+
+				{% for row in produits|batch(3) %}
+					<div class="row mb-2">
+						{% for produit in row %}
+							<div class="md:basis-4/12">
+								<article class="produit-card">
+									<div class="produit-image">
+										<a href=" {{ path('produit_show', {slug: produit.slug}) }} ">
+											<img src="{{ (produit.imageName ? vich_uploader_asset(produit) : asset('build/images/placeholder.jpg')) | imagine_filter('rectangle_thumbnail_medium') }}" alt="{{ produit.name }}"/>
+										</a>
+									</div>
+									<div class="produit-info">
+										<h1>
+											<a href="{{ path('produit_show', {slug: produit.slug}) }}">{{ produit.name }}</a>
+										</h1>
+										<p class="produit-description">
+											<ul class="produit-list">
+												<li>
+													<small>Gérér par :
+														{{ produit.socGest|u.truncate(25, ' ...', false)|raw }}</small>
+												</li>
+												<li>
+													<small>Catégorie :
+														{{ produit.categorie|u.truncate(25, ' ...', false)|raw }}</small>
+												</li>
+												<li>
+													<small>Capital :
+														{{ produit.capital|u.truncate(25, ' ...', false)|raw }}</small>
+												</li>
+												<li>
+													<small>Thématique :
+														{{ produit.thematique|u.truncate(25, ' ...', false)|raw }}</small>
+												</li>
+												<li>
+													<small>Date de création :
+														{{ produit.createdAt|date("d/m/Y") }}</small>
+												</li>
+												<li>
+													<small>Capitalisation :
+														{{ produit.Capitalisation }}
+														Mds €</small>
+												</li>
+											</ul>
+										</p>
+										<p class="flex justify-around">
+											{% set produitObj = {
+											id: produit.id,
+											name: produit.name,
+											slug: produit.slug,
+											SocGest: produit.socGest,
+											categorie: produit.categorie.name,
+											capital: produit.capital,
+											capitalisation: produit.Capitalisation
+											}
+										%}
+											<button class="btn btn-secondary w-50 select-produit" datat-produit-obj="{{ produitObj|json_encode|e('html_attr') }}">
+												<i class="fa-solid fa-file-arrow-up me-2"></i>Ajouter</button>
+											{# <a href="{{ path('add_to_compare', {id: produitObj.id}) }}" class="btn btn-secondary w-50"> Ajouter au comparateur</a> #}
+										</p>
+									</div>
+								</article>
+							</div>
+						{% endfor %}
+					</div>
+				{% endfor %}
+			{% else %}
+				<p class="h1 mt-5 text-align:center">Il n'y a pas de produits correspondant a votre Recherche</p>
+				<p class="h4 mt-5 text-center">
+					<a href="{{ path('home-scpi') }}" class="btn btn-secondary w-50">
+						<i class="fa-solid fa-angles-left me-2"></i>
+						Retour a la homepage</a>
+				</p>
+			{% endif %}
+		</div>
+	</main>
+{% endblock content %}

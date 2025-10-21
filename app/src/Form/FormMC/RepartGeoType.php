@@ -2,7 +2,7 @@
 
 namespace App\Form\FormMC;
 
-use App\Entity\EntitySCIP\RepartGeo;
+use App\Entity\EntitySCPI\RepartGeo;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;

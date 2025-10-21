@@ -1,0 +1,20 @@
+@media (max-width: 1400px) {
+  .SiteFooter {
+    padding: 90px 0;
+  }
+}
+
+.SiteFooter {
+  position: fixed;
+  bottom: 0px;
+  width: 100%;
+  padding: 5px 0;
+  background: #222222;
+  color: #fff;
+  font-size: 0.83333333em;
+  line-height: 1rem;
+}
+
+.SiteFooter p {
+  color: #a0a0a0;
+}
