@@ -28,7 +28,7 @@ class ActivityController extends AbstractController
   }
 
   #[Route("/activities/", name: "app_activities", methods: ["GET"])]
-  #[IsGranted('ROLE_USER')]
+  #[IsGranted('ROLE_BAM')]
   public function index(ActivityRepository $activityRepository, Request $request, PaginatorInterface $paginator): Response
   {
     $keyword = $request->query->get('keyword');

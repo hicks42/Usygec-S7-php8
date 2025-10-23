@@ -1,0 +1,179 @@
+{# @var ea \EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext #}
+{# @var entity \EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto #}
+{% extends ea.templatePath('layout') %}
+{% form_theme edit_form with ea.crud.formThemes only %}
+
+{% trans_default_domain ea.i18n.translationDomain %}
+
+{% block body_id 'ea-edit-' ~ entity.name ~ '-' ~ entity.primaryKeyValue %}
+{% block body_class 'ea-edit ea-edit-' ~ entity.name %}
+
+{% set ea_field_assets = ea.crud.fieldAssets(constant('EasyCorp\\Bundle\\EasyAdminBundle\\Config\\Crud::PAGE_EDIT')) %}
+
+{% block head_javascript %}
+	{{ parent() }}
+	<script src="{{ asset('form.js', ea.assets.defaultAssetPackageName) }}"></script>
+{% endblock head_javascript %}
+
+	{% block configured_head_contents %}
+	{{ parent() }}
+		{% for htmlContent in ea_field_assets.headContents %}
+	{{ htmlContent|raw }}
+{% endfor %}
+{% endblock configured_head_contents %}
+
+	{% block configured_body_contents %}
+	{{ parent() }}
+		{% for htmlContent in ea_field_assets.bodyContents %}
+	{{ htmlContent|raw }}
+{% endfor %}
+{% endblock configured_body_contents %}
+
+	{% block configured_stylesheets %}
+	{{ parent() }}
+	{{ include('@EasyAdmin/includes/_css_assets.html.twig', { assets: ea_field_assets.cssAssets }, with_context = false) }}
+{{ include('@EasyAdmin/includes/_encore_link_tags.html.twig', { assets: ea_field_assets.webpackEncoreAssets }, with_context = false) }}
+{% endblock configured_stylesheets %}
+
+	{% block configured_javascripts %}
+	{{ parent() }}
+	{{ include('@EasyAdmin/includes/_js_assets.html.twig', { assets: ea_field_assets.jsAssets }, with_context = false) }}
+{{ include('@EasyAdmin/includes/_encore_script_tags.html.twig', { assets: ea_field_assets.webpackEncoreAssets }, with_context = false) }}
+{% endblock configured_javascripts %}
+
+	{% block content_title %}
+	{%- set custom_page_title = ea.crud.customPageTitle(pageName, entity ? entity.instance : null, ea.i18n.translationParameters, ea.i18n.translationDomain) -%}
+	{{- custom_page_title is null
+              ? ea.crud.defaultPageTitle(null, null, ea.i18n.translationParameters)|trans|raw
+              : custom_page_title|trans|raw -}}
+{% endblock content_title %}
+
+	{% block page_actions %}
+		{% for action in entity.actions %}
+	{{ include(action.templatePath, { action: action }, with_context = false) }}
+{% endfor %}
+{% endblock page_actions %}
+
+	{% block main %}
+		{% block edit_form %}
+			<h1>
+		{{ edit_form.vars.value.name }}
+		</h1>
+			<div>
+			{{ form_start(edit_form) }}
+		{{ form_row(edit_form.isPromo) }}
+	</div>
+	</hr>
+
+		<div class="flex justify-between col-md-6"> <h2>IDENTITE</h2>
+	</div>
+	<div class="row justify-between flex-nowrap">
+		<div class="col-md-6 border border-light shadow p-3 mb-5 bg-white rounded m-1">
+			{{ form_row(edit_form.imageName) }}
+			{{ form_row(edit_form.name) }}
+			{{ form_row(edit_form.slug) }}
+			{{ form_row(edit_form.createdAt) }}
+		</div>
+		<div class="col-md-6 border border-light shadow p-3 mb-5 bg-white rounded m-1 flex flex-column">
+			<div class="flex justify-between">
+				<div class="col-md-6">
+					{{ form_row(edit_form.socGest) }}
+					{{ form_row(edit_form.categorie) }}
+					{{ form_row(edit_form.capital) }}
+				</div>
+				<div class="col-md-6">
+					{{ form_row(edit_form.thematique) }}
+					{{ form_row(edit_form.capitalisation) }}
+					{{ form_row(edit_form.nbAssoc) }}
+				</div>
+			</div>
+			<div>
+				{{ form_row(edit_form.performances, {'attr': {'class': 'form-inline'}}) }}
+			</div>
+		</div>
+	</div>
+	<div class="flex justify-between col-md-6">
+		<h2>CHIFFRES CLES</h2>
+	</div>
+	<div class="row justify-between flex-nowrap">
+		<div class="col-md-6 border border-light shadow p-3 mb-5 bg-white rounded m-1">
+			<div class="flex justify-between">
+				<div class="col-md-6">
+					{{ form_row(edit_form.sharePrice) }}
+					{{ form_row(edit_form.shareNbr) }}
+					{{ form_row(edit_form.shareSubMin) }}
+				</div>
+				<div class="col-md-6">
+					{{ form_row(edit_form.fruitionDelay) }}
+					{{ form_row(edit_form.withdrawalValue) }}
+					{{ form_row(edit_form.immvableNbr) }}
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6 border border-light shadow p-3 mb-5 bg-white rounded m-1 flex flex-column">
+			<div class="flex justify-between">
+				<div class="col-md-6">
+					{{ form_row(edit_form.surface) }}
+					{{ form_row(edit_form.tenantNbr) }}
+					{{ form_row(edit_form.top) }}
+					{{ form_row(edit_form.lifeInsuranceAvaible) }}
+				</div>
+				<div class="col-md-6">
+					{{ form_row(edit_form.tof) }}
+					{{ form_row(edit_form.reserveRan) }}
+					{{ form_row(edit_form.worksAdvance) }}
+				</div>
+			</div>
+			<div></div>
+		</div>
+	</div>
+
+	<div class="flex justify-between col-md-6">
+		<h2>STRATEGIE</h2>
+	</div>
+	<div class="row justify-between flex-nowrap">
+		<div class="col-md-6 border border-light shadow p-3 mb-5 bg-white rounded m-1">
+			{{ form_row(edit_form.investStrat) }}
+			{{ form_row(edit_form.infoTrim) }}
+			{{ form_row(edit_form.lifeAssetTrim) }}
+		</div>
+		<div class="col-md-6 border border-light shadow p-3 mb-5 bg-white rounded m-1 flex flex-column">
+			<div>
+				{{ form_row(edit_form.repartSectors, {'attr': {'class': 'form-inline'}}) }}
+			</div>
+			<hr>
+			<div>
+				{{ form_row(edit_form.repartGeos, {'attr': {'class': 'form-inline'}}) }}
+			</div>
+		</div>
+	</div>
+
+	<div class="flex justify-between col-md-6">
+		<h2>FRAIS</h2>
+	</div>
+	<div class="row justify-between flex-nowrap">
+		<div class="col-md-12 border border-light shadow p-3 mb-5 bg-white rounded m-1">
+			{{ form_row(edit_form.subscriptionCom) }}
+			{{ form_row(edit_form.ManageCom) }}
+			{{ form_row(edit_form.arbMovCom) }}
+			{{ form_row(edit_form.pilotWorksCom) }}
+			{{ form_row(edit_form.witCessionCom) }}
+			{{ form_row(edit_form.shareMutaCom) }}
+		</div>
+	</div>
+	<style>
+		/* Hide empty fieldsets and panels from form_rest() */
+		.form-panel:not(:has(input)):not(:has(textarea)):not(:has(select)):not(:has(trix-editor)) {
+			display: none !important;
+		}
+		fieldset:empty {
+			display: none !important;
+		}
+	</style>
+	{{ form_rest(edit_form) }}
+	{{ form_end(edit_form) }}
+{% endblock edit_form %}
+
+{% block delete_form %}
+	{{ include('@EasyAdmin/crud/includes/_delete_form.html.twig', { entity_id: entity.primaryKeyValue }, with_context = false) }}
+{% endblock delete_form %}{% endblock main %}

@@ -15,6 +15,23 @@
 					<div class="text-base mt-16">
 						<div class="font-title text-slate-400 text-2xl">A quel service voulez vous accéder ?</div>
 
+            {% if is_granted('ROLE_SCPI') %}
+						<div class="row flex pt-10">
+							<div class="basis-1/6 justify-end text-center text-amber-400 mt-4">
+								<a href="{{ path('scpi_hp') }}" class="text-3xl text-amber-400 ">
+									<i class="fa-solid fa-building-columns mx-2"></i>
+								</a>
+							</div>
+							<div class="basis-5/6 justify-start pt-2">
+								<div class="flex">
+									<a href="{{ path('scpi_hp') }}" class="font-title text-2xl text-amber-400">
+										SCPI Comparateur</a>
+								</div>
+								<p class="font-text  text-slate-400">Comparateur de Sociétés Civiles de Placement Immobilier</p>
+							</div>
+						</div>
+						{% endif %}
+
             {% if is_granted('ROLE_EZR') %}
 						<div class="row flex pt-10">
 							<div class="basis-1/6 justify-end text-center text-amber-400 mt-4">

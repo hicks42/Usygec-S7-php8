@@ -1,44 +1,36 @@
-{% extends 'base.html.twig' %}
+{% extends 'scpi/scpi_base.html.twig' %}
 
 {% block title %}Le comparateur
 {% endblock %}
 
-{% block stylesheets %}
-	{{ parent() }}
-{% endblock stylesheets %}
-
-{% block javascripts %}
-	{{ parent() }}
-{% endblock javascripts %}
-
 {% block content %}
-	<div class="main-wrapper">
-		<h1>{{produit.name}}</h1>
-		<div class="compare-result w-50">
+	<div class="pb-16">
+		<h1 class="bg-red-600 w-1/2 mx-auto mt-0 pt-6 pb-4 rounded-b-3xl text-white text-center text-4xl font-semibold">{{produit.name}}</h1>
+		<div class="bg-white shadow-md border-0 rounded-md my-4 mx-auto w-1/2">
 
-			<table class="table">
-				<tr class="bg-secondary bg-gradient text-white">
-					<th>SCIP</th>
+			<table class="w-full table-auto border-collapse">
+				<tr class="bg-red-600 bg-gradient-to-r text-white">
+					<th class="p-2 text-left">SCPI</th>
 					<td></td>
 				</tr>
 				{% for column in produit.imageName|split('<hr />') %}
 					<td></td>
-					<td><img src="{{ (column ? vich_uploader_asset(produit) : asset('build/images/placeholder.jpg')) | imagine_filter('rectangle_thumbnail_medium') }}" class="border border-white border-2 ml-2"></td>
+					<td><img src="{{ (column ? vich_uploader_asset(produit) : asset('images/scpi/placeholder.png')) | imagine_filter('rectangle_thumbnail_medium') }}" class="border-2 border-white ml-2"></td>
 				{% endfor %}
 				{% set my_keys = [ "socGest", "categorie", "capital", "thematique", "capitalisation"] %}
 				{% for cle in my_keys %}
-					<tr>
-						<th>{{cle|trans}}
+					<tr class="border-t border-gray-200 even:bg-gray-50">
+						<th class="p-3 text-left font-semibold text-gray-700">{{cle|trans}}
 							:</th>
 						{% for column in attribute(produit, cle)|split('<hr />') %}
 							{% if cle == 'capitalisation' %}
-								<td>
-									<div class="ms-5 w-full">{{ column|raw }}
+								<td class="p-3">
+									<div class="ml-12 w-full">{{ column|raw }}
 										M€</div>
 								</td>
 							{% else %}
-								<td>
-									<div class="ms-5 w-full">{{ column|raw }}</div>
+								<td class="p-3">
+									<div class="ml-12 w-full">{{ column|raw }}</div>
 								</td>
 							{% endif %}
 						{% endfor %}
@@ -46,9 +38,9 @@
 				{% endfor %}
 			</table>
 
-			<p class="flex justify-around">
-				<a href={{ path ('produits') }} class="btn btn-secondary w-50 my-2">
-					<i class="fa-solid fa-angles-left me-2"></i>Retour aux produits</a>
+			<p class="flex justify-around p-4">
+				<a href={{ path ('produits') }} class="inline-block px-4 py-2 my-2 bg-red-600 text-white rounded w-1/2 no-underline text-center hover:bg-red-700 transition-colors">
+					<i class="fa-solid fa-angles-left mr-2"></i>Retour aux produits</a>
 			</p>
 
 		</div>

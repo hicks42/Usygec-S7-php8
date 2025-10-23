@@ -13,22 +13,29 @@ let compareCart = [];
 
 produitBtns.forEach((button) => {
   button.addEventListener("click", (e) => {
-    makeObject(e);
+    const produitObj = makeObject(e);
     addToCompareCart(produitObj);
     openComparePopup(compareCart);
   });
 });
 
-launchCompareBtn.addEventListener("click", (e) => {
-  const produitIds = [];
-  compareCart.forEach((produitObj) => {
-    produitIds.push(produitObj.id);
+if (launchCompareBtn) {
+  launchCompareBtn.addEventListener("click", (e) => {
+    const produitIds = [];
+    compareCart.forEach((produitObj) => {
+      produitIds.push(produitObj.id);
+    });
+    window.location.href = `/scpi/comparator/${produitIds}`;
   });
-  window.location.href = `/comparator/${produitIds}`;
-});
+}
 
-closeCompareBtn.addEventListener("click", closeComparePopup);
-razBtn.addEventListener("click", clearCompare);
+if (closeCompareBtn) {
+  closeCompareBtn.addEventListener("click", closeComparePopup);
+}
+
+if (razBtn) {
+  razBtn.addEventListener("click", clearCompare);
+}
 
 // Functions ###################################################################
 
@@ -101,15 +108,19 @@ function clearCompare() {
 }
 
 function openComparePopup(compareCart) {
-  comparePopup.classList.add("active");
-  comparePopup.classList.add("active");
+  comparePopup.classList.remove("-translate-y-64");
+  comparePopup.classList.remove("opacity-0");
+  comparePopup.classList.add("translate-y-0");
+  comparePopup.classList.add("opacity-100");
 
   displayCompareCart(compareCart);
 }
 
 function closeComparePopup() {
-  comparePopup.classList.remove("active");
-  comparePopup.classList.remove("active");
+  comparePopup.classList.add("-translate-y-64");
+  comparePopup.classList.add("opacity-0");
+  comparePopup.classList.remove("translate-y-0");
+  comparePopup.classList.remove("opacity-100");
 }
 
 function inArray(id, array) {
@@ -121,7 +132,121 @@ function inArray(id, array) {
 }
 
 function makeObject(event) {
-  protoObj = event.target.getAttribute("datat-produit-obj");
-  produitObj = JSON.parse(protoObj);
+  const button = event.target.closest('.select-produit');
+  const protoObj = button.getAttribute("data-produit-obj");
+  const produitObj = JSON.parse(protoObj);
   return produitObj;
 }
+
+// Modal functions for text ellipsis ###########################################
+
+window.openTextModal = function(fieldName, fieldLabel) {
+  const modal = document.getElementById('textModal');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalContent = document.getElementById('modalContent');
+
+  if (!modal || !modalTitle || !modalContent) {
+    console.error('Modal elements not found');
+    return;
+  }
+
+  // Set modal title
+  modalTitle.textContent = fieldLabel;
+
+  // Get all full texts for this field
+  const fullTexts = document.querySelectorAll(`[data-full-text^="${fieldName}-"]`);
+
+  console.log('Opening modal for field:', fieldName, 'Found texts:', fullTexts.length);
+
+  // Determine grid columns based on number of products
+  const columnCount = fullTexts.length;
+  modalContent.style.gridTemplateColumns = `repeat(${columnCount}, 1fr)`;
+
+  // Clear previous content
+  modalContent.innerHTML = '';
+
+  // Add each product's text
+  fullTexts.forEach((textDiv) => {
+    const productName = textDiv.getAttribute('data-product-name');
+    const fullText = textDiv.innerHTML;
+
+    const column = document.createElement('div');
+    column.className = 'border border-gray-300 rounded p-4';
+
+    const header = document.createElement('h3');
+    header.className = 'font-bold text-lg mb-3 text-red-600';
+    header.textContent = productName;
+
+    const content = document.createElement('div');
+    content.className = 'text-justify';
+    content.innerHTML = fullText;
+
+    column.appendChild(header);
+    column.appendChild(content);
+    modalContent.appendChild(column);
+  });
+
+  // Show modal
+  modal.classList.remove('hidden');
+  modal.classList.add('flex');
+}
+
+window.closeTextModal = function() {
+  const modal = document.getElementById('textModal');
+  if (!modal) {
+    console.error('Modal not found');
+    return;
+  }
+  modal.classList.add('hidden');
+  modal.classList.remove('flex');
+}
+
+// Check for truncated text and show/hide "Lire la suite" button
+function checkTruncatedTexts() {
+  // Find all line-clamped elements
+  const clampedElements = document.querySelectorAll('[id^="text-"]');
+
+  clampedElements.forEach((element) => {
+    const id = element.id;
+    const btnId = id.replace('text-', 'btn-');
+    const button = document.getElementById(btnId);
+
+    if (!button) return;
+
+    // Check if text is truncated by comparing scroll height to client height
+    // Add a small buffer (5px) to account for rounding errors
+    if (element.scrollHeight > element.clientHeight + 5) {
+      button.style.display = 'block';
+    } else {
+      button.style.display = 'none';
+    }
+  });
+}
+
+// Add event listeners to all "Lire la suite" buttons
+function attachReadMoreListeners() {
+  const buttons = document.querySelectorAll('[id^="btn-"]');
+
+  buttons.forEach((button) => {
+    button.addEventListener('click', function() {
+      const fieldName = this.getAttribute('data-field');
+      const fieldLabel = this.getAttribute('data-label');
+      openTextModal(fieldName, fieldLabel);
+    });
+  });
+}
+
+// Run check after DOM is loaded and after a short delay to ensure styles are applied
+document.addEventListener('DOMContentLoaded', function() {
+  // Attach event listeners
+  attachReadMoreListeners();
+
+  // Initial check
+  checkTruncatedTexts();
+
+  // Check again after a short delay to ensure all styles are loaded
+  setTimeout(checkTruncatedTexts, 100);
+
+  // Check again after images and fonts are loaded
+  window.addEventListener('load', checkTruncatedTexts);
+});

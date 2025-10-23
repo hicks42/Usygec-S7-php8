@@ -42,7 +42,7 @@ class CompanyController extends AbstractController
   }
 
   #[Route("/companies/", name: "app_companies", methods: ["GET", "POST"])]
-  #[IsGranted('ROLE_USER')]
+  #[IsGranted('ROLE_BAM')]
   public function index(CompanyRepository $companyRepository, Request $request, PaginatorInterface $paginator, CompanyCsvManager $companyCsvImporter): Response
   {
     $user = $this->security->getUser();

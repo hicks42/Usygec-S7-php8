@@ -31,6 +31,7 @@ class UserEditType extends AbstractType
           'Utilisateur idfracon' => 'ROLE_IDFRACON',
           'Utilisateur Bam' => 'ROLE_BAM',
           'Utilisateur EZreview' => 'ROLE_EZR',
+          'Utilisateur SCPI' => 'ROLE_SCPI',
         ],
         'multiple' => true,
         'expanded' => true,

@@ -14,7 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class StructureController extends AbstractController
 {
     #[Route("/structure/", name:"structure_index", methods:["GET"])]
-    #[IsGranted('ROLE_USER')]
+    #[IsGranted('ROLE_EZR')]
     public function index(StructureRepository $structureRepository): Response
     {
         return $this->render('structure/index.html.twig', [
@@ -23,7 +23,7 @@ class StructureController extends AbstractController
     }
 
     #[Route("/structure/{id}", name:"structure_show", methods:["GET"])]
-    #[IsGranted('ROLE_USER')]
+    #[IsGranted('ROLE_EZR')]
     public function show(Structure $structure): Response
     {
         return $this->render('structure/show.html.twig', [
@@ -32,7 +32,7 @@ class StructureController extends AbstractController
     }
 
     #[Route("/structure/{id}", name:"structure_delete", methods:["POST"])]
-    #[IsGranted('ROLE_USER')]
+    #[IsGranted('ROLE_EZR')]
     public function delete(Request $request, Structure $structure, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete' . $structure->getId(), $request->request->get('_token'))) {

@@ -59,11 +59,14 @@
     "twig/cssinliner-extra": "^3.10",
     "twig/extra-bundle": "*",
     "twig/intl-extra": "*",
+    "twig/string-extra": "^3.21",
     "twig/twig": "*",
     "vich/uploader-bundle": "*"
   },
   "require-dev": {
     "dbrekelmans/bdi": "^1.0",
+    "doctrine/doctrine-fixtures-bundle": "^4.3",
+    "fakerphp/faker": "^1.24",
     "phpunit/phpunit": "^9.5",
     "symfony/browser-kit": "*",
     "symfony/css-selector": "*",

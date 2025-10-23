@@ -1,61 +1,65 @@
-{% extends 'base.html.twig' %}
+{% extends 'scpi/scpi_base.html.twig' %}
 
 {% block title %}Le comparateur
 {% endblock %}
 
-{% block stylesheets %}
-	{{ parent() }}
-	{# ########### WIP ########### #}
-	<link rel="stylesheet" href="http://localhost:8080/wip.scss">
-{% endblock stylesheets %}
-
 {% block javascripts %}
 	{{ parent() }}
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
-	{# ########### WIP ########### #}
-	<script src="http://localhost:8080/wip.js"></script>
+	{{ importmap('scpi-donut') }}
+	{{ importmap('scpi-compare') }}
 {% endblock javascripts %}
 
 {% block content %}
-	<div class="main-wrapper">
-		<h1>Le Comparateur</h1>
-		<div class="compare-result">
+	<div class="pb-16 mx-5">
+		<h1 class="bg-slate-900 w-1/2 mx-auto mt-0 pt-6 pb-4 rounded-b-3xl text-white text-center text-4xl font-semibold">Le Comparateur</h1>
+
+		<!-- Modal pour afficher les textes complets -->
+		<div id="textModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 items-center justify-center p-4" onclick="if(event.target === this) closeTextModal()">
+			<div class="bg-white rounded-lg shadow-xl max-w-6xl w-full max-h-[90vh] overflow-hidden flex flex-col" onclick="event.stopPropagation()">
+				<div class="bg-red-600 text-white p-4 flex justify-between items-center">
+					<h2 id="modalTitle" class="text-2xl font-semibold"></h2>
+					<button onclick="closeTextModal()" class="text-white hover:text-gray-200 text-3xl font-bold leading-none">&times;</button>
+				</div>
+				<div class="p-6 overflow-y-auto flex-1">
+					<div id="modalContent" class="grid gap-6"></div>
+				</div>
+			</div>
+		</div>
+
+		<div class="bg-white shadow-md border-0 rounded-md my-4 mx-auto">
 			{% if compare is null %}
-				<div class="row">
-					<div class="basis-full">Aucun produit dans le comparateur</div>
+				<div class="grid grid-cols-1">
+					<div class="col-span-full p-4">Aucun produit dans le comparateur</div>
 				</div>
 			{% else %}
-				<div class="bg-secondary bg-gradient text-white" id="tableHeader">
-					<div class="col-{{col1}} p-2 pt-3">IDENTITE</div>
+				<div class="bg-slate-900 bg-gradient-to-r text-white grid" id="tableHeader" style="grid-template-columns: {{col1}}fr repeat({{compare|length}}, {{lastcols}}fr);">
+					<div class="text-white p-2 pt-8">IDENTITE</div>
 					{% for item in compare %}
-						{% for column in item.produit.imageName|split('<hr />') %}
-							<div class="col-{{lastcols}} p-2">
-								<img src="{{ (column ? vich_uploader_asset(item.produit) : asset('build/images/placeholder.jpg')) | imagine_filter('square_thumbnail_htiny') }}" class="border border-white border-2 ml-2 bg-white">
-							</div>
-						{% endfor %}
+						<div class="p-2">
+							<img src="{{ (item.produit.imageName ? vich_uploader_asset(item.produit) : asset('images/scpi/placeholder.png')) | imagine_filter('square_thumbnail_htiny') }}" class="border-2 border-white ml-2 bg-white">
+						</div>
 					{% endfor %}
 				</div>
 				{% for key in fieldnames %}
 					{% if key == "sharePrice" %}
-						<div class="row bg-info bg-gradient text-white">
-							<div class="col-{{col1}} p-2" colspan="{{(compare|length)+1}}">CHIFFRES CLES</div>
+						<div class="grid grid-cols-1 bg-slate-900 bg-gradient-to-r text-white">
+							<div class="p-2 text-white" colspan="{{(compare|length)+1}}">CHIFFRES CLES</div>
 						</div>
 					{% elseif key == "investStrat" %}
-						<div class="row bg-info bg-gradient text-white">
-							<div class="col-{{col1}} p-2" colspan="{{(compare|length)+1}}">STRATEGIE</div>
+						<div class="grid grid-cols-1 bg-slate-900 bg-gradient-to-r text-white">
+							<div class="p-2 text-white" colspan="{{(compare|length)+1}}">STRATEGIE</div>
 						</div>
 					{% elseif key == "subscriptionCom" %}
-						<div class="row bg-info bg-gradient text-white">
-							<div class="col-{{col1}} p-2" colspan="{{(compare|length)+1}}">FRAIS</div>
+						<div class="grid grid-cols-1 bg-slate-900 bg-gradient-to-r text-white">
+							<div class="p-2 text-white" colspan="{{(compare|length)+1}}">FRAIS</div>
 						</div>
 					{% endif %}
-					{% include 'traits/_line.html.twig' with {'value': key} %}
+					{% include 'scpi/traits/_line.html.twig' with {'value': key} %}
 				{% endfor %}
 			{% endif %}
 			<p class="flex justify-around">
-				<a href={{ path ('produits') }} class="btn btn-secondary w-50 my-2">Retour aux produits</a>
+				<a href={{ path ('produits') }} class="inline-block px-4 py-2 my-2 bg-slate-900 text-white rounded w-1/2 no-underline text-center hover:bg-red-700 transition-colors">Retour aux produits</a>
 			</p>
 		</div>
 	</div>
-	{{ encore_entry_script_tags('donut') }}
 {% endblock content %}

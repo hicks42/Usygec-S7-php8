@@ -1,101 +1,84 @@
-<header class="SiteHeader">
-	<div class="SiteHeader-contact c-grey">
-		<span class="ttu f-bold">Une question ?</span>&nbsp;&nbsp; Contactez-nous au
-		<span class="f-bold">04 04 04 04</span>&nbsp;&nbsp;
-		<small class="c-grey f-italic">Prix d'un appel local</small>
+<header class="sticky top-0 z-50 bg-white shadow-md">
+	<div class="bg-slate-900 text-white py-3 text-center text-sm border-b-2 border-red-700">
+		<span class="uppercase font-medium tracking-wide text-white">Une question ?</span>&nbsp;&nbsp; Contactez-nous au
+		<span class="font-semibold">04 37 24 70 70</span>&nbsp;&nbsp;
+		<small class="text-gray-200 italic">Prix d'un appel local</small>
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Suivez-nous sur les réseaux sociaux &nbsp;
-		<a href="https://twitter.com/capitalinvest" target="_blank" class="c-grey">
-			<span class="hidden">Nous suivre sur Twitter</span> <em class="fab fa-twitter"></em>
+		<a href="https://twitter.com/capitalinvest" target="_blank" class="text-white hover:text-red-600 transition-colors mx-1">
+			<span class="sr-only">Nous suivre sur Twitter</span> <em class="fab fa-twitter text-base"></em>
 		</a>
 		&nbsp;
-		<a href="https://www.linkedin.com/company/capitalinvest" target="_blank" class="icon-linkedin c-grey">
-			<span class="hidden">Nous suivre sur Linkedin</span> <i class="fab fa-linkedin"></i>
+		<a href="https://www.linkedin.com/company/capitalinvest" target="_blank" class="text-white hover:text-red-600 transition-colors">
+			<span class="sr-only">Nous suivre sur Linkedin</span> <i class="fab fa-linkedin"></i>
 		</a>
 	</div>
 
-	<div class="HomeHeader">
-		<div class="logo-container">
-			<a href="/" class="SiteHeader-logo">
-				<img src="/images/logo-magnacarta.svg" alt="Magnacarta - Gestion de Patrimoine">
+	<div class="max-w-7xl mx-auto">
+		<div class="bg-white text-center py-8 border-b border-gray-200">
+			<a href="/" class="inline-block transition-transform hover:scale-105">
+				<img src="{{ asset('images/scpi/logo-magnacarta.svg') }}" alt="Magnacarta - Gestion de Patrimoine" class="max-h-20 w-auto">
 			</a>
-		</div>
-
-		<div class="promo-container">
-			{% if promos is defined and promos is not empty %}
-				{% for promo in promos %}
-					<article class="promo-card">
-						<h1>Promotion du jour !!!</h1>
-						<div class="promo-info">
-							<div class="promo-image">
-								{% if promo.slug %}
-									<a href="{{ path('produit_show', {slug: promo.slug}) }}">
-										<img src="/images/placeholder.jpg" alt="{{ promo.name|default('Produit') }}" width="200">
-									</a>
-								{% endif %}
-							</div>
-							<div>
-								<h2>
-									{% if promo.slug %}
-										<a href="{{ path('produit_show', {slug: promo.slug}) }}">{{ promo.name|default('Sans nom') }}</a>
-									{% else %}
-										{{ promo.name|default('Sans nom') }}
-									{% endif %}
-								</h2>
-								<div class="info-container mx-1">
-									{% if promo.socGest %}
-										<div><small>Géré par :</small> {{ promo.socGest }}</div>
-									{% endif %}
-
-									{% if promo.categorie %}
-										<div><small>Catégorie :</small> {{ promo.categorie }}</div>
-									{% endif %}
-
-									{% if promo.capital %}
-										<div><small>Capital :</small> {{ promo.capital }}</div>
-									{% endif %}
-
-									{% if promo.thematique %}
-										<div><small>Thém. :</small> {{ promo.thematique }}</div>
-									{% endif %}
-
-									{% if promo.createdAt %}
-										<div><small>Date de création :</small> {{ promo.createdAt|date("d/m/Y") }}</div>
-									{% endif %}
-
-									{% if promo.capitalisation is defined %}
-										<div><small>Capitalisation :</small> {{ promo.capitalisation }} Mds €</div>
-									{% endif %}
-								</div>
-							</div>
-						</div>
-					</article>
-				{% endfor %}
-			{% endif %}
-		</div>
-
-		<div class="actu-container">
-			{% if actus is defined and actus is not empty %}
-				{% for actu in actus %}
-					<article class="actu-card">
-						<h1>Actualité</h1>
-						<hr>
-						<div class="actu-info">
-							<div>
-								<h2>{{ actu.title|default('Sans titre') }}</h2>
-								<div class="actu-info mx-1">
-									{% if actu.content %}
-										{{ actu.content|striptags|slice(0, 100) }}...
-									{% endif %}
-									<br>
-									{% if actu.slug %}
-										<a href="{{ path('actu_show', {slug: actu.slug}) }}">Lire</a>
-									{% endif %}
-								</div>
-							</div>
-						</div>
-					</article>
-				{% endfor %}
-			{% endif %}
 		</div>
 	</div>
 </header>
+
+<div class="max-w-7xl mx-auto px-5 py-6">
+	<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+		{# Section Promotions #}
+		{% if promos is defined and promos is not empty %}
+			{% for promo in promos %}
+				<article class="bg-white rounded-lg shadow-md p-4 border-t-2 border-red-600 transition-all hover:shadow-lg">
+					<h3 class="text-gray-900 text-sm font-semibold mb-3 uppercase tracking-wide flex items-center gap-1.5">
+						<span class="text-red-600 text-base">★</span> Promotion
+					</h3>
+					<div class="flex gap-3 items-start">
+						<div class="rounded overflow-hidden shadow-sm bg-gray-100 flex-shrink-0">
+							{% if promo.slug %}
+								<a href="{{ path('produit_show', {slug: promo.slug}) }}">
+									<img src="{{ (promo.imageName ? vich_uploader_asset(promo) : asset('images/scpi/placeholder.png')) | imagine_filter('rectangle_thumbnail_medium') }}" alt="{{ promo.name|default('Produit') }}" class="w-24 h-auto block transition-transform hover:scale-105">
+								</a>
+							{% endif %}
+						</div>
+						<div class="flex-1 min-w-0">
+							<h4 class="text-base mb-2 text-gray-900 font-semibold leading-tight">
+								{% if promo.slug %}
+									<a href="{{ path('produit_show', {slug: promo.slug}) }}" class="text-gray-900 no-underline transition-colors hover:text-red-600">{{ promo.name|default('Sans nom') }}</a>
+								{% else %}
+									{{ promo.name|default('Sans nom') }}
+								{% endif %}
+							</h4>
+							<div class="text-xs text-gray-600 space-y-1">
+								{% if promo.socGest %}
+									<div><span class="font-semibold">Géré par:</span> {{ promo.socGest }}</div>
+								{% endif %}
+								{% if promo.categorie %}
+									<div><span class="font-semibold">Catégorie:</span> {{ promo.categorie }}</div>
+								{% endif %}
+							</div>
+						</div>
+					</div>
+				</article>
+			{% endfor %}
+		{% endif %}
+
+		{# Section Actualités #}
+		{% if actus is defined and actus is not empty %}
+			{% for actu in actus %}
+				<article class="bg-white rounded-lg shadow-md p-4 border-t-2 border-red-600 transition-all hover:shadow-lg">
+					<h3 class="text-red-600 text-sm font-semibold mb-3 uppercase tracking-wide">Actualité</h3>
+					<div>
+						<h4 class="text-base text-gray-800 mb-2 font-semibold leading-tight">{{ actu.title|default('Sans titre') }}</h4>
+						<div class="text-xs text-gray-600">
+							{% if actu.content %}
+								{{ actu.content|striptags|slice(0, 80) }}...
+							{% endif %}
+						</div>
+						{% if actu.slug %}
+							<a href="{{ path('actu_show', {slug: actu.slug}) }}" class="inline-block mt-2 text-red-600 no-underline font-semibold text-xs px-3 py-1.5 border border-red-600 rounded uppercase tracking-wide hover:bg-red-600 hover:text-white transition-all">Lire</a>
+						{% endif %}
+					</div>
+				</article>
+			{% endfor %}
+		{% endif %}
+	</div>
+</div>

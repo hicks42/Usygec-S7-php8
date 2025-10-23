@@ -4,8 +4,8 @@ namespace App\Controller\ControllerSCPI;
 
 use App\Classe\ClasseSCPI\Search;
 use App\Entity\EntitySCPI\Produit;
-use App\Form\FormMC\SearchType;
-use App\Repository\RepositorySD\ProduitRepository;
+use App\Form\FormSCPI\SearchType;
+use App\Repository\RepositorySCPI\ProduitRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

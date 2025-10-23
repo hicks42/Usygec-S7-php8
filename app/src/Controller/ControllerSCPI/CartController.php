@@ -53,6 +53,6 @@ class CartController extends AbstractController
   public function delete(Cart $cart)
   {
     $cart->delete();
-    return $this->redirectToRoute('home-scpi');
+    return $this->redirectToRoute('home_scpi');
   }
 }

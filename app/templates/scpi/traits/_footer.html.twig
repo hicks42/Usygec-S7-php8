@@ -1,17 +1,22 @@
-<footer class="SiteFooter">
-	<div class="container">
-		<div class="row">
-			<div class="d-inline-flex justify-between my-0">
-				<div class="SiteFooter-logo">
-					{% if is_granted('ROLE_ADMIN') %}
-						<img src="/images/CapitalInvestdark.png" alt="Logo Magnacarta, gestion en patrimoine">
-					{% else %}
-						<a href="{{path('admin')}}"><img src="/images/CapitalInvestdark.png" alt="Logo Magnacarta, gestion en patrimoine"></a>
-					{% endif %}
-				</div>
-				<p>32 rue de la R&eacute;publique  69002 Lyon<br>
-					T&eacute;l. 04 37 24 70 70</p>
+<footer class="bg-black border-t border-gray-800 py-8 mt-12">
+	<div class="max-w-7xl mx-auto px-4">
+		<div class="flex justify-between items-center">
+			<div>
+				{# {% if is_granted('ROLE_ADMIN') %}
+					<img src="{{ asset('images/scpi/logo-magnacarta-white.svg') }}" alt="Logo Magnacarta, gestion en patrimoine" class="h-16">
+				{% else %}
+					<a href="{{path('admin')}}">
+						<img src="{{ asset('images/scpi/logo-magnacarta-white.svg') }}" alt="Logo Magnacarta, gestion en patrimoine" class="h-16 hover:opacity-80 transition-opacity">
+					</a>
+				{% endif %} #}
+					<a href="{{path('admin')}}">
+						<img src="{{ asset('images/scpi/logo-magnacarta-white.svg') }}" alt="Logo Magnacarta, gestion en patrimoine" class="h-16 hover:opacity-80 transition-opacity">
+					</a>
 			</div>
+			<p class="text-white text-right">
+				32 rue de la République 69002 Lyon<br>
+				Tél. 04 37 24 70 70
+			</p>
 		</div>
 	</div>
 </footer>

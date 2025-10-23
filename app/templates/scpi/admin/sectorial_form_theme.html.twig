@@ -1,0 +1,178 @@
+{% extends '@EasyAdmin/crud/form_theme.html.twig' %}
+
+{# CSS pour la grille 2 colonnes #}
+{% block ea_stylesheets %}
+    {{ parent() }}
+    <style>
+        /* Cibler le conteneur des items de collection avec la classe personnalisée */
+        .repart-grid-2cols .field-collection-items {
+            display: grid !important;
+            grid-template-columns: 1fr 1fr !important;
+            gap: 15px !important;
+        }
+
+        .repart-grid-2cols .field-collection-item {
+            margin-bottom: 0 !important;
+        }
+    </style>
+{% endblock %}
+
+{# Surcharge du label des fieldsets pour forcer les majuscules #}
+{% block ea_form_fieldset_open_label %}
+    <div class="form-fieldset-header {{ ea_is_collapsible ? 'collapsible' }} {{ ea_help is not empty ? 'with-help' }}">
+        <div class="form-fieldset-title">
+            {% if ea_is_collapsible %}
+                <a href="#content-{{ form.vars.name }}" data-bs-toggle="collapse"
+                   class="form-fieldset-title-content form-fieldset-collapse {{ ea_is_collapsed ? 'collapsed' }}"
+                   aria-expanded="{{ ea_is_collapsed ? 'false' : 'true' }}" aria-controls="content-{{ form.vars.name }}">
+                    {{ ea_form_ealabel(form)|striptags|upper }}
+                </a>
+            {% else %}
+                <span class="not-collapsible form-fieldset-title-content">
+                    {{ ea_form_ealabel(form)|striptags|upper }}
+                </span>
+            {% endif %}
+
+            {% if ea_help %}
+                <div class="form-fieldset-help">{{ ea_help|trans|raw }}</div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+{# Surcharge du widget de collection pour ajouter un en-tête #}
+{% block collection_widget %}
+    {% if form.vars.name == 'performances' %}
+        {# En-tête pour les performances #}
+        <div style="display: flex; gap: 15px; margin-bottom: 10px; padding: 0 10px; font-weight: bold;">
+            <div style="flex: 0 0 180px;">Année</div>
+            <div style="flex: 0 0 180px;">Taux (%)</div>
+            <div style="flex: 0 0 auto; width: 60px;"></div>
+        </div>
+        {{ parent() }}
+    {% elseif form.vars.name == 'repartSectors' %}
+        {# En-tête pour la répartition sectorielle (sur 2 colonnes) #}
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 10px;">
+            <div style="display: flex; gap: 15px; padding: 0 10px; font-weight: bold;">
+                <div style="flex: 0 0 200px;">Nom du secteur</div>
+                <div style="flex: 0 0 120px;">Valeur (%)</div>
+                <div style="flex: 0 0 auto; width: 60px;"></div>
+            </div>
+            <div style="display: flex; gap: 15px; padding: 0 10px; font-weight: bold;">
+                <div style="flex: 0 0 200px;">Nom du secteur</div>
+                <div style="flex: 0 0 120px;">Valeur (%)</div>
+                <div style="flex: 0 0 auto; width: 60px;"></div>
+            </div>
+        </div>
+        <div class="grid-2cols-wrapper" style="display: grid; grid-template-columns: 1fr 1fr;">
+            {% for key, child in form %}
+                {{ form_row(child) }}
+            {% endfor %}
+        </div>
+        {% if form.vars.prototype is defined %}
+            <button type="button" class="btn btn-primary field-collection-add-button"
+                    data-list-selector=".grid-2cols-wrapper"
+                    data-widget-counter="{{ form|length }}">
+                Ajouter
+            </button>
+        {% endif %}
+    {% elseif form.vars.name == 'repartGeos' %}
+        {# En-tête pour la répartition géographique (sur 2 colonnes) #}
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 10px;">
+            <div style="display: flex; gap: 15px; padding: 0 10px; font-weight: bold;">
+                <div style="flex: 0 0 200px;">Zone géographique</div>
+                <div style="flex: 0 0 120px;">Valeur (%)</div>
+                <div style="flex: 0 0 auto; width: 60px;"></div>
+            </div>
+            <div style="display: flex; gap: 15px; padding: 0 10px; font-weight: bold;">
+                <div style="flex: 0 0 200px;">Zone géographique</div>
+                <div style="flex: 0 0 120px;">Valeur (%)</div>
+                <div style="flex: 0 0 auto; width: 60px;"></div>
+            </div>
+        </div>
+        <div class="grid-2cols-wrapper" style="display: grid; grid-template-columns: 1fr 1fr;">
+            {% for key, child in form %}
+                {{ form_row(child) }}
+            {% endfor %}
+        </div>
+        {% if form.vars.prototype is defined %}
+            <button type="button" class="btn btn-primary field-collection-add-button"
+                    data-list-selector=".grid-2cols-wrapper"
+                    data-widget-counter="{{ form|length }}">
+                Ajouter
+            </button>
+        {% endif %}
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{# Surcharge du rendu de chaque entrée de collection #}
+{% block collection_entry_row %}
+    {% set field_name = form.parent.vars.name|default('') %}
+
+    {% if field_name == 'performances' %}
+        {# Rendu personnalisé pour les performances : tout sur une ligne sans labels #}
+        <div class="field-collection-item" style="display: flex; gap: 15px; align-items: center; padding: 10px; background: #f8f9fa; border-radius: 4px;">
+            <div style="flex: 0 0 180px;">
+                {{ form_widget(form.year) }}
+                {{ form_errors(form.year) }}
+            </div>
+            <div style="flex: 0 0 180px;">
+                {{ form_widget(form.rate) }}
+                {{ form_errors(form.rate) }}
+            </div>
+            <div style="flex: 0 0 auto;">
+                <button type="button"
+                        class="btn btn-sm btn-danger field-collection-item-delete"
+                        onclick="this.closest('.field-collection-item').remove()"
+                        title="Supprimer">
+                    ×
+                </button>
+            </div>
+        </div>
+    {% elseif field_name == 'repartSectors' %}
+        {# Rendu personnalisé pour la répartition sectorielle : tout sur une ligne sans labels #}
+        <div class="field-collection-item" style="display: flex; gap: 15px; align-items: center; padding: 10px; background: #f8f9fa; border-radius: 4px;">
+            <div style="flex: 0 0 200px;">
+                {{ form_widget(form.sectorName) }}
+                {{ form_errors(form.sectorName) }}
+            </div>
+            <div style="flex: 0 0 120px;">
+                {{ form_widget(form.sectorValue) }}
+                {{ form_errors(form.sectorValue) }}
+            </div>
+            <div style="flex: 0 0 auto;">
+                <button type="button"
+                        class="btn btn-sm btn-danger field-collection-item-delete"
+                        onclick="this.closest('.field-collection-item').remove()"
+                        title="Supprimer">
+                    ×
+                </button>
+            </div>
+        </div>
+    {% elseif field_name == 'repartGeos' %}
+        {# Rendu personnalisé pour la répartition géographique : tout sur une ligne sans labels #}
+        <div class="field-collection-item" style="display: flex; gap: 15px; align-items: center; padding: 10px; background: #f8f9fa; border-radius: 4px;">
+            <div style="flex: 0 0 200px;">
+                {{ form_widget(form.geoName) }}
+                {{ form_errors(form.geoName) }}
+            </div>
+            <div style="flex: 0 0 120px;">
+                {{ form_widget(form.geoValue) }}
+                {{ form_errors(form.geoValue) }}
+            </div>
+            <div style="flex: 0 0 auto;">
+                <button type="button"
+                        class="btn btn-sm btn-danger field-collection-item-delete"
+                        onclick="this.closest('.field-collection-item').remove()"
+                        title="Supprimer">
+                    ×
+                </button>
+            </div>
+        </div>
+    {% else %}
+        {# Utilise le comportement par défaut pour les autres collections #}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}

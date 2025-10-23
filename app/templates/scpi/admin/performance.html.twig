@@ -1,0 +1,57 @@
+{% set field_value = field.value|default([]) %}
+<fieldset class="form-fieldset">
+    <legend class="form-fieldset-header collapsible collapsed">
+        <i class="fas fa-chevron-right form-fieldset-collapse-marker"></i>
+        Performances
+    </legend>
+
+    <div class="form-fieldset-body" style="display: none;">
+        <div data-prototype="{{ form_widget(field.vars.form.vars.prototype)|e('html_attr') }}"
+             data-index="{{ field.vars.form|length }}">
+            {% for key, item in field.vars.form %}
+                <div class="field-collection-item" data-index="{{ key }}">
+                    <span>Année :</span>
+                    {{ form_widget(item.year, {'attr': {'class': 'perf-input'}}) }}
+                    <span>Taux :</span>
+                    {{ form_widget(item.rate, {'attr': {'class': 'perf-input'}}) }}
+                    {{ form_errors(item) }}
+                    <button type="button" class="btn btn-sm btn-danger field-collection-delete-button">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="field-collection-action mt-3">
+            <button type="button" class="btn btn-sm btn-primary field-collection-add-button">
+                <i class="fa fa-plus"></i> Ajouter une performance
+            </button>
+        </div>
+    </div>
+</fieldset>
+
+<style>
+    .field-collection-item {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        margin-bottom: 10px;
+        padding: 10px;
+        background: #f8f9fa;
+        border-radius: 4px;
+    }
+
+    .field-collection-item span {
+        font-weight: 600;
+        color: #495057;
+    }
+
+    .perf-input {
+        width: 120px !important;
+        display: inline-block !important;
+    }
+
+    .field-collection-delete-button {
+        margin-left: auto;
+    }
+</style>

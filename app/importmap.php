@@ -12,40 +12,58 @@
  * The "importmap:require" command can be used to add new entries to this file.
  */
 return [
-  'app' => [
-    'path' => './assets/app.js',
-    'entrypoint' => true,
-  ],
-  'modal' => [
-    'path' => './assets/js/modal.js',
-    'entrypoint' => true,
-  ],
-  'collection' => [
-    'path' => './assets/js/collection_managment.js',
-    'entrypoint' => true,
-  ],
-  'activity' => [
-    'path' => './assets/js/activity.js',
-    'entrypoint' => true,
-  ],
-  'flatpickr' => [
-    'path' => './assets/js/flatpickr-config.js',
-    'entrypoint' => true,
-  ],
-  'datetimepicker' => [
-    'path' => './assets/js/dtpkr_init.js',
-    'entrypoint' => true,
-  ],
-  'auto-resize-textarea' => [
-    'path' => './assets/js/auto-resize-textarea.js',
-    'entrypoint' => true,
-  ],
-  'homepage-modals' => [
-    'path' => './assets/js/homepage-modals.js',
-    'entrypoint' => true,
-  ],
-  'pid-help-modal' => [
-    'path' => './assets/js/pid_help_modal.js',
-    'entrypoint' => true,
-  ],
+    'app' => [
+        'path' => './assets/app.js',
+        'entrypoint' => true,
+    ],
+    'modal' => [
+        'path' => './assets/js/modal.js',
+        'entrypoint' => true,
+    ],
+    'collection' => [
+        'path' => './assets/js/collection_managment.js',
+        'entrypoint' => true,
+    ],
+    'activity' => [
+        'path' => './assets/js/activity.js',
+        'entrypoint' => true,
+    ],
+    'flatpickr' => [
+        'path' => './assets/js/flatpickr-config.js',
+        'entrypoint' => true,
+    ],
+    'datetimepicker' => [
+        'path' => './assets/js/dtpkr_init.js',
+        'entrypoint' => true,
+    ],
+    'auto-resize-textarea' => [
+        'path' => './assets/js/auto-resize-textarea.js',
+        'entrypoint' => true,
+    ],
+    'homepage-modals' => [
+        'path' => './assets/js/homepage-modals.js',
+        'entrypoint' => true,
+    ],
+    'pid-help-modal' => [
+        'path' => './assets/js/pid_help_modal.js',
+        'entrypoint' => true,
+    ],
+    'scpi-compare' => [
+        'path' => './assets/js/scpi/compare.js',
+        'entrypoint' => true,
+    ],
+    'scpi-donut' => [
+        'path' => './assets/js/scpi/donut.js',
+        'entrypoint' => true,
+    ],
+    'trix' => [
+        'version' => '2.1.15',
+    ],
+    'trix/dist/trix.min.css' => [
+        'version' => '2.1.15',
+        'type' => 'css',
+    ],
+    '@hotwired/stimulus' => [
+        'version' => '3.2.2',
+    ],
 ];

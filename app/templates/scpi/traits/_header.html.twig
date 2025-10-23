@@ -1,28 +1,29 @@
-<header class="SiteHeader">
-	<div class="SiteHeader-contact" class="c-grey">
-		<span class="ttu f-bold">Une question ?</span>&nbsp;&nbsp; Contactez-nous au
-		<span class="f-bold">04 04 04 04</span>&nbsp;&nbsp;
-		<small class="c-grey f-italic">Prix d’un appel local</small>
+<header class="bg-white shadow-md">
+	<div class="bg-slate-900 text-white py-3 text-center text-sm">
+		<span class="uppercase font-bold">Une question ?</span>&nbsp;&nbsp; Contactez-nous au
+		<span class="font-bold">04 37 24 70 70</span>&nbsp;&nbsp;
+		<small class="text-gray-200 italic">Prix d'un appel local</small>
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Suivez-nous sur les réseaux sociaux &nbsp;
-		<a href="https://twitter.com/capitalinvest" target="_blank" class="c-grey">
-		<span class="hidden">Nous suivre sur Twitter</span> <em class="fab fa-twitter"></em></a>
+		<a href="https://twitter.com/capitalinvest" target="_blank" class="text-white hover:text-gray-200 transition-colors">
+			<span class="sr-only">Nous suivre sur Twitter</span> <em class="fab fa-twitter"></em>
+		</a>
 		&nbsp;
-		<a href="https://www.linkedin.com/company/capitalinvest" target="_blank" class="icon-linkedin c-grey">
-			<span class="hidden">Nous suivre sur Linkedin</span> <i class="fab fa-linkedin"></i>
+		<a href="https://www.linkedin.com/company/capitalinvest" target="_blank" class="text-white hover:text-gray-200 transition-colors">
+			<span class="sr-only">Nous suivre sur Linkedin</span> <i class="fab fa-linkedin"></i>
 		</a>
 	</div>
-	<div class="SiteHeader-menu container">
-		<a href="/" class="SiteHeader-logo">
-			<img src="/images/CapitalInvestlight.png" alt="Logo CapialInvest, gestion en patrimoine">
+	<div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+		<a href="https://www.magnacarta.fr/" class="block">
+			<img src="{{ asset('images/scpi/logo-magnacarta.svg') }}" alt="Logo Magnacarta - Gestion de Patrimoine" class="h-12">
 		</a>
-		<nav class="SiteHeader-nav">
-    	<ul>
-				<li><a href="{{path('homepage')}}">Accueil</a></li>
-				<li><a href="{{path('produits')}}">Voir les produits</a></li>
-				<li><a href="{{path('admin')}}">Backoffice</a></li>
-				<li><a href="http://www.usygec.fr/">Site principal</a></li>
-        <li><a href="http://www.usygec.fr/" class="icon-lock"><span class="hidden">intranet</span></a></li>
+		<nav>
+			<ul class="flex gap-6 list-none m-0 p-0">
+				<li><a href="{{path('scpi_hp')}}" class="text-gray-700 hover:text-gray-900 font-medium transition-colors">Accueil</a></li>
+				<li><a href="{{path('produits')}}" class="text-gray-700 hover:text-gray-900 font-medium transition-colors">Voir les produits</a></li>
+				<li><a href="{{path('admin')}}" class="text-gray-700 hover:text-gray-900 font-medium transition-colors">Backoffice</a></li>
+				<li><a href="http://www.usygec.fr/" class="text-gray-700 hover:text-gray-900 font-medium transition-colors">Site principal</a></li>
+				<li><a href="http://www.usygec.fr/" class="text-gray-700 hover:text-gray-900 transition-colors"><span class="sr-only">intranet</span><i class="fas fa-lock"></i></a></li>
 			</ul>
-    </nav>
+		</nav>
 	</div>
 </header>

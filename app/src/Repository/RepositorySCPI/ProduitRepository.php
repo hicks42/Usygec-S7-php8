@@ -46,6 +46,19 @@ class ProduitRepository extends ServiceEntityRepository
         return $query->getQuery()->getResult();
     }
 
+    /**
+     * Recherche un produit par son slug
+     * @return Produit|null
+     */
+    public function findOneBySlug(string $slug): ?Produit
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.slug = :slug')
+            ->setParameter('slug', $slug)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
     // /**
     //  * @return Produit[] Returns an array of Produit objects
     //  */
