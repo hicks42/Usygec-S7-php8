@@ -3,8 +3,8 @@ doughnuts.forEach((doughnut) => {
   const dataArray = JSON.parse(doughnut.getAttribute("data-array"));
 
   let svg = document.createElementNS("http://www.w3.org/2000/svg", "svg"),
-    name = "";
-  filled = 0;
+    name = "",
+    filled = 0;
   svg.setAttribute("width", "200px");
   svg.setAttribute("height", "200px");
   svg.setAttribute("viewBox", "0 0 100 100");

@@ -6,6 +6,7 @@ use App\Entity\EntitySCPI\Actu;
 use App\Form\FormMC\ActuType;
 use App\Repository\RepositorySCPI\ActuRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,7 +17,7 @@ class ActuController extends AbstractController
   #[Route("scpi/actu/", name: "actu_index", methods: ["GET"])]
   public function index(ActuRepository $actuRepository): Response
   {
-    return $this->render('actu/index.html.twig', [
+    return $this->render('scpi/actu/index.html.twig', [
       'actus' => $actuRepository->findAll(),
     ]);
   }
@@ -35,16 +36,16 @@ class ActuController extends AbstractController
       return $this->redirectToRoute('actu_index', [], Response::HTTP_SEE_OTHER);
     }
 
-    return $this->render('actu/new.html.twig', [
+    return $this->render('scpi/actu/new.html.twig', [
       'actu' => $actu,
       'form' => $form,
     ]);
   }
 
   #[Route("scpi/actu/{slug}", name: "actu_show", methods: ["GET"])]
-  public function show(Actu $actu): Response
+  public function show(#[MapEntity(mapping: ['slug' => 'slug'])] Actu $actu): Response
   {
-    return $this->render('actu/show.html.twig', [
+    return $this->render('scpi/actu/show.html.twig', [
       'actu' => $actu,
     ]);
   }
@@ -61,7 +62,7 @@ class ActuController extends AbstractController
       return $this->redirectToRoute('actu_index', [], Response::HTTP_SEE_OTHER);
     }
 
-    return $this->render('actu/edit.html.twig', [
+    return $this->render('scpi/actu/edit.html.twig', [
       'actu' => $actu,
       'form' => $form,
     ]);

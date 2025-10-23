@@ -15,55 +15,55 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class ContactType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options): void
-    {
-        $builder
-            ->add('name', TextType::class, [
-                'label' => 'Votre nom :',
-                'attr' => [
-                    'class' => 'form-control'
-                ]
-            ])
-            ->add('subject', TextType::class, [
-                'label' => 'Sujet :',
-                'attr' => [
-                    'class' => 'form-control'
-                ]
-            ])
-            ->add('email', EmailType::class, [
-                'label' => 'Votre email :',
-                'attr' => [
-                    'class' => 'form-control'
-                ]
-            ])
-            ->add('phone', TextType::class, [
-                'label' => 'Votre téléphone :',
-                'attr' => [
-                    'class' => 'form-control'
-                ]
-            ])
-            ->add('message', TextareaType::class, [
-                'label' => 'Votre message :',
-                'attr' => [
-                    'class' => 'form-control'
-                ]
-            ])
-            ->add('envoyer', SubmitType::class, [
-                'attr' => [
-                    'class' => 'btn btn-primary mt-3'
-                ]
-            ]);
-            // ->add('captcha', Recaptcha3Type::class, [
-            //     'constraints' => new Recaptcha3(),
-            //     'action_name' => 'contact',
-            //     'locale' => 'fr',
-            // ]);
-    }
+  public function buildForm(FormBuilderInterface $builder, array $options): void
+  {
+    $builder
+      ->add('name', TextType::class, [
+        'label' => 'Votre nom :',
+        'attr' => [
+          'class' => 'form-control'
+        ]
+      ])
+      ->add('subject', TextType::class, [
+        'label' => 'Sujet :',
+        'attr' => [
+          'class' => 'form-control'
+        ]
+      ])
+      ->add('email', EmailType::class, [
+        'label' => 'Votre email :',
+        'attr' => [
+          'class' => 'form-control'
+        ]
+      ])
+      ->add('phone', TextType::class, [
+        'label' => 'Votre téléphone :',
+        'attr' => [
+          'class' => 'form-control'
+        ]
+      ])
+      ->add('message', TextareaType::class, [
+        'label' => 'Votre message :',
+        'attr' => [
+          'class' => 'form-control'
+        ]
+      ])
+      ->add('envoyer', SubmitType::class, [
+        'attr' => [
+          'class' => 'btn btn-primary mt-3'
+        ]
+      ]);
+    // ->add('captcha', Recaptcha3Type::class, [
+    //     'constraints' => new Recaptcha3(),
+    //     'action_name' => 'contact',
+    //     'locale' => 'fr',
+    // ]);
+  }
 
-    public function configureOptions(OptionsResolver $resolver): void
-    {
-        $resolver->setDefaults([
-            // Configure your form options here
-        ]);
-    }
+  public function configureOptions(OptionsResolver $resolver): void
+  {
+    $resolver->setDefaults([
+      // Configure your form options here
+    ]);
+  }
 }

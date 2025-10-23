@@ -39,7 +39,7 @@ class EzreviewController extends AbstractController
   }
 
   #[Route("/ezreview/", name: "ezreview_hp")]
-  #[IsGranted('ROLE_USER')]
+  #[IsGranted('ROLE_EZR')]
   public function show(Request $request, SluggerInterface $slugger): Response
   {
     $form = $this->createForm(EmailCsvType::class);
@@ -72,7 +72,7 @@ class EzreviewController extends AbstractController
   }
 
   #[Route("/ezreview/settings", name: "ezreview_settings")]
-  #[IsGranted('ROLE_USER')]
+  #[IsGranted('ROLE_EZR')]
   public function editEzreviewUser(Request $request, EntityManagerInterface $em): Response
   {
 
@@ -105,7 +105,7 @@ class EzreviewController extends AbstractController
   }
 
   #[Route("/ezreview/{id<\d+>}/survey ", name: "survey")]
-  #[IsGranted('ROLE_USER')]
+  #[IsGranted('ROLE_EZR')]
   public function survey(Request $request, $id): Response
   {
     $structure = $this->structureRepo->findOneById($id);
@@ -126,7 +126,7 @@ class EzreviewController extends AbstractController
   }
 
   #[Route("/ezreview/{id<\d+>}/enquete/", name: "enquete")]
-  #[IsGranted('ROLE_USER')]
+  #[IsGranted('ROLE_EZR')]
   public function sendOneEmail(Request $request, MessageBusInterface $bus, $id): Response
   {
     $baseUrl = $request->getSchemeAndHttpHost();
@@ -194,7 +194,7 @@ class EzreviewController extends AbstractController
    * API pour extraire le Google Place ID depuis n'importe quelle URL Google Maps
    */
   #[Route("/api/ezreview/extract-pid", name: "api_extract_pid", methods: ["POST"])]
-  #[IsGranted('ROLE_USER')]
+  #[IsGranted('ROLE_EZR')]
   public function extractPlaceId(Request $request, HttpClientInterface $httpClient): JsonResponse
   {
     $data = json_decode($request->getContent(), true);

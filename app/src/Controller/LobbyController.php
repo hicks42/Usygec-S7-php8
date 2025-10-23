@@ -11,7 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class LobbyController extends AbstractController
 {
     #[Route("/lobby", name:"lobby")]
-    // #[IsGranted('ROLE_USER')]
+    #[IsGranted('ROLE_USER')]
     public function index(Security $security): Response
     {
         $user = $security->getUser();

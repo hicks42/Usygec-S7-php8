@@ -1,0 +1,55 @@
+{% extends 'scpi/scpi_base.html.twig' %}
+
+  {% block title %}Homepage SCPI
+  {% endblock %}
+
+  {% block stylesheets %}
+    {{ parent() }}
+  {% endblock stylesheets %}
+
+  {% block javascripts %}
+    {{ parent() }}
+  {% endblock javascripts %}
+
+	{% block content %}
+			<div class="min-h-screen">
+				<main role="main" class="flex justify-center max-w-screen-xl mx-auto">
+						<div class="pb-16 w-8/2 mx-5">
+							<h1 class="bg-slate-900 w-6/12 mx-0 pt-6 pb-4 rounded-b-3xl text-white text-center text-4xl font-semibold">Comparateur SCPI</h1>
+
+							<div class="bg-white border border-gray-300 rounded-lg p-8 mt-10 mb-6 transition-all hover:border-red-600 hover:shadow-lg">
+								<div class="text-gray-600 leading-relaxed mb-6">
+									<h4 class="text-slate-900 text-2xl mb-4 font-semibold">Page de garde du comparateur</h4>
+									Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente dolor nam nostrum? Sequi rem voluptatibus nemo soluta nulla adipisci. Libero dignissimos laborum culpa magnam commodi est molestiae praesentium eius sint eum inventore sit reprehenderit nam, voluptates quasi blanditiis illum aut earum tempore non fugit voluptas modi? Numquam enim odio repellat.
+								</div>
+								<div class="flex justify-end">
+									<a href="{{path('produits')}}" class="inline-block bg-slate-900 text-white px-9 py-3.5 rounded uppercase font-semibold tracking-wide text-sm transition-all hover:bg-red-700 hover:-translate-y-1 hover:shadow-xl">Comparer les SCPI</a>
+								</div>
+							</div>
+
+							<div class="bg-white border border-gray-300 rounded-lg p-8 mb-6 transition-all hover:border-red-600 hover:shadow-lg">
+								<div class="text-gray-600 leading-relaxed mb-6">
+									<h4 class="text-slate-900 text-2xl mb-4 font-semibold">Voir Notre site officiel</h4>
+									Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere voluptas repellat assumenda tempora possimus dicta ratione ex quasi fugit nam rerum harum cum animi, reiciendis, placeat dignissimos deleniti enim rem modi voluptates illum accusantium voluptatum vitae! Animi dolores commodi ipsam ea modi blanditiis possimus! Doloribus veniam natus rerum error praesentium.
+								</div>
+								<div class="flex justify-start">
+									<a href="http://www.magnacarta.fr/" class="inline-block bg-slate-900 text-white px-9 py-3.5 rounded uppercase font-semibold tracking-wide text-sm transition-all hover:bg-red-700 hover:-translate-y-1 hover:shadow-xl">Site principal</a>
+								</div>
+							</div>
+
+							<div class="bg-white border border-gray-300 rounded-lg p-8 mb-6 transition-all hover:border-red-600 hover:shadow-lg">
+								<div class="text-gray-600 leading-relaxed mb-6">
+									<h4 class="text-slate-900 text-2xl mb-4 font-semibold">Connectez vous a notre intranet</h4>
+									Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis repudiandae modi ducimus totam mollitia ipsum dicta ratione ea minus, perferendis quia ullam, dolorem neque doloribus molestiae, architecto optio rerum tempora. Neque officiis repellendus quae eius assumenda, aliquam commodi earum mollitia ad ipsa fuga soluta quo placeat deleniti. Ipsam, tempora enim.
+								</div>
+								<div class="flex justify-end">
+									<a href="http://intranet.magnacarta.fr/" class="inline-block bg-slate-900 text-white px-9 py-3.5 rounded uppercase font-semibold tracking-wide text-sm transition-all hover:bg-red-700 hover:-translate-y-1 hover:shadow-xl">intranet</a>
+								</div>
+							</div>
+						</div>
+				</main>
+				{# <div class="flex justify-center"></div> #}
+				{# {{ render(controller('App\\Controller\\NavController::navbar')) }} #}
+				{# {{ include('scpi/traits/_footer.html.twig') }} #}
+			</div>
+	{% endblock content %}

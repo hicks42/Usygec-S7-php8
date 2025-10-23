@@ -3,75 +3,79 @@
 {% set graph = ['repartGeos','repartSectors'] %}
 {% set color = ['#80e080', '#4fc3f7', '#71f1bb', '#9575cd', '#f06292', '#757696', '#f072bb', '#dd5813', '#2adcd7', '#2c370c', '#ccd61e' ] %}
 
-<div class="row border-top p-2">
-	<div class="col1 col-{{col1}}">{{value|trans}}
-		:</div>
+<div class="grid border-t border-gray-300 p-2" style="grid-template-columns: {{col1}}fr repeat({{compare|length}}, {{lastcols}}fr);">
+	<div class="p-2 font-semibold text-gray-700">{{value|trans}}:</div>
 	{% if value == 'performances' %}
 		{% for item in compare %}
 			{% set perfs = attribute(item.produit, value).getValues() %}
-			<div class="col-{{lastcols}}">
+			<div class="p-2">
 				{% for perf in perfs %}
-					<strong>{{ perf.year|raw }}
-						:</strong>
-					{{ perf.rate|raw }}%</br>
-			{% endfor %}
-		</div>
-	{% endfor %}
+					<strong>{{ perf.year|raw }}:</strong>
+					{{ perf.rate|raw }}%<br>
+				{% endfor %}
+			</div>
+		{% endfor %}
 {% elseif value == 'repartSectors' %}
-	{% for item in compare %}
-		{% set objs = attribute(item.produit, value).getValues() %}
-		<div class="col-{{lastcols}}">
-			{% set dataCharts = [] %}
-			{% for obj in objs %}
-				{% set dataCharts = dataCharts|merge([{ 'name': obj.sectorName, 'fill': obj.sectorValue, 'color': color[loop.index] }]) %}
-			{% endfor %}
-			<div class="flex flex-column">
-				<div id="doughnut" data-array="{{ dataCharts|json_encode|e('html_attr') }}"></div>
+		{% for item in compare %}
+			{% set objs = attribute(item.produit, value).getValues() %}
+			<div class="p-2">
+				{% set dataCharts = [] %}
+				{% for obj in objs %}
+					{% set dataCharts = dataCharts|merge([{ 'name': obj.sectorName, 'fill': obj.sectorValue, 'color': color[loop.index] }]) %}
+				{% endfor %}
+				<div class="flex flex-col">
+					<div id="doughnut" data-array="{{ dataCharts|json_encode|e('html_attr') }}"></div>
+				</div>
 			</div>
-		</div>
-	{% endfor %}
-{% elseif value == 'repartGeos' %}
-	{% for item in compare %}
-		{% set objs = attribute(item.produit, value).getValues() %}
-		<div class="col-{{lastcols}}">
-			{% set dataCharts = [] %}
-			{% for obj in objs %}
-				{% set dataCharts = dataCharts|merge([{ 'name': obj.geoName, 'fill': obj.geoValue, 'color': color[loop.index] }]) %}
-			{% endfor %}
-			<div class="flex flex-column">
-				<div id="doughnut" data-array="{{ dataCharts|json_encode|e('html_attr') }}"></div>
+		{% endfor %}
+	{% elseif value == 'repartGeos' %}
+		{% for item in compare %}
+			{% set objs = attribute(item.produit, value).getValues() %}
+			<div class="p-2">
+				{% set dataCharts = [] %}
+				{% for obj in objs %}
+					{% set dataCharts = dataCharts|merge([{ 'name': obj.geoName, 'fill': obj.geoValue, 'color': color[loop.index] }]) %}
+				{% endfor %}
+				<div class="flex flex-col">
+					<div id="doughnut" data-array="{{ dataCharts|json_encode|e('html_attr') }}"></div>
+				</div>
 			</div>
-		</div>
-	{% endfor %}
+		{% endfor %}
 {% elseif value == 'lifeInsuranceAvaible' %}
-	{% for item in compare %}
-		{% set lifass = attribute(item.produit, value) %}
-		<div class="col-{{lastcols}}">
-			{% if lifass %}
-				<strong>OUI</strong>
-			{% else %}
-				<strong>NON</strong>
-			{% endif %}
-		</div>
-	{% endfor %}
-{% else %}
-	{% for item in compare %}
-		{% set produit = item.produit %}
-		{% for column in attribute(produit, value)|split('<hr />') %}
+		{% for item in compare %}
+			{% set lifass = attribute(item.produit, value) %}
+			<div class="p-2">
+				{% if lifass %}
+					<strong class="text-green-600">OUI</strong>
+				{% else %}
+					<strong class="text-red-600">NON</strong>
+				{% endif %}
+			</div>
+		{% endfor %}
+	{% else %}
+		{% for item in compare %}
+			{% set produit = item.produit %}
+			{% set fieldValue = attribute(produit, value) %}
 			{% if value == 'capitalisation' %}
-				<div class="col-{{lastcols}}">{{ column|raw }}
-					Milliards €</div>
+				<div class="p-2">{{ fieldValue|raw }} Milliards €</div>
 			{% elseif value in currency %}
-				<div class="col-{{lastcols}}">{{ (column / 100)|number_format(2, '.', ',')}}
-					€</div>
+				<div class="p-2">{{ (fieldValue / 100)|number_format(2, '.', ',')}} €</div>
 			{% elseif value in percent %}
-				<div class="col-{{lastcols}}">{{ column|raw }}
-					%</div>
+				<div class="p-2">{{ fieldValue|raw }} %</div>
 			{% else %}
-				<div id="lgtxt" class="col-{{lastcols}} text-justify">
-					{{ column|raw }}
+				<div class="p-2 text-justify relative">
+					<div class="line-clamp-4" id="text-{{ value }}-{{ loop.index }}">{{ fieldValue|raw }}</div>
+					<button
+						type="button"
+						class="text-blue-600 hover:text-blue-800 text-sm mt-1 underline block"
+						id="btn-{{ value }}-{{ loop.index }}"
+						data-field="{{ value }}"
+						data-label="{{ value|trans }}">
+						Lire la suite...
+					</button>
+					<div class="hidden" data-full-text="{{ value }}-{{ loop.index }}" data-product-name="{{ produit.name }}">{{ fieldValue|raw }}</div>
 				</div>
 			{% endif %}
 		{% endfor %}
-	{% endfor %}
-{% endif %}</div>
+	{% endif %}
+</div>

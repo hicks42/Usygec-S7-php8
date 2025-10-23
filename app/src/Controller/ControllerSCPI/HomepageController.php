@@ -12,14 +12,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class HomepageController extends AbstractController
 {
-  #[Route("/scpi/home", name: "home-scpi")]
+  #[Route("/scpi/home", name: "scpi_hp")]
   public function index(EntityManagerInterface $em): Response
   {
     $promos = $em->getRepository(Produit::class)->findBy(['isPromo' => true], ['id' => 'DESC']);
     $actus = $em->getRepository(Actu::class)->findBy(['isOnline' => true], ['id' => 'DESC']);
 
     return $this->render(
-      'scpi/homepage.html.twig',
+      'scpi/scpi_hp.html.twig',
       compact('promos', 'actus'),
     );
   }

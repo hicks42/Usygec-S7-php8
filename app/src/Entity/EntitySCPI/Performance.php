@@ -64,4 +64,9 @@ class Performance
 
         return $this;
     }
+
+    public function __toString(): string
+    {
+        return ''; // Retourne une chaîne vide pour éviter le titre auto-généré
+    }
 }

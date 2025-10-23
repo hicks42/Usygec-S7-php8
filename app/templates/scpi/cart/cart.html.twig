@@ -1,43 +1,59 @@
-{% extends 'base.html.twig' %}
+{% extends 'scpi/scpi_base.html.twig' %}
 
 {% block title %}Mon panier{% endblock %}
 
-{% block body %}
-<div class="main-wrapper">
-	<h1>Mon panier</h1>
+{% block content %}
+<div class="max-w-screen-xl mx-auto px-5 py-10">
+	<h1 class="bg-slate-600 w-1/2 mx-auto mt-0 pt-6 pb-4 rounded-b-3xl text-white text-center text-4xl font-semibold">Mon panier</h1>
 
-	<table class="table">
-		<thead class="thead-dark">
-			<tr>
-				<th scope="col">#</th>
-				<th scope="col"></th>
-				<th scope="col">Name</th>
-				<th scope="col" class="text-center">Quantity</th>
-				<th scope="col">Géré par</th>
-			</tr>
-		</thead>
-		<tbody>
-	{# {{ dump (cart) }} #}
-			{% for item in cart %}
+	<div class="bg-white shadow-md rounded-lg overflow-hidden my-8">
+		<table class="w-full">
+			<thead class="bg-red-600 text-white">
 				<tr>
-					<th scope="row">{{loop.index}}</th>
-					<td><img src="{{ (item.produit.imageName ? vich_uploader_asset(item.produit) : asset('build/images/placeholder.jpg')) | imagine_filter('square_thumbnail_vtiny') }}"></td>
-					<td>{{item.produit.name}}</td>
-					<td class="text-center">
-						<a href="{{ path('remove_from_cart')}} "><img src="{{asset('images/minus-sign.png')}}" height="12" alt="moins un"></a>
-						x {{item.quantity}}
-						<a href="{{ path('add_to_cart')}} "><img src="{{asset('images/plus-sign.png')}}" height="12" alt="plus un"></a>
-					</td>
-					<td>{{item.produit.SocGest}}</td>
-					<td>
-						<a href="{{path('remove_from_cart', {'id': item.produit.id})}}"><img src="{{asset('images/trash.png')}}"  height="12" alt="supprimmer"></a>
-					</td>
+					<th class="px-4 py-3 text-left">#</th>
+					<th class="px-4 py-3 text-left"></th>
+					<th class="px-4 py-3 text-left">Nom</th>
+					<th class="px-4 py-3 text-center">Quantité</th>
+					<th class="px-4 py-3 text-left">Géré par</th>
+					<th class="px-4 py-3 text-center">Action</th>
 				</tr>
-			{% endfor %}
-		</tbody>
-	</table>
-	<p class="h4 mt-5 text-center">
-		<a href={{ path ('produits') }} class="btn btn-secondary w-50">Retour sur la page produits</a>
+			</thead>
+			<tbody>
+		{# {{ dump (cart) }} #}
+				{% for item in cart %}
+					<tr class="border-b border-gray-200 hover:bg-gray-50 transition-colors">
+						<th scope="row" class="px-4 py-3 font-medium text-gray-900">{{loop.index}}</th>
+						<td class="px-4 py-3">
+							<img src="{{ (item.produit.imageName ? vich_uploader_asset(item.produit) : asset('images/scpi/placeholder.png')) | imagine_filter('square_thumbnail_vtiny') }}" alt="{{item.produit.name}}" class="rounded">
+						</td>
+						<td class="px-4 py-3 text-gray-900">{{item.produit.name}}</td>
+						<td class="px-4 py-3 text-center">
+							<div class="flex items-center justify-center gap-3">
+								<a href="{{ path('remove_from_cart')}} " class="text-red-600 hover:text-red-800 transition-colors">
+									<img src="{{asset('images/minus-sign.png')}}" height="12" alt="moins un" class="inline">
+								</a>
+								<span class="font-medium">x {{item.quantity}}</span>
+								<a href="{{ path('add_to_cart')}} " class="text-green-600 hover:text-green-800 transition-colors">
+									<img src="{{asset('images/plus-sign.png')}}" height="12" alt="plus un" class="inline">
+								</a>
+							</div>
+						</td>
+						<td class="px-4 py-3 text-gray-700">{{item.produit.SocGest}}</td>
+						<td class="px-4 py-3 text-center">
+							<a href="{{path('remove_from_cart', {'id': item.produit.id})}}" class="text-red-600 hover:text-red-800 transition-colors">
+								<img src="{{asset('images/trash.png')}}" height="12" alt="supprimer" class="inline">
+							</a>
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+
+	<p class="text-center mt-8">
+		<a href={{ path ('produits') }} class="inline-block px-6 py-3 bg-gray-600 text-white text-lg font-semibold rounded w-1/2 no-underline text-center hover:bg-gray-700 transition-colors">
+			Retour sur la page produits
+		</a>
 	</p>
 
 </div>

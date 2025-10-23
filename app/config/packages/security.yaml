@@ -56,14 +56,22 @@ security:
     - { path: ^/login, roles: PUBLIC_ACCESS }
     - { path: ^/reset-password, roles: PUBLIC_ACCESS }
 
-    # Routes protégées nécessitant ROLE_USER (accès EZR et BAM)
-    - { path: ^/companies, roles: ROLE_USER }
-    - { path: ^/activities, roles: ROLE_USER }
-    - { path: ^/ezreview, roles: ROLE_USER }
+    # Routes publiques SCPI (site vitrine accessible sans connexion)
+    - { path: ^/scpi, roles: PUBLIC_ACCESS }
 
-    # Administration
-    # - { path: ^/usygec/settings, roles: [ROLE_ADMIN] }
+    # Routes accessibles uniquement avec des rôles spécifiques
+    - { path: ^/ezreview, roles: ROLE_EZR }
+    - { path: ^/companies, roles: ROLE_BAM }
+    - { path: ^/activities, roles: ROLE_BAM }
+    - { path: ^/idfracon, roles: ROLE_IDFRACON }
+
+    # Lobby et compte utilisateur (nécessite au minimum ROLE_USER)
+    - { path: ^/lobby, roles: ROLE_USER }
+    - { path: ^/usygec, roles: ROLE_USER }
+
+    # Administration (nécessite ROLE_ADMIN)
+    - { path: ^/admin, roles: ROLE_ADMIN }
 
   role_hierarchy:
     ROLE_ADMIN:
-      [ROLE_USER, ROLE_IDFRACON, ROLE_BAM, ROLE_EZR, ROLE_ALLOWED_TO_SWITCH]
+      [ROLE_USER, ROLE_IDFRACON, ROLE_BAM, ROLE_EZR, ROLE_SCPI, ROLE_ALLOWED_TO_SWITCH]

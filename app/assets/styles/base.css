@@ -95,7 +95,7 @@
   }
 
   a {
-    @apply text-blue-600 font-spartan mt-4;
+    @apply text-blue-600 font-spartan;
   }
 
   p,
@@ -116,7 +116,7 @@
   }
 
   .input-group {
-    @apply relative mt-2 rounded-md shadow-sm;
+    @apply relative rounded-md shadow-sm mt-2;
   }
 
   select {

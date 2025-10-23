@@ -14,7 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class QRGenController extends AbstractController
 {
   #[Route("/ezreview/{id<[0-9]+>}/qr_gen", name:"qr_gen")]
-  #[IsGranted('ROLE_USER')]
+  #[IsGranted('ROLE_EZR')]
   public function qrGen(StructureRepository $structureRepo, $id): Response
   {
     $url = $this->generateUrl('survey', ['id' => $id], UrlGeneratorInterface::ABSOLUTE_URL);
