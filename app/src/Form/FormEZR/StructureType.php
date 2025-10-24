@@ -68,7 +68,7 @@ class StructureType extends AbstractType
         'label_attr' => ['class' => 'text-gray-500 mt-4'],
         'attr' => [
           'placeholder' => 'Indiquez l\'adresse',
-          'class' => 'form-control'
+          'class' => 'form-control w-full'
         ]
       ])
       ->add('adresse2', TextType::class, [
@@ -77,7 +77,7 @@ class StructureType extends AbstractType
         'label_attr' => ['class' => 'text-gray-500 mt-4'],
         'attr' => [
           'placeholder' => '(optionnelle)',
-          'class' => 'form-control'
+          'class' => 'form-control w-full'
         ]
       ])
       ->add('city', TextType::class, [
@@ -85,7 +85,7 @@ class StructureType extends AbstractType
         'label_attr' => ['class' => 'text-gray-500 mt-4'],
         'attr' => [
           'placeholder' => 'Indiquez la ville',
-          'class' => 'form-control'
+          'class' => 'form-control w-full'
         ]
       ])
       ->add('country', TextType::class, [
@@ -93,7 +93,7 @@ class StructureType extends AbstractType
         'label_attr' => ['class' => 'text-gray-500 mt-4'],
         'attr' => [
           'placeholder' => 'Indiquez le pays',
-          'class' => 'form-control'
+          'class' => 'form-control w-full'
         ]
       ])
       ->add('phone', TelType::class, [
@@ -101,7 +101,7 @@ class StructureType extends AbstractType
         'label_attr' => ['class' => 'text-gray-500 mt-4'],
         'attr' => [
           'placeholder' => 'Le téléphone du contact',
-          'class' => 'form-control'
+          'class' => 'form-control w-full'
         ]
       ])
       ->add('badRevUrl', TextareaType::class, [

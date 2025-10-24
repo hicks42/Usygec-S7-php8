@@ -52,9 +52,13 @@
 						{% for produit in row %}
 							<div>
 								<article class="bg-white shadow-lg border-0 rounded-lg flex flex-col flex-nowrap my-4 mx-auto">
-									<div class="max-h-24 rounded-t-lg overflow-hidden flex-grow max-w-full text-center">
+									<div class="rounded-t-lg overflow-hidden bg-gray-50">
 										<a href=" {{ path('produit_show', {slug: produit.slug}) }} ">
-											<img src="{{ (produit.imageName ? vich_uploader_asset(produit) : asset('images/scpi/placeholder.png')) | imagine_filter('rectangle_thumbnail_medium') }}" alt="{{ produit.name }}" class="h-24 max-w-full transition-transform duration-500 hover:scale-125"/>
+											{% if produit.imageName %}
+												<img src="{{ vich_uploader_asset(produit) | imagine_filter('rectangle_thumbnail_medium_inset') }}" alt="{{ produit.name }}" class="w-full h-auto object-contain transition-transform duration-500 hover:scale-110"/>
+											{% else %}
+												<img src="{{ '/images/produits-placeholder.png' | imagine_filter('rectangle_thumbnail_medium_inset') }}" alt="{{ produit.name }}" class="w-full h-auto object-cover transition-transform duration-500 hover:scale-110"/>
+											{% endif %}
 										</a>
 									</div>
 									<div class="mx-2 my-0 mb-2 w-auto h-fit flex-grow-[2]">

@@ -4,77 +4,161 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QR Code - {{ structure.name }} | EZReview</title>
-    <link href="{{ asset('styles/custom-components.css') }}" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="{{ asset('styles/app.tailwind.css') }}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* Styles spécifiques pour l'impression */
+        @media print {
+            body { margin: 0; padding: 0; }
+            .qr-page {
+                width: 100%;
+                min-height: 100vh;
+                margin: 0;
+                padding: 0;
+                box-shadow: none;
+            }
+            .no-print { display: none !important; }
+            * {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        }
+
+        /* Animation des formes géométriques */
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        .shape {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .shape:nth-child(2) { animation-delay: 1s; }
+        .shape:nth-child(3) { animation-delay: 2s; }
+        .shape:nth-child(4) { animation-delay: 3s; }
+
+        /* Forme avec image de fond */
+        .image-shape {
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        @media print {
+            .shape { animation: none; }
+        }
+    </style>
 </head>
-<body class="ezr-qr-print">
-    <div class="ezr-qr-page">
-        <!-- En-tête -->
-        <div class="ezr-qr-header">
-            <div>
-                {% if structure.imageName %}
-                    <img src="{{ vich_uploader_asset(structure) | imagine_filter('company_image_banner') }}" 
-                         alt="{{ structure.name }}" class="ezr-qr-logo">
+<body class="font-['Inter'] bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 overflow-x-hidden m-10">
+    <div class="qr-page w-[210mm] min-h-[297mm] mx-auto bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 relative overflow-hidden shadow-2xl">
+
+        <!-- Formes géométriques abstraites en arrière-plan -->
+        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+            <!-- Cercle jaune -->
+            <div class="shape absolute w-64 h-64 bg-yellow-400 rounded-full opacity-80 -top-20 -right-20 blur-sm"></div>
+
+            <!-- Rectangle rose -->
+            <div class="shape absolute w-72 h-48 bg-pink-500 rounded-3xl opacity-70 top-1/4 -left-24 rotate-12 blur-sm"></div>
+
+            <!-- Cercle cyan -->
+            <div class="shape absolute w-80 h-80 bg-cyan-400 rounded-full opacity-60 bottom-20 right-10 blur-sm"></div>
+
+            <!-- Triangle simulé avec bordure -->
+            <div class="shape absolute w-56 h-56 bg-orange-500 opacity-75 bottom-32 left-20 rotate-45 rounded-3xl blur-sm"></div>
+
+            <!-- Rectangle violet -->
+            <div class="shape absolute w-64 h-40 bg-violet-600 rounded-2xl opacity-70 top-1/2 right-16 -rotate-12 blur-sm"></div>
+        </div>
+
+        <!-- Contenu de l'affiche -->
+        <div class="relative z-10 p-10">
+
+            <!-- En-tête avec cadre coloré -->
+            <div class="mb-8">
+                <div class="bg-white px-10 py-8 rounded-[2rem] shadow-2xl border-4 border-yellow-400 max-w-2xl">
+                    <h3 class="text-3xl md:text-4xl font-black text-gray-900 m-0 mb-4">Enquête de Satisfaction</h3>
+                    <p class="text-gray-700 text-lg font-medium leading-relaxed m-0">
+                        Afin d'améliorer nos prestations et de vous offrir un service toujours plus adapté à vos besoins,
+                        nous vous invitons à partager votre expérience. Votre avis compte et nous aide à progresser au quotidien.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Titre principal avec forme abstraite -->
+            <div class="relative mb-10">
+                <div class="bg-yellow-400 px-10 py-8 rounded-[3rem] shadow-2xl rotate-1 inline-block">
+                    <h2 class="text-5xl md:text-6xl font-black text-gray-900 m-0 leading-tight tracking-tight">
+                        DONNEZ<br>VOTRE AVIS
+                    </h2>
+                </div>
+            </div>
+
+            <!-- QR Code avec design moderne -->
+            <div class="flex flex-col md:flex-row items-center gap-8 mb-10">
+                <!-- Bloc QR Code -->
+                <div class="bg-white p-8 rounded-[2.5rem] shadow-2xl rotate-2 hover:rotate-0 transition-transform duration-300">
+                    <img src="{{ myqrcode }}" alt="QR Code" class="w-52 h-52 mx-auto">
+                </div>
+
+                <!-- Instructions dans un bloc coloré -->
+                <div class="flex-1 bg-pink-500 px-8 py-8 rounded-[2rem] shadow-2xl -rotate-1 hover:rotate-0 transition-transform duration-300">
+                    <h3 class="text-2xl font-black text-white m-0 mb-4">SCANNEZ-MOI !</h3>
+                    <p class="text-white font-bold text-lg mb-4">C'est simple :</p>
+                    <ul class="text-white space-y-2 list-none p-0 m-0">
+                        <li class="flex items-start gap-3">
+                            <span class="text-2xl">📱</span>
+                            <span class="font-medium">Ouvrez votre appareil photo</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-2xl">🎯</span>
+                            <span class="font-medium">Pointez vers le QR code</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-2xl">✨</span>
+                            <span class="font-medium">Cliquez sur la notification</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-2xl">💬</span>
+                            <span class="font-medium">Donnez votre avis !</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Informations établissement dans un bloc cyan -->
+            <div class="bg-cyan-400 px-8 py-6 rounded-[2rem] shadow-2xl mb-8 rotate-1 hover:rotate-0 transition-transform duration-300">
+                <h3 class="text-2xl md:text-3xl font-black text-gray-900 m-0 mb-3">{{ structure.name }}</h3>
+                {% if structure.adresse1 %}
+                <div class="text-gray-800 font-semibold mb-2 flex items-start gap-2">
+                    <span class="text-xl">📍</span>
+                    <span>{{ structure.adresse1 }}{% if structure.adresse2 %}, {{ structure.adresse2 }}{% endif %}
+                    {% if structure.cp or structure.city %}
+                        <br>{{ structure.cp }} {{ structure.city }}{% if structure.country %}, {{ structure.country }}{% endif %}
+                    {% endif %}</span>
+                </div>
+                {% endif %}
+                {% if structure.phone %}
+                <div class="text-gray-800 font-semibold flex items-center gap-2">
+                    <span class="text-xl">📞</span>
+                    <span>{{ structure.phone }}</span>
+                </div>
                 {% endif %}
             </div>
-            <div class="ezr-qr-brand">
-                <h1>EZReview</h1>
-                <p>Système de gestion des avis clients</p>
+
+            <!-- Footer avec forme violette -->
+            <div class="bg-violet-600 px-8 py-6 rounded-[2rem] shadow-2xl text-center -rotate-1">
+                <p class="text-white font-bold text-lg mb-1">Merci pour votre confiance !</p>
+                <p class="text-violet-200 text-xs font-extralight">EZReview powered by Usygec</p>
             </div>
-        </div>
-
-        <!-- Contenu principal -->
-        <div class="ezr-qr-main">
-            <h2 class="ezr-qr-title">Donnez votre avis</h2>
-            <p class="ezr-qr-subtitle">Scannez ce QR code avec votre smartphone</p>
-            
-            <!-- QR Code -->
-            <div class="ezr-qr-container">
-                <img src="{{ myqrcode }}" alt="QR Code pour {{ structure.name }}" class="ezr-qr-code">
-            </div>
-        </div>
-
-        <!-- Informations de l'établissement -->
-        <div class="ezr-establishment-info">
-            <h3 class="ezr-establishment-name">{{ structure.name }}</h3>
-            {% if structure.adresse1 %}
-                <div class="ezr-establishment-details">
-                    📍 {{ structure.adresse1 }}{% if structure.adresse2 %}, {{ structure.adresse2 }}{% endif %}
-                    {% if structure.cp or structure.city %}
-                        <br>&nbsp;&nbsp;&nbsp;&nbsp;{{ structure.cp }} {{ structure.city }}
-                        {% if structure.country %}, {{ structure.country }}{% endif %}
-                    {% endif %}
-                </div>
-            {% endif %}
-            {% if structure.phone %}
-                <div class="ezr-establishment-details">📞 {{ structure.phone }}</div>
-            {% endif %}
-        </div>
-
-        <!-- Instructions -->
-        <div class="ezr-qr-instructions">
-            <h3>Comment procéder ?</h3>
-            <ol>
-                <li>Ouvrez l'appareil photo de votre smartphone</li>
-                <li>Pointez l'objectif vers le QR code ci-dessus</li>
-                <li>Touchez la notification qui apparaît à l'écran</li>
-                <li>Remplissez notre enquête de satisfaction en ligne</li>
-                <li>Votre avis nous aide à améliorer nos services !</li>
-            </ol>
-        </div>
-
-        <!-- Footer -->
-        <div class="ezr-qr-footer">
-            <p>Merci pour votre confiance | EZReview - Votre satisfaction, notre priorité</p>
-            <p>Générée le {{ "now"|date("d/m/Y à H:i") }}</p>
         </div>
 
         <!-- Boutons d'action (cachés à l'impression) -->
-        <div class="ezr-no-print" style="position: fixed; top: 20px; right: 20px; z-index: 1000;">
-            <button onclick="window.print()" class="ezr-btn ezr-btn-primary" style="margin-right: 10px;">
+        <div class="no-print fixed top-5 right-5 z-[1000]">
+            <button onclick="window.print()" class="inline-flex items-center justify-center px-6 py-3 text-base font-bold rounded-2xl bg-yellow-400 text-gray-900 hover:bg-yellow-300 hover:scale-105 shadow-xl transition-all duration-200 mr-2.5">
                 🖨️ Imprimer
             </button>
-            <a href="{{ path('ezreview_hp') }}" class="ezr-btn ezr-btn-secondary">
+            <a href="{{ path('ezreview_hp') }}" class="inline-flex items-center justify-center px-6 py-3 text-base font-bold rounded-2xl bg-white text-gray-900 hover:bg-gray-100 hover:scale-105 shadow-xl transition-all duration-200 no-underline">
                 ← Retour
             </a>
         </div>
@@ -87,7 +171,7 @@
                 setTimeout(() => window.print(), 500);
             };
         }
-        
+
         // Ajouter des raccourcis clavier
         document.addEventListener('keydown', function(e) {
             if ((e.ctrlKey || e.metaKey) && e.key === 'p') {

@@ -1,8 +1,8 @@
 {# form for existing structures #}
 {% macro niceForm(form) %}
 	<div id="accordion" class="bg-slate-300 flex flex-col my-[1px] rounded-md" data-structure-form>
-		<div class="item" id="etbls-{{ form.vars.name }}">
-			<div class="header bg-slate-600 flex flex-row justify-between items-center cursor-pointer font-bold p-6 rounded-md" id="heading-{{ form.vars.name }}">
+		<div class="item w-full" id="etbls-{{ form.vars.name }}">
+			<div class="header bg-slate-600 flex flex-row justify-between items-center cursor-pointer font-bold p-6 rounded-md w-full" id="heading-{{ form.vars.name }}">
 				<div class=" text-white">{{ form.name.vars.value }}</div>
 				<svg class="size-6 activeIcon text-gray-200" fill="rgb(71 85 105 / var(--tw-bg-opacity))">
 					<use xlink:href="{{ asset('icons/icons.svg') }}#icon-down"></use>
@@ -11,7 +11,7 @@
 					<use xlink:href="{{ asset('icons/icons.svg') }}#icon-up"></use>
 				</svg>
 			</div>
-			<div class="content transition-all duration-1000">
+			<div class="content transition-all duration-1000 w-full">
 				{{ form_row(form.name)}}
 				{{ form_row(form.imageFile)}}
 				<div class="relative">
@@ -126,7 +126,7 @@
 			<div class="flex justify-center mt-6">
 				<button type="button"
 						onclick="openPidHelpModalNew(this)"
-						class="bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 text-white px-8 py-4 rounded-lg transition-all font-bold text-lg shadow-lg flex items-center gap-3 transform hover:scale-105"
+						class="bg-teal-800 hover:from-green-700 hover:to-blue-700 text-white px-8 py-4 rounded-lg transition-all   text-sm font-medium shadow-lg flex items-center gap-3 transform hover:scale-105"
 						data-create-link-btn>
 					<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path>
@@ -146,7 +146,7 @@
 		</div>
 
 		{# ÉTAPE 2 : Reste du formulaire (caché tant qu'il n'y a pas de PID) #}
-		<div class="rest-of-form hidden" data-rest-form>
+		<div class="rest-of-form hidden w-full" data-rest-form>
 			<div class="bg-green-100 border-l-4 border-green-500 p-4 mb-4 rounded">
 				<p class="text-green-800 font-semibold flex items-center gap-2">
 					<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -165,7 +165,7 @@
 
 			{{ form_row(form.imageFile)}}
 
-			<div class="grid lg:grid-cols-2 grid-cols-1 gap-2">
+			<div class="grid lg:grid-cols-2 grid-cols-1 gap-2 w-full">
 				<div class="">
 					{{ form_row(form.adresse1)}}
 				</div>

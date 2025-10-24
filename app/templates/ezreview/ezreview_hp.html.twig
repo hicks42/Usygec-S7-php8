@@ -18,7 +18,7 @@
 {% block content %}
 	<div class="flex justify-center mt-10">
 		<div class="w-full mt-4 p-2">
-			<div class="flex justify-between my-3">
+			<div class="flex justify-between my-3 flex-col md:flex-row">
 
 				<div class="flex justify-start flex-col w-10/12">
 					<h1>EZ Review de :
@@ -28,8 +28,8 @@
 					</h1>
 				</div>
 
-				<div class="w-2/12 align-center">
-					<a href="{{ path('ezreview_settings') }}" class="btn btn-secondary btn-sm float-end text-nowrap">
+				<div class="w-2/12 align-center me-1">
+					<a href="{{ path('ezreview_settings') }}" class="btn btn-secondary btn-sm md:float-end text-nowrap">
 						<i class="fa-solid fa-pen-to-square"></i>
 						Configurer</a>
 				</div>
@@ -42,7 +42,7 @@
 			</div>
 
 			{# Encadré d'explication du fonctionnement d'EZReview #}
-			<div class="bg-gradient-to-br from-blue-50 to-purple-50 border-2 border-blue-200 rounded-xl p-6 mt-6 shadow-sm">
+			<div class="bg-gradient-to-br from-blue-50 to-purple-50 border-2 border-blue-200 rounded-xl p-1 md:p-6 mt-6 shadow-sm">
 				<div class="flex items-start gap-3 mb-4">
 					<div class="flex-shrink-0">
 						<svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -59,9 +59,9 @@
 
 				<div class="grid md:grid-cols-2 gap-4 mb-4">
 					{# Avis positifs #}
-					<div class="bg-white rounded-lg p-4 border-l-4 border-green-500 shadow-sm">
+					<div class="bg-green-100 rounded-lg p-4 border-l-8 border-green-500 shadow-sm">
 						<div class="flex items-center gap-2 mb-2">
-							<h4 class="font-semibold text-green-700">Avis positifs (4-5 ⭐)</h4>
+							<h4 class="font-semibold text-green-700">Avis positifs</h4>
 						</div>
 						<ul class="text-sm text-gray-700 space-y-1">
 							<li class="flex items-start gap-2">
@@ -80,9 +80,9 @@
 					</div>
 
 					{# Avis négatifs #}
-					<div class="bg-white rounded-lg p-4 border-l-4 border-orange-500 shadow-sm">
+					<div class="bg-orange-100 rounded-lg p-4 border-l-8 border-orange-500 shadow-sm">
 						<div class="flex items-center gap-2 mb-2">
-							<h4 class="font-semibold text-orange-700">Avis négatifs (1-3 ⭐)</h4>
+							<h4 class="font-semibold text-orange-700">Avis négatifs</h4>
 						</div>
 						<ul class="text-sm text-gray-700 space-y-1">
 							<li class="flex items-start gap-2">
@@ -137,12 +137,12 @@
 								<i class="fa-solid fa-building lead my-2"></i>
 								{{ structure.name }}
 							</div>
-							<div class="flex text-nowrap justify-around w-full xl:w-7/12 my-3">
+							<div class="flex flex-col sm:flex-row text-nowrap justify-around w-full xl:w-7/12 my-3 gap-3">
 								<a href="{{ path('enquete', {'id': structure.id}) }}" class="btn btn-secondary btn-sm mx-1">
 									<i class="fa-regular fa-envelope lead "></i><br>
 									Envoyer mail</a>
 
-								<a href="#" type="button" data-modal-type="email-csv" data-structureid="{{structure.id}}" class="modal-btn btn btn-secondary btn-sm mx-1">
+								<a href="#" type="button" data-modal-type="email-csv" data-structureid="{{structure.id}}" class="modal-btn btn btn-secondary btn-sm mx-1 hidden md:block">
 									<i class="fa-regular fa-file-lines lead"></i><br>
 									Envois groupé
 								</a>

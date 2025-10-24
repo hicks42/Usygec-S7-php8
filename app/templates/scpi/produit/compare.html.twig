@@ -32,7 +32,7 @@
 					<div class="col-span-full p-4">Aucun produit dans le comparateur</div>
 				</div>
 			{% else %}
-				<div class="bg-slate-900 bg-gradient-to-r text-white grid" id="tableHeader" style="grid-template-columns: {{col1}}fr repeat({{compare|length}}, {{lastcols}}fr);">
+				<div class="bg-slate-900 bg-gradient-to-r text-white grid sticky top-0 z-10" id="tableHeader" style="grid-template-columns: {{col1}}fr repeat({{compare|length}}, {{lastcols}}fr);">
 					<div class="text-white p-2 pt-8">IDENTITE</div>
 					{% for item in compare %}
 						<div class="p-2">

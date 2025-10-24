@@ -41,6 +41,13 @@ liip_imagine:
           mode: outbound
           allow_upscale: true
 
+    rectangle_thumbnail_medium_inset:
+      filters:
+        thumbnail:
+          size: [400, 200]
+          mode: inset
+          allow_upscale: true
+
     square_thumbnail_hmedium:
       filters:
         thumbnail:

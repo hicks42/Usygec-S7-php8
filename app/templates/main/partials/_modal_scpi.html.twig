@@ -1,0 +1,105 @@
+<!-- Modal SCPI -->
+<div id="modal-scpi" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4" onclick="closeModal('scpi')">
+    <div class="bg-gray-900 rounded-2xl max-w-5xl w-full max-h-[90vh] overflow-y-auto modal-no-scrollbar border border-gray-700" onclick="event.stopPropagation()">
+        <div class="relative">
+            <!-- Header avec image -->
+            <div class="relative h-64 overflow-hidden bg-gradient-to-br from-indigo-900 to-cyan-900">
+                <img src="{{ asset('images/placeholder.png') }}" alt="SCPI Header" class="w-full h-full object-cover opacity-40">
+                <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent"></div>
+                <button onclick="closeModal('scpi')" class="absolute top-4 right-4 bg-gray-800/80 hover:bg-gray-700 text-white rounded-full p-2 transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="p-8">
+                <div class="flex items-center mb-6">
+                    <div class="w-16 h-16 bg-gradient-to-r from-indigo-600 to-cyan-600 rounded-xl flex items-center justify-center mr-4 border-2 border-indigo-500">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <span class="inline-block rounded-full bg-indigo-500/20 border border-indigo-500/30 px-3 py-1 text-xs font-medium text-indigo-300 mb-2">
+                            Symfony • Finance
+                        </span>
+                        <h2 class="text-3xl font-bold text-white">SCPI Magnacarta</h2>
+                        <p class="text-gray-400 text-sm">Comparateur de produits financiers</p>
+                    </div>
+                </div>
+
+                <p class="text-gray-300 text-lg leading-relaxed mb-6">
+                    Projet réalisé pour <strong>Magnacarta</strong>, société d'investissement lyonnaise.
+                    Cette plateforme permet de présenter numériquement des produits financiers aux prospects
+                    et leur offre la possibilité de comparer facilement différentes SCPI selon leurs critères
+                    d'investissement. Un outil moderne pour faciliter la prise de décision d'investissement.
+                </p>
+
+                <!-- Galerie d'images -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="rounded-lg overflow-hidden border border-gray-700">
+                        <img src="{{ asset('images/placeholder.png') }}" alt="Catalogue SCPI" class="w-full h-64 object-cover object-top">
+                    </div>
+                    <div class="rounded-lg overflow-hidden border border-gray-700">
+                        <img src="{{ asset('images/placeholder.png') }}" alt="Comparateur" class="w-full h-64 object-cover object-top">
+                    </div>
+                </div>
+
+                <h3 class="text-xl font-bold text-white mb-4">Fonctionnalités principales</h3>
+                <div class="grid md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-gray-800 p-4 rounded-lg border border-gray-700">
+                        <div class="flex items-start">
+                            <svg class="w-6 h-6 text-indigo-400 mt-1 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                            </svg>
+                            <div>
+                                <h4 class="font-semibold text-white mb-1">Sélection multicritères</h4>
+                                <p class="text-sm text-gray-400">Choisissez jusqu'à 3 produits selon les critères de la carte de présentation</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-800 p-4 rounded-lg border border-gray-700">
+                        <div class="flex items-start">
+                            <svg class="w-6 h-6 text-indigo-400 mt-1 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                            </svg>
+                            <div>
+                                <h4 class="font-semibold text-white mb-1">Comparateur exhaustif</h4>
+                                <p class="text-sm text-gray-400">Comparez tous les critères des produits sélectionnés sur une page dédiée</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-800 p-4 rounded-lg border border-gray-700">
+                        <div class="flex items-start">
+                            <svg class="w-6 h-6 text-indigo-400 mt-1 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                            </svg>
+                            <div>
+                                <h4 class="font-semibold text-white mb-1">Backoffice complet</h4>
+                                <p class="text-sm text-gray-400">Ajoutez, modifiez et supprimez des produits facilement</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-800 p-4 rounded-lg border border-gray-700">
+                        <div class="flex items-start">
+                            <svg class="w-6 h-6 text-indigo-400 mt-1 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                            </svg>
+                            <div>
+                                <h4 class="font-semibold text-white mb-1">Présentation numérique</h4>
+                                <p class="text-sm text-gray-400">Interface moderne pour présenter les produits aux prospects</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-indigo-500/10 border border-indigo-500/30 rounded-lg p-4">
+                    <p class="text-sm text-indigo-300">
+                        <strong>Technologies :</strong> Symfony 7, PHP 8+, Tailwind CSS, Doctrine ORM, MySQL
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
