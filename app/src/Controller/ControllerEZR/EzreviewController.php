@@ -4,7 +4,7 @@ namespace App\Controller\ControllerEZR;
 
 use App\Form\UserType;
 use League\Csv\Reader;
-use App\Service\MailJetService;
+use App\Service\MailgunService;
 use App\Service\SendMailService;
 use App\Form\FormEZR\TargetType;
 use App\Form\FormEZR\EmailCsvType;
@@ -30,7 +30,7 @@ class EzreviewController extends AbstractController
   private $structureRepo;
   private $user;
 
-  public function __construct(MailJetService $mailService, StructureRepository $structureRepo, Security $security)
+  public function __construct(MailgunService $mailService, StructureRepository $structureRepo, Security $security)
   {
     $this->security = $security;
     $this->mailService = $mailService;
@@ -105,11 +105,18 @@ class EzreviewController extends AbstractController
   }
 
   #[Route("/ezreview/{id<\d+>}/survey ", name: "survey")]
-  #[IsGranted('ROLE_EZR')]
   public function survey(Request $request, $id): Response
   {
     $structure = $this->structureRepo->findOneById($id);
-    $badRevUrl = $structure->getBadRevUrl();
+
+    // Déterminer l'URL de mauvaise review
+    // Si l'utilisateur a configuré une URL personnalisée, on l'utilise
+    // Sinon, on génère l'URL par défaut vers /badreview/{id}
+    if ($structure->getBadRevUrl() === "" || $structure->getBadRevUrl() === null) {
+      $badRevUrl = $request->getSchemeAndHttpHost() . "/badreview/" . $id;
+    } else {
+      $badRevUrl = $structure->getBadRevUrl();
+    }
 
     // Utilise le meilleur lien disponible :
     // - Lien direct avec PID si disponible
@@ -145,7 +152,7 @@ class EzreviewController extends AbstractController
     ]);
   }
 
-  #[Route("/badreview/{structureId}", name: "badreview")]
+  #[Route("/badreview/{structureId}", name: "badreview", methods: ["GET", "POST"])]
   public function badreview(Request $request, SendMailService $sendMailService, $structureId): Response
   {
     $form = $this->createForm(BadReviewType::class);

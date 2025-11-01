@@ -66,7 +66,45 @@
                     button_hover: 'text-green-300'
                 }) }}
 
-                {# Project 3: Contact/Profil Patrice Gerin #}
+                {# Project 3: EZReview #}
+                {{ cards.projectCard({
+                    modal_id: 'ezr',
+                    gradient: 'from-orange-600 to-yellow-600',
+                    image: 'images/ezr/etablissements-list.png',
+                    image_alt: 'EZReview - Gestion d\'avis clients',
+                    image_position: 'object-center',
+                    icon_bg: 'bg-gradient-to-r from-orange-600 to-yellow-600',
+                    icon_svg: '<svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>',
+                    badge_bg: 'bg-orange-500/20',
+                    badge_border: 'border-orange-500/30',
+                    badge_text: 'text-orange-300',
+                    badge: 'Symfony • E-réputation',
+                    title: 'EZReview',
+                    description: 'Système intelligent de filtrage d\'avis clients pour protéger votre e-réputation.',
+                    button_color: 'text-orange-400',
+                    button_hover: 'text-orange-300'
+                }) }}
+
+                {# Project 4: SCPI Magnacarta #}
+                {{ cards.projectCard({
+                    modal_id: 'scpi',
+                    gradient: 'from-indigo-600 to-cyan-600',
+                    image: 'images/scpi/SCPI.png',
+                    image_alt: 'SCPI Magnacarta - Comparateur de produits financiers',
+                    image_position: 'object-center',
+                    icon_bg: 'bg-gradient-to-r from-indigo-600 to-cyan-600',
+                    icon_svg: '<svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>',
+                    badge_bg: 'bg-indigo-500/20',
+                    badge_border: 'border-indigo-500/30',
+                    badge_text: 'text-indigo-300',
+                    badge: 'Symfony • Finance',
+                    title: 'SCPI Magnacarta',
+                    description: 'Plateforme de présentation et comparaison de produits financiers pour Magnacarta.',
+                    button_color: 'text-indigo-400',
+                    button_hover: 'text-indigo-300'
+                }) }}
+
+                {# Project 5: Contact/Profil Patrice Gerin #}
                 {{ cards.projectCard({
                     modal_id: 'contact',
                     gradient: 'from-purple-600 to-pink-600',
@@ -92,6 +130,8 @@
     {# Modals - Fichiers partiels #}
     {{ include('main/partials/_modal_time2gether.html.twig') }}
     {{ include('main/partials/_modal_bam.html.twig') }}
+    {{ include('main/partials/_modal_ezr.html.twig') }}
+    {{ include('main/partials/_modal_scpi.html.twig') }}
     {{ include('main/partials/_modal_contact.html.twig') }}
     {{ include('main/partials/_modal_image_zoom.html.twig') }}
 

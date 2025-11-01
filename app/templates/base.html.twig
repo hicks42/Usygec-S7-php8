@@ -40,19 +40,7 @@
 				{{ include('main/partials/_preloader.html.twig') }}
 
 				<div class="flex justify-center w-full">
-					<div class="flex flex-col justify-center window-h p-2
-							          {% if width_size is defined %}
-                            {% if width_size == 'tiny' %}
-                                  md:w-4/12
-                              {% elseif width_size == 'half' %}
-                                  md:w-1/2
-                              {% elseif width_size == 'full' %}
-                                  w-full
-                            {% endif %}
-                        {% else %}
-                            md:w-8/12 w-full
-                        {% endif %}
-                      ">
+					<div class="flex flex-col justify-center window-h p-1 {{ container_width|default('w-full md:w-8/12') }}">
 
 						{% block content %}
             {% endblock %}

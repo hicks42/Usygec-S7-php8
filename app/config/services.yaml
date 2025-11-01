@@ -56,6 +56,8 @@ services:
       $mailjet_key_public: "%env(MAILJET_PUBLIC_KEY)%"
       $mailjet_key_private: "%env(MAILJET_PRIVATE_KEY)%"
 
+  # App\Service\MailgunService utilise l'autowiring, pas besoin de configuration spécifique
+
   App\Service\SendMailService:
     arguments:
       $dkim_key_path: "%app.dkim_key_path%"

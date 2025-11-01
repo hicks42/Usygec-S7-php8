@@ -29,29 +29,53 @@ class MailJetService
 
   public function send($baseUrl, $target, $structureId)
   {
+    // Vérifier que structureId n'est pas vide
+    if (empty($structureId)) {
+      throw new \Exception("L'ID de structure est vide ou null");
+    }
+
     $structure = $this->structureRepo->findOneById($structureId);
+
+    if (!$structure) {
+      throw new \Exception("Structure non trouvée avec l'ID : " . $structureId);
+    }
 
     if ($structure->getBadRevUrl() === "" || $structure->getBadRevUrl() === null) {
       $badUrl = $baseUrl . "/badreview/" . $structureId;
     } else {
       $badUrl = $structure->getBadRevUrl();
-    };
+    }
+
+    // Debug: vérifier que l'URL contient bien l'ID
+    if (strpos($badUrl, '/badreview/') !== false && strpos($badUrl, '/badreview/' . $structureId) === false) {
+      throw new \Exception("Erreur: l'URL badUrl ne contient pas le structureId. URL: " . $badUrl);
+    }
 
     $structureName = $structure->getName();
-    $image = $structure->getImageName();
-
-    // En développement (localhost), utiliser une URL placeholder
-    // En production, utiliser l'URL réelle du serveur
-    if (strpos($baseUrl, 'localhost') !== false) {
-      // URL placeholder pour le développement (remplace par ton URL de prod quand tu déploies)
-      $imageUrl = 'https://via.placeholder.com/600x200.png?text=' . urlencode($structureName);
-    } else {
-      // URL de production
-      $imageUrl = $baseUrl . "/images/companies/" . $image;
-    }
+    $imageName = $structure->getImageName();
     $GooglUrl = "https://search.google.com/local/writereview?placeid=" . $structure->getPid();
 
-    $mj = new Client($this->mailjet_key_public, $this->mailjet_key_private, true, ["version" => 'v3.1']);
+    // URL placeholder par défaut
+    $placeholderUrl = 'https://via.placeholder.com/600x200.png?text=' . urlencode($structureName);
+
+    // Si une image existe, utiliser l'URL publique, sinon utiliser le placeholder
+    $hasEmbeddedImage = false;  // On n'utilise pas d'images embarquées à cause des permissions
+
+    $mj = new Client(
+      $this->mailjet_key_public,
+      $this->mailjet_key_private,
+      true,
+      [
+        "version" => 'v3.1',
+        "curl" => [
+          CURLOPT_SSL_VERIFYPEER => true,
+          CURLOPT_SSL_VERIFYHOST => 2,
+          CURLOPT_SSLVERSION => CURL_SSLVERSION_TLSv1_2,
+          CURLOPT_TIMEOUT => 30,
+          CURLOPT_CONNECTTIMEOUT => 10
+        ]
+      ]
+    );
 
     $body = [
       'Messages' => [
@@ -71,7 +95,8 @@ class MailJetService
           'Subject' => "Enquete de satisfaction de " . $structureName,
           'Variables' => [
             'structureName' => $structureName,
-            'imageUrl' => $imageUrl,
+            'hasEmbeddedImage' => $hasEmbeddedImage,
+            'placeholderUrl' => $placeholderUrl,
             'badUrl' => $badUrl,
             'googleUrl' => $GooglUrl
           ]
