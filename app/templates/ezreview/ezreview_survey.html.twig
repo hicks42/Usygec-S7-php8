@@ -1,0 +1,85 @@
+{% extends 'raw.html.twig' %}
+
+{% block title %}Enquête de satisfaction - {{ structure.name }}{% endblock %}
+
+{% block content %}
+<div class="w-full max-w-2xl mx-auto bg-transparent">
+
+  {# Section Header avec image #}
+  <div class="w-full bg-[#00405c]">
+    {% if structure.imageName %}
+      <img alt="{{ structure.name }}"
+           src="{{ vich_uploader_asset(structure) | imagine_filter('company_image_banner') }}"
+           class="w-full h-48 object-cover object-center block">
+    {% else %}
+      <img alt="{{ structure.name }}"
+           src="{{ asset('images/placeholder.png') }}"
+           class="w-full h-48 object-cover object-center block">
+    {% endif %}
+  </div>
+
+  {# Section Contenu texte #}
+  <div class="w-full bg-white">
+    {# Titre principal #}
+    <div class="pt-5 text-center">
+      <p class="text-xl leading-none font-bold text-black my-2" style="font-family: Verdana, Helvetica, Arial, sans-serif;">
+        Qu'avez vous pensé de votre visite?
+      </p>
+    </div>
+
+    {# Texte du corps #}
+    <div class="px-4 text-sm leading-relaxed text-gray-700" style="font-family: Verdana, Helvetica, Arial, sans-serif;">
+      <p class="my-2 mt-2">
+        Bonjour.
+      </p>
+
+      <p class="my-2">
+        Récemment nous avons eu le plaisir de vous accueillir dans notre établissement <b>{{ structure.name }}</b>.
+      </p>
+
+      <p class="my-2">
+        Soucieux de l'amélioration continue de nos prestations et afin de répondre au mieux à vos attentes, nous avons mis en place cette enquête de satisfaction.
+      </p>
+
+      <p class="my-2">
+        Toutes les données recueillies restent confidentielles et seront traitées de manière anonyme.
+      </p>
+
+      <p class="my-2 mb-2">
+        <b>Qu'avez vous pensé de la qualité de nos services ? :</b>
+      </p>
+    </div>
+
+    {# Séparateur #}
+    <div class="py-2 px-6">
+      <hr class="border-t border-dashed border-gray-300">
+    </div>
+  </div>
+
+  {# Section Boutons #}
+  <div class="w-full bg-white py-5 px-0">
+    <div class="flex flex-col md:flex-row gap-4 justify-center items-center px-4">
+
+      {# Bouton Mécontent #}
+        <a href="{{ badRevUrl }}"
+           class="inline-block bg-[#f9b338] text-center no-underline rounded px-6 py-2 text-black text-sm leading-tight hover:opacity-90 transition-opacity w-full md:w-auto"
+           style="font-family: Verdana, Helvetica, Arial, sans-serif;"
+           target="_blank">
+          Plutot mécontent
+        </a>
+
+
+      {# Bouton Satisfait #}
+        <a href="{{ GooglUrl }}"
+           class="inline-block bg-[#2e924f] text-center no-underline rounded px-6 py-2 text-white text-sm leading-tight hover:opacity-90 transition-opacity w-full md:w-auto"
+           style="font-family: Verdana, Helvetica, Arial, sans-serif;"
+           target="_blank">
+          Plutot satisfait
+        </a>
+
+
+    </div>
+  </div>
+
+</div>
+{% endblock content %}

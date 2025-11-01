@@ -105,11 +105,18 @@ class EzreviewController extends AbstractController
   }
 
   #[Route("/ezreview/{id<\d+>}/survey ", name: "survey")]
-  #[IsGranted('ROLE_EZR')]
   public function survey(Request $request, $id): Response
   {
     $structure = $this->structureRepo->findOneById($id);
-    $badRevUrl = $structure->getBadRevUrl();
+
+    // Déterminer l'URL de mauvaise review
+    // Si l'utilisateur a configuré une URL personnalisée, on l'utilise
+    // Sinon, on génère l'URL par défaut vers /badreview/{id}
+    if ($structure->getBadRevUrl() === "" || $structure->getBadRevUrl() === null) {
+      $badRevUrl = $request->getSchemeAndHttpHost() . "/badreview/" . $id;
+    } else {
+      $badRevUrl = $structure->getBadRevUrl();
+    }
 
     // Utilise le meilleur lien disponible :
     // - Lien direct avec PID si disponible

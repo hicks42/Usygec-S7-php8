@@ -4,7 +4,7 @@
         <div class="relative">
             <!-- Header avec image -->
             <div class="relative h-64 overflow-hidden bg-gradient-to-br from-indigo-900 to-cyan-900">
-                <img src="{{ asset('images/placeholder.png') }}" alt="SCPI Header" class="w-full h-full object-cover opacity-40">
+                <img src="{{ asset('images/scpi/SCPI.png') }}" alt="SCPI Header" class="w-full h-full object-cover opacity-40">
                 <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent"></div>
                 <button onclick="closeModal('scpi')" class="absolute top-4 right-4 bg-gray-800/80 hover:bg-gray-700 text-white rounded-full p-2 transition-colors">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -38,11 +38,24 @@
 
                 <!-- Galerie d'images -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                    <div class="rounded-lg overflow-hidden border border-gray-700">
-                        <img src="{{ asset('images/placeholder.png') }}" alt="Catalogue SCPI" class="w-full h-64 object-cover object-top">
+                    <div class="rounded-lg overflow-hidden border border-gray-700 cursor-pointer hover:opacity-80 transition-opacity" onclick="openImageZoom('{{ asset('images/scpi/SCPI_zoom_out.png') }}', 'Liste de tous les produits')">
+                        <img src="{{ asset('images/scpi/SCPI_zoom_out.png') }}" alt="Catalogue SCPI" class="w-full h-64 object-cover object-top">
                     </div>
-                    <div class="rounded-lg overflow-hidden border border-gray-700">
-                        <img src="{{ asset('images/placeholder.png') }}" alt="Comparateur" class="w-full h-64 object-cover object-top">
+                    <div class="rounded-lg overflow-hidden border border-gray-700 cursor-pointer hover:opacity-80 transition-opacity" onclick="openImageZoom('{{ asset('images/scpi/compare_cart.png') }}', 'Panier de comparaison')">
+                        <img src="{{ asset('images/scpi/compare_cart.png') }}" alt="Catalogue SCPI" class="w-full h-64 object-cover object-top">
+                    </div>
+                    <div class="rounded-lg overflow-hidden border border-gray-700 cursor-pointer hover:opacity-80 transition-opacity" onclick="openImageZoom('{{ asset('images/scpi/comparison2.png') }}', 'Afichage des données en graphiques')">
+                        <img src="{{ asset('images/scpi/comparison2.png') }}" alt="Catalogue SCPI" class="w-full h-64 object-cover object-top">
+                    </div>
+                    <div class="rounded-lg overflow-hidden border border-gray-700 cursor-pointer hover:opacity-80 transition-opacity" onclick="openImageZoom('{{ asset('images/scpi/comparison_details.png') }}', 'Détails de comparaison')">
+                        <img src="{{ asset('images/scpi/comparison_details.png') }}" alt="Comparateur" class="w-full h-64 object-cover object-top">
+                    </div>
+
+                    <div class="rounded-lg overflow-hidden border border-gray-700 cursor-pointer hover:opacity-80 transition-opacity" onclick="openImageZoom('{{ asset('images/scpi/backoffice-index.png') }}', 'Backoffice - Liste des produits')">
+                        <img src="{{ asset('images/scpi/backoffice-index.png') }}" alt="Catalogue SCPI" class="w-full h-64 object-cover object-top">
+                    </div>
+                    <div class="rounded-lg overflow-hidden border border-gray-700 cursor-pointer hover:opacity-80 transition-opacity" onclick="openImageZoom('{{ asset('images/scpi/backoffice-crud3.png') }}', 'Création/modification de produits')">
+                        <img src="{{ asset('images/scpi/backoffice-crud3.png') }}" alt="Comparateur" class="w-full h-64 object-cover object-top">
                     </div>
                 </div>
 

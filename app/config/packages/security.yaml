@@ -59,6 +59,10 @@ security:
     # Routes publiques SCPI (site vitrine accessible sans connexion)
     - { path: ^/scpi, roles: PUBLIC_ACCESS }
 
+    # Routes publiques EZReview (enquêtes et avis accessibles sans connexion)
+    - { path: ^/ezreview/\d+/survey, roles: PUBLIC_ACCESS }
+    - { path: ^/badreview, roles: PUBLIC_ACCESS }
+
     # Routes accessibles uniquement avec des rôles spécifiques
     - { path: ^/ezreview, roles: ROLE_EZR }
     - { path: ^/companies, roles: ROLE_BAM }
